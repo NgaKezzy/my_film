@@ -1,0 +1,17 @@
+{
+    "helloWorld": "Xin chào thế giới!",
+    "home": "Trang chủ",
+    "changeLanguage":"Thay đổi ngôn ngữ",
+    "changeTheme":"Thay đổi chủ đề",
+    "ok":"Đồng ý",
+    "download": "Tải về",
+    "explore": "Khám phá",
+    "me": "Của tôi",
+    "noNetworkConnection":"Không có kết nối mạng!",
+    "networkConnectionRestored":"Đã khôi phục kết nối mạng!",
+    "setting":"Cài đặt",
+    "darkMode": "Chế độ ban đêm",
+    "language": "Ngôn ngữ"
+
+
+}

@@ -1,0 +1,20 @@
+{
+    "helloWorld": "Hello world!",
+    "home": "Home",
+    "changeLanguage": "Change language",
+    "changeTheme":"Change theme",
+    "ok": "Ok",
+    "download": "Download",
+    "explore": "Explore",
+    "me": "Me",
+    "noNetworkConnection":"No network connection!",
+    "networkConnectionRestored":"Network connection restored!",
+    "setting":"Setting",
+    "darkMode": "Dark mode",
+    "language": "Language"
+
+
+
+
+
+}
