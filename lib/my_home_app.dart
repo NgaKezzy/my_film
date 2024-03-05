@@ -18,8 +18,8 @@ class _MyHomeAppState extends State<MyHomeApp> {
   int pageIndex = 0;
 
   List<Widget> pageList = <Widget>[
-    const HomePage(),
-    const ExplorePage(),
+    HomePage(),
+    ExplorePage(),
     const DownloadPage(),
     const SettingPage(),
     // const MeScreen(),
