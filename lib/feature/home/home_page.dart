@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../component/item_grid_film.dart';
 import '../../component/item_slider_image.dart';
 
 class HomePage extends StatefulWidget {
@@ -47,56 +48,66 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: CarouselSlider(
-                carouselController: carouselController,
-                options: CarouselOptions(
-                  height: height * 0.5,
-                  viewportFraction: 1.0,
-                  autoPlay: true,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: CarouselSlider(
+                  carouselController: carouselController,
+                  options: CarouselOptions(
+                    height: height * 0.5,
+                    viewportFraction: 1.0,
+                    autoPlay: true,
+                  ),
+                  items: List.generate(
+                      items.length,
+                      (index) => ItemSliderImage(
+                            imageUrl: items[index],
+                          )),
                 ),
-                items: List.generate(
-                    items.length,
-                    (index) => ItemSliderImage(
-                          imageUrl: items[index],
-                        )),
               ),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return Container(
-                    color: index.isOdd ? Colors.white : Colors.black12,
-                    height: 100.0,
-                    child: Center(
-                      child: Text(
-                        '$index',
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 10),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 10),
+              ),
+              ItemGridFilm(itemsFilm: items),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Container(
+                      color: index.isOdd ? Colors.white : Colors.black12,
+                      height: 100.0,
+                      child: Center(
+                        child: Text(
+                          '$index',
+                        ),
                       ),
-                    ),
-                  );
-                },
-                childCount: 10,
+                    );
+                  },
+                  childCount: 10,
+                ),
               ),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return Container(
-                    color: index.isOdd ? Colors.red : Colors.blue,
-                    height: 100.0,
-                    child: Center(
-                      child: Text(
-                        '$index',
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Container(
+                      color: index.isOdd ? Colors.red : Colors.blue,
+                      height: 100.0,
+                      child: Center(
+                        child: Text(
+                          '$index',
+                        ),
                       ),
-                    ),
-                  );
-                },
-                childCount: 10,
+                    );
+                  },
+                  childCount: 10,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
