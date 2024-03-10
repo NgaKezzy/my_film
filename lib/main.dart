@@ -4,6 +4,7 @@ import 'package:app/theme/cubit/theme_cubit.dart';
 import 'package:app/theme/dark_theme.dart';
 import 'package:app/theme/light_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'feature/splash/splash_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,6 +12,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 String language = 'vi';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.blue, // navigation bar color
+    statusBarColor: Colors.transparent, // status bar color
+  ));
   runApp(
     MultiBlocProvider(
       providers: [

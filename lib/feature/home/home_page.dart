@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:app/config/app_size.dart';
+import 'package:app/feature/home/widgets/item_film_horizontally.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import '../../component/item_grid_film.dart';
-import '../../component/item_slider_image.dart';
+import 'widgets/item_grid_film.dart';
+import 'widgets/item_slider_image.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> {
     'https://scontent-hkg1-2.xx.fbcdn.net/v/t39.30808-6/404928254_1021163959096148_4125032703481119641_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeES_VoT7ifCxEB6gB-PvNOFJIaXXosR9KQkhpdeixH0pIxjY-z7qJvfhx56D808g8Irc3BdKPirOA3FgPmY1IJ1&_nc_ohc=_FXJu0taJOUAX-nUThD&_nc_ht=scontent-hkg1-2.xx&oh=00_AfDGWv48BZnnWtMbC9ooidCfi-xmbhJzTLm3a1refd2Cqw&oe=65EB761A',
     'https://scontent-hkg1-2.xx.fbcdn.net/v/t39.30808-6/404001288_1018261012719776_8046360455298572426_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeHZEKVMQMpK9hq_qPuPXulhOyrbKw_XRPc7KtsrD9dE94sh1DRgi9CEm3asHqJEoo9VDBJl_u-S-FamGAutNXlo&_nc_ohc=gQBna7Me29QAX_ZWN1e&_nc_ht=scontent-hkg1-2.xx&oh=00_AfASZDXFewbeiLJJjJFCt_VLy1aVGEW0-tZHT1LdZQMJ3Q&oe=65EC3B75',
     'https://scontent-hkg1-2.xx.fbcdn.net/v/t39.30808-6/339466707_742082007454510_5150962880705956640_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeG48UbLTZsuYbwq5htGDfZrTKaDXDzTiGlMpoNcPNOIaTgBSqI2tniRrRbQgdwZT010lWDiuDYkl2PXMEhS-kc2&_nc_ohc=f43At1Y3wWIAX8RCvav&_nc_ht=scontent-hkg1-2.xx&oh=00_AfDK-UChm2GMTSLk8BgxK4NJ8hQcsAqIRWlSSWuOokSR5w&oe=65ECA5D6',
+    'https://scontent-hkg1-1.xx.fbcdn.net/v/t39.30808-6/345197021_884413966131341_1043224480803101677_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=6o1kj1Te-_cAX-eq0ij&_nc_ht=scontent-hkg1-1.xx&oh=00_AfCZnmDCrP-KAgYUVrTmwP8ZMHG90m5l94Crb4oiX7j2WQ&oe=65EE6B48'
   ];
   final CarouselController carouselController = CarouselController();
   late Timer _timer;
@@ -36,7 +38,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _timer.cancel();
   }
@@ -47,67 +48,54 @@ class _HomePageState extends State<HomePage> {
     final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: CarouselSlider(
-                  carouselController: carouselController,
-                  options: CarouselOptions(
-                    height: height * 0.5,
-                    viewportFraction: 1.0,
-                    autoPlay: true,
-                  ),
-                  items: List.generate(
-                      items.length,
-                      (index) => ItemSliderImage(
-                            imageUrl: items[index],
-                          )),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: CarouselSlider(
+                carouselController: carouselController,
+                options: CarouselOptions(
+                  height: height * 0.5,
+                  viewportFraction: 1.0,
+                  autoPlay: true,
                 ),
+                items: List.generate(
+                    items.length,
+                    (index) => ItemSliderImage(
+                          imageUrl: items[index],
+                        )),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 10),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 10),
-              ),
-              ItemGridFilm(itemsFilm: items),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return Container(
-                      color: index.isOdd ? Colors.white : Colors.black12,
-                      height: 100.0,
-                      child: Center(
-                        child: Text(
-                          '$index',
-                        ),
-                      ),
-                    );
-                  },
-                  childCount: 10,
+            ),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 30),
+            ),
+            ItemGridFilm(itemsFilm: items),
+            SliverToBoxAdapter(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                SizedBox(
+                  height: 20,
                 ),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return Container(
-                      color: index.isOdd ? Colors.red : Colors.blue,
-                      height: 100.0,
-                      child: Center(
-                        child: Text(
-                          '$index',
-                        ),
-                      ),
-                    );
-                  },
-                  childCount: 10,
+                Text(
+                  'Phim thịnh hành',
+                  style: TextStyle(fontSize: AppSize.size20),
                 ),
-              ),
-            ],
-          ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
+            )),
+            ItemFilmHorizontally(itemsFilm: items),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 30),
+            ),
+            ItemGridFilm(itemsFilm: items),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 30),
+            ),
+          ],
         ),
       ),
     );
