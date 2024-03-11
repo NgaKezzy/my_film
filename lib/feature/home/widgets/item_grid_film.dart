@@ -1,8 +1,6 @@
 import 'package:app/config/app_size.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class ItemGridFilm extends StatelessWidget {
   ItemGridFilm({super.key, required this.itemsFilm});
@@ -14,8 +12,8 @@ class ItemGridFilm extends StatelessWidget {
       itemCount: itemsFilm.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3, // Số cột trong lưới
-        mainAxisSpacing: 5, // Khoảng cách theo trục chính
-        crossAxisSpacing: 5, // Khoảng cách theo trục phụ
+        mainAxisSpacing: 20, // Khoảng cách theo trục chính
+        crossAxisSpacing: 10, // Khoảng cách theo trục phụ
         childAspectRatio: 0.6,
       ),
       itemBuilder: (context, index) {
