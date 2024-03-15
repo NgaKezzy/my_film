@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-import '../../../config/app_size.dart';
 
 class ItemSliderImage extends StatelessWidget {
-  const ItemSliderImage({super.key, required this.imageUrl,required this.onTap});
+  const ItemSliderImage(
+      {super.key, required this.imageUrl, required this.onTap});
   final String imageUrl;
   final VoidCallback onTap;
   @override
@@ -32,20 +32,20 @@ class ItemSliderImage extends StatelessWidget {
             ),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
-          Positioned(
-            left: 10,
-            bottom: 10,
-            child: SizedBox(
-              height: 60,
-              width: width * 0.5,
-              child: const Text(
-                'Đấu phá khung thương ',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                style: TextStyle(fontSize: AppSize.size25, color: Colors.white),
-              ),
-            ),
-          ),
+          // Positioned(
+          //   left: 10,
+          //   bottom: 10,
+          //   child: SizedBox(
+          //     height: 60,
+          //     width: width * 0.5,
+          //     child: const Text(
+          //       'Đấu phá khung thương ',
+          //       overflow: TextOverflow.ellipsis,
+          //       maxLines: 2,
+          //       style: TextStyle(fontSize: AppSize.size25, color: Colors.white),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

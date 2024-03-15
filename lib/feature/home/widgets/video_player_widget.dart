@@ -1,7 +1,6 @@
 import 'package:app/component/loading_widget.dart';
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
@@ -16,47 +15,42 @@ class VideoPlayerWidget extends StatefulWidget {
 }
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
-  late VideoPlayerController _videoPlayerController;
-  late Future<void> _initializeVideoPlayerFuture;
-
+  late FlickManager flickManager;
   @override
   void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'));
-    _initializeVideoPlayerFuture =
-        _videoPlayerController.initialize().then((value) => {
-              _videoPlayerController.play(),
-              _videoPlayerController.setLooping(true),
-            });
-    setState(() {});
+    flickManager = FlickManager(
+      autoPlay: true,
+      autoInitialize: true,
+      videoPlayerController: VideoPlayerController.networkUrl(
+        Uri.parse(widget.url),
+      ),
+    );
+    // flickManager.flickVideoManager?.addListener(() {
+    //   if (flickManager.flickVideoManager!.isVideoEnded) {
+    //     // Khi video hiện tại kết thúc, chuyển sang video tiếp theo
+    //     setState(() {});
+    //   }
+    // });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    flickManager.dispose();
     super.dispose();
-    _videoPlayerController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: FutureBuilder(
-          future: _initializeVideoPlayerFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              print('heheheh');
-              return AspectRatio(
-                aspectRatio: _videoPlayerController.value.aspectRatio,
-                child: VideoPlayer(_videoPlayerController),
-              );
-            } else {
-              return const LoadingWidget();
-            }
-          },
+    return FlickVideoPlayer(
+      flickManager: flickManager,
+      flickVideoWithControls: FlickVideoWithControls(
+        controls: FlickPortraitControls(
+          progressBarSettings: FlickProgressBarSettings(
+            playedColor: Colors.blue,
+          ),
         ),
+        playerLoadingFallback: const LoadingWidget(),
       ),
     );
   }
