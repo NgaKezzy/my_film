@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:equatable/equatable.dart';
 
 import '../../../config/print_color.dart';
 import 'home_page_state.dart';

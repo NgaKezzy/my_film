@@ -1,5 +1,4 @@
 import 'package:app/feature/home/models/movie_category.dart';
-import 'package:app/feature/home/models/movie_episodes.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'movie_details.g.dart';
@@ -16,17 +15,17 @@ class MovieDetails {
   final List<MovieCategory> category;
   final List<MovieCategory> country;
 
-  MovieDetails(
-      {this.content = '',
-      this.poster_url = '',
-      this.thumb_url = '',
-      this.trailer_url = '',
-      this.time = '',
-      this.year = 0,
-      this.actor = const [],
-      this.category = const [],
-      this.country = const [],
-      });
+  MovieDetails({
+    this.content = '',
+    this.poster_url = '',
+    this.thumb_url = '',
+    this.trailer_url = '',
+    this.time = '',
+    this.year = 0,
+    this.actor = const [],
+    this.category = const [],
+    this.country = const [],
+  });
 
   factory MovieDetails.fromJson(Map<String, dynamic> json) =>
       _$MovieDetailsFromJson(json);

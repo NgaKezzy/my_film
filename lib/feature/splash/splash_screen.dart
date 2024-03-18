@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'package:app/my_home_app.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/cubit/home_page_cubit.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:flutter_svg/svg.dart';
 
 bool isFirstCheck = true;
 
@@ -82,16 +81,29 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       body: SafeArea(
-        child: Center(
-          child: Shimmer.fromColors(
-            baseColor: theme.colorScheme.error,
-            highlightColor: Colors.yellow,
-            child: const Text(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(
+              child: SvgPicture.asset(
+                'assets/icons/icon_app.svg',
+                height: 130,
+                color: Color(0xFFabc066),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
               'My Film',
               style: TextStyle(
-                  fontSize: AppSize.size50, fontWeight: FontWeight.w500),
-            ),
-          ),
+                letterSpacing: 0.5,
+                fontSize: 70,
+                fontWeight: FontWeight.w600,
+              ),
+            )
+          ],
         ),
       ),
     );

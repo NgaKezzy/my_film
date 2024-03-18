@@ -16,15 +16,15 @@ class RouteGenerator {
         return _GeneratePageRoute(
             widget: const MyHomeApp(), routeName: settings.name);
       case RoutesName.HOME_PAGE:
-        return _GeneratePageRoute(widget: HomePage(), routeName: settings.name);
+        return _GeneratePageRoute(widget: const HomePage(), routeName: settings.name);
       case RoutesName.Explore_Page:
         return _GeneratePageRoute(
-            widget: ExplorePage(), routeName: settings.name);
+            widget: const ExplorePage(), routeName: settings.name);
       case RoutesName.DOWNLOAD_PAGE:
         return _GeneratePageRoute(
             widget: const DownloadPage(), routeName: settings.name);
       default:
-        return _GeneratePageRoute(widget: HomePage(), routeName: settings.name);
+        return _GeneratePageRoute(widget: const HomePage(), routeName: settings.name);
     }
   }
 }
@@ -39,7 +39,7 @@ class _GeneratePageRoute extends PageRouteBuilder {
                 Animation<double> secondaryAnimation) {
               return widget;
             },
-            transitionDuration: Duration(milliseconds: 500),
+            transitionDuration: const Duration(milliseconds: 500),
             transitionsBuilder: (BuildContext context,
                 Animation<double> animation,
                 Animation<double> secondaryAnimation,
@@ -47,7 +47,7 @@ class _GeneratePageRoute extends PageRouteBuilder {
               return SlideTransition(
                 textDirection: TextDirection.rtl,
                 position: Tween<Offset>(
-                  begin: Offset(1.0, 0.0),
+                  begin: const Offset(1.0, 0.0),
                   end: Offset.zero,
                 ).animate(animation),
                 child: child,

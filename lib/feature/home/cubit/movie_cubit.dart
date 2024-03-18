@@ -1,8 +1,5 @@
-import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
-import 'package:app/feature/home/models/movie_data.dart';
-import 'package:app/feature/home/models/movie_details.dart';
-import 'package:app/feature/home/models/movie_episodes.dart';
+import 'package:app/feature/home/models/data_film.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/network/fetch_api_movie.dart';
 import 'package:bloc/bloc.dart';
@@ -30,20 +27,20 @@ class MovieCubit extends Cubit<MovieState> {
 
   Future<void> getMovieDetails(String slug) async {
     emit(state.copyWith(status: MovieStatus.loading));
+    final DataFilm newDataFilm;
 
     try {
       final data = await FetchApiMovie.getMovieDetails(slug);
-      final MovieDetails movieDetails = MovieDetails.fromJson(data['movie']);
+      newDataFilm = DataFilm.fromJson(data);
 
-      final MovieEpisodes movieEpisodes =
-          MovieEpisodes.fromJson(data['episodes'][0]);
-
-      final movieData =
-          MovieData(movie: [movieDetails], episodes: movieEpisodes);
- 
+      emit(state.copyWith(
+        dataFilm: newDataFilm,
+        status: MovieStatus.success,
+      ));
     } catch (e) {
-      print("error: " + e.toString());
+      print("error: $e");
     }
+
     emit(state.copyWith(status: MovieStatus.success));
   }
 }

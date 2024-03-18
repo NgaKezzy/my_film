@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class HeaderApp extends StatelessWidget implements PreferredSizeWidget {
   const HeaderApp({super.key, this.title = 'Title'});

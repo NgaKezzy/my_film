@@ -47,7 +47,7 @@ class FlagAndCountryName extends StatelessWidget {
                 child: Image.asset('assets/images/$pathImage')),
             Text(
               countryName,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: AppSize.size20, fontWeight: FontWeight.w500),
             )
           ],

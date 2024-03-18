@@ -42,15 +42,19 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FlickVideoPlayer(
-      flickManager: flickManager,
-      flickVideoWithControls: FlickVideoWithControls(
-        controls: FlickPortraitControls(
-          progressBarSettings: FlickProgressBarSettings(
-            playedColor: Colors.blue,
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.3,
+      child: FlickVideoPlayer(
+        flickManager: flickManager,
+        flickVideoWithControls: FlickVideoWithControls(
+          videoFit: BoxFit.cover,
+          controls: FlickPortraitControls(
+            progressBarSettings: FlickProgressBarSettings(
+              playedColor: Colors.blue,
+            ),
           ),
+          playerLoadingFallback: const LoadingWidget(),
         ),
-        playerLoadingFallback: const LoadingWidget(),
       ),
     );
   }

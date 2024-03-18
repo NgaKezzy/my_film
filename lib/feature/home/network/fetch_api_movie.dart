@@ -17,7 +17,6 @@ class FetchApiMovie {
         case 200:
           var data = jsonDecode(response.body);
           result = data;
-          printCyan(data.toString());
           break;
         case 400:
           var data = jsonDecode(response.body);
@@ -55,7 +54,6 @@ class FetchApiMovie {
         case 200:
           Map<String, dynamic> data = jsonDecode(response.body);
           result = data;
-          printRed(data.toString());
           break;
         case 400:
           var data = jsonDecode(response.body);

@@ -1,8 +1,6 @@
 import 'package:app/config/app_size.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class ItemFilmHorizontally extends StatelessWidget {
   const ItemFilmHorizontally({super.key, this.itemsFilm = const []});
@@ -39,7 +37,7 @@ class ItemFilmHorizontally extends StatelessWidget {
                         ),
                       ),
                     ),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
                 ),
                 Positioned(

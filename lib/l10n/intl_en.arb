@@ -11,7 +11,17 @@
     "networkConnectionRestored":"Network connection restored!",
     "setting":"Setting",
     "darkMode": "Dark mode",
-    "language": "Language"
+    "language": "Language",
+    "movieUpdate": "Movie is being updated...",
+    "film":"Film: ",
+    "actor":"Actor: ",
+    "category":"Category: ",
+    "episode":"Episode: ",
+    "content":"Content: "
+
+
+
+
 
 
 

@@ -34,14 +34,14 @@ class ItemGridFilm extends StatelessWidget {
                           ),
                         ),
                       ),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                   Positioned(
                       bottom: 0,
                       width: MediaQuery.of(context).size.width * 0.28,
                       child: Container(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         alignment: Alignment.topLeft,
                         child: const Text(
                           'Tập 1',

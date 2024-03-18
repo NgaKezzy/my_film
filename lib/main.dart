@@ -1,8 +1,6 @@
 import 'package:app/feature/home/cubit/home_page_cubit.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
-import 'package:app/routers/route_generator.dart';
-import 'package:app/routers/router_name.dart';
 import 'package:app/theme/cubit/theme_cubit.dart';
 import 'package:app/theme/dark_theme.dart';
 import 'package:app/theme/light_theme.dart';

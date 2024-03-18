@@ -1,10 +1,6 @@
-import 'dart:ffi';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
 
 class ItemSliderImage extends StatelessWidget {
   const ItemSliderImage(

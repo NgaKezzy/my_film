@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ExplorePage extends StatefulWidget {
-  ExplorePage({super.key});
+  const ExplorePage({super.key});
 
   @override
   State<ExplorePage> createState() => _ExplorePageState();
@@ -29,7 +29,7 @@ class _ExplorePageState extends State<ExplorePage> {
             (index) => Container(
               alignment: Alignment.center,
               height: 50,
-              margin: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               color: index.isOdd ? Colors.green : Colors.red,
               key: Key('$index'),
               child: Text(items[index]),

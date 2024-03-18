@@ -1,4 +1,4 @@
-import 'package:app/feature/home/models/movie_details.dart';
+import 'package:app/feature/home/models/data_film.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
@@ -12,16 +12,16 @@ class MovieState extends Equatable {
   const MovieState({
     this.movies = const [],
     this.status = MovieStatus.init,
-    this.movieDetails = const [],
+    this.dataFilm,
   });
   final List<MovieInformation> movies;
   final MovieStatus status;
-  final List<MovieDetails> movieDetails;
+  final DataFilm? dataFilm;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         movies,
-        movieDetails,
+        dataFilm,
         status,
       ];
 }

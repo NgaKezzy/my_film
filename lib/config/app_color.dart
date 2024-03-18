@@ -12,7 +12,7 @@ class AppColors {
   static const Color pink = Colors.pink;
   static const Color pink_F4E4FA = Color(0xFFF4E4FA);
   static const Color white = Color(0xFFFFFFFF);
-  static const Color white_fff = Color(0xFFFFF);
+  static const Color white_fff = Color(0x000fffff);
 
   static const Color white_F5F5F6 = Color(0xFFF5F5F6);
   static const Color white_F4F7FA = Color(0xFFF4F7FA);

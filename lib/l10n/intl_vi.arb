@@ -11,7 +11,16 @@
     "networkConnectionRestored":"Đã khôi phục kết nối mạng!",
     "setting":"Cài đặt",
     "darkMode": "Chế độ ban đêm",
-    "language": "Ngôn ngữ"
+    "language": "Ngôn ngữ",
+    "movieUpdate": "Phim đang được cập nhật ...",
+    "film":"Phim: ",
+    "actor":"Diễn viên: ",
+    "category":"Thể loại",
+    "episode":"Tập: ",
+    "content":"Nội dung: "
+
+
+
 
 
 }

@@ -3,14 +3,14 @@ part 'server_data.g.dart';
 
 @JsonSerializable()
 class ServerData {
-  final String server_data;
+  final String name;
   final String slug;
   final String filename;
   final String link_embed;
   final String link_m3u8;
 
   ServerData(
-      {required this.server_data,
+      {required this.name,
       required this.slug,
       required this.filename,
       required this.link_embed,

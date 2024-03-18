@@ -1,21 +1,18 @@
 import 'dart:async';
-
 import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/widgets/item_film_horizontally.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
-
 import 'widgets/item_grid_film.dart';
 import 'widgets/item_slider_image.dart';
 import 'watch_a_movie.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -63,74 +60,70 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: BlocBuilder<MovieCubit, MovieState>(
-            builder: (context, state) {
-              return CustomScrollView(
-                slivers: [
-                  state.movies.isNotEmpty
-                      ? SliverToBoxAdapter(
-                          child: CarouselSlider(
-                            carouselController: carouselController,
-                            options: CarouselOptions(
-                              height: height * 0.5,
-                              viewportFraction: 1.0,
-                              autoPlay: true,
-                            ),
-                            items: List.generate(
-                                5,
-                                (index) => ItemSliderImage(
-                                      imageUrl: state.movies[index].thumb_url,
-                                      onTap: () {
-                                        _timer.cancel();
-                                        Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            type:
-                                                PageTransitionType.rightToLeft,
-                                            child: WatchAMovie(
-                                                movieInformation:
-                                                    state.movies[index]),
-                                          ),
-                                        );
-                                      },
-                                    )),
+        child: BlocBuilder<MovieCubit, MovieState>(
+          builder: (context, state) {
+            return CustomScrollView(
+              slivers: [
+                state.movies.isNotEmpty
+                    ? SliverToBoxAdapter(
+                        child: CarouselSlider(
+                          carouselController: carouselController,
+                          options: CarouselOptions(
+                            height: height * 0.5,
+                            viewportFraction: 1.0,
+                            autoPlay: true,
                           ),
-                        )
-                      : const SliverToBoxAdapter(child: SizedBox()),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(height: 30),
-                  ),
-                  ItemGridFilm(itemsFilm: items),
-                  const SliverToBoxAdapter(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Phim thịnh hành',
-                        style: TextStyle(fontSize: AppSize.size20),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  )),
-                  ItemFilmHorizontally(itemsFilm: items),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(height: 30),
-                  ),
-                  ItemGridFilm(itemsFilm: items),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(height: 30),
-                  ),
-                ],
-              );
-            },
-          ),
+                          items: List.generate(
+                              10,
+                              (index) => ItemSliderImage(
+                                    imageUrl: state.movies[index].poster_url,
+                                    onTap: () {
+                                      _timer.cancel();
+                                      Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          type: PageTransitionType.rightToLeft,
+                                          child: WatchAMovie(
+                                              movieInformation:
+                                                  state.movies[index]),
+                                        ),
+                                      );
+                                    },
+                                  )),
+                        ),
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox()),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 30),
+                ),
+                ItemGridFilm(itemsFilm: items),
+                const SliverToBoxAdapter(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Phim thịnh hành',
+                      style: TextStyle(fontSize: AppSize.size20),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                )),
+                ItemFilmHorizontally(itemsFilm: items),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 30),
+                ),
+                ItemGridFilm(itemsFilm: items),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 30),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
