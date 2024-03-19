@@ -16,7 +16,7 @@ class ItemGridFilm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       sliver: SliverGrid.builder(
         itemCount: 9,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

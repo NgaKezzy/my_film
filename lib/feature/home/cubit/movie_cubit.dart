@@ -83,4 +83,22 @@ class MovieCubit extends Cubit<MovieState> {
       status: MovieStatus.success,
     ));
   }
+
+  Future<void> getTheListOfMoviesAndSeries() async {
+    emit(state.copyWith(status: MovieStatus.loading));
+    List<MovieInformation> newSeriesMovies = [];
+
+    final data = await FetchApiMovie.getTheListOfMoviesAndSeries();
+
+    List items = data['data']['items'];
+    for (var i = 0; i < items.length; i++) {
+      final MovieInformation item;
+      item = MovieInformation.fromJson(items[i]);
+      newSeriesMovies.add(item);
+    }
+    emit(state.copyWith(
+      seriesMovies: newSeriesMovies,
+      status: MovieStatus.success,
+    ));
+  }
 }

@@ -80,8 +80,7 @@ class FetchApiMovie {
   }
 
   static Future<Map<String, dynamic>> getAListOfIndividualMovies() async {
-    var uri = Uri.https(
-        KeyApp.baseUrl, '/v1/api/danh-sach/phim-le');
+    var uri = Uri.https(KeyApp.baseUrl, '/v1/api/danh-sach/phim-le');
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
@@ -115,4 +114,38 @@ class FetchApiMovie {
     return result;
   }
 
+  static Future<Map<String, dynamic>> getTheListOfMoviesAndSeries() async {
+    var uri = Uri.https(KeyApp.baseUrl,'/v1/api/danh-sach/phim-bo');
+    Map<String, dynamic> result = {};
+    try {
+      final response = await http.get(uri);
+
+      switch (response.statusCode) {
+        case 200:
+          var data = jsonDecode(response.body);
+          result = data;
+          break;
+        case 400:
+          var data = jsonDecode(response.body);
+          result = data;
+          break;
+        case 401:
+          var data = jsonDecode(response.body);
+          result = data;
+          break;
+        case 404:
+          var data = jsonDecode(response.body);
+          result = data;
+          break;
+        default:
+          var data = jsonDecode(response.body);
+          result = data;
+      }
+
+      return result;
+    } catch (e) {
+      printRed(e.toString());
+    }
+    return result;
+  }
 }

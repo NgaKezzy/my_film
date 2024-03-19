@@ -1,5 +1,6 @@
 import 'package:app/component/loading_widget.dart';
 import 'package:app/config/app_size.dart';
+import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/models/data_film.dart';
 import 'package:app/feature/home/models/movie_category.dart';
 import 'package:app/feature/home/models/movie_episodes.dart';
@@ -100,7 +101,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   const SizedBox(
                     height: 10,
                   ),
-                  widget.dataFilm!.episodes.length == 1
+                  widget.dataFilm!.episodes[0].server_data.length == 1
                       ? const SizedBox()
                       : EpisodeNumberOfTheMovie(
                           items: widget.dataFilm!.episodes,
@@ -157,7 +158,7 @@ class EpisodeNumberOfTheMovie extends StatelessWidget {
           runSpacing: 8.0, // Khoảng cách giữa các dòng
           alignment: WrapAlignment.center, // Căn giữa theo chiều ngang
           children: List.generate(
-            items.length,
+            items[0].server_data.length,
             (index) => InkWell(
               onTap: () {
                 onTap.call();
