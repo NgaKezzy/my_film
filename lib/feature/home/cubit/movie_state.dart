@@ -13,12 +13,14 @@ class MovieState extends Equatable {
     this.movies = const [],
     this.singleMovies = const [],
     this.seriesMovies = const [],
+    this.cartoon = const [],
     this.status = MovieStatus.init,
     this.dataFilm,
   });
   final List<MovieInformation> movies;
   final List<MovieInformation> singleMovies;
   final List<MovieInformation> seriesMovies;
+  final List<MovieInformation> cartoon;
   final MovieStatus status;
   final DataFilm? dataFilm;
 
@@ -27,6 +29,7 @@ class MovieState extends Equatable {
         movies,
         singleMovies,
         seriesMovies,
+        cartoon,
         dataFilm,
         status,
       ];
