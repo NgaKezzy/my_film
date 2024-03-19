@@ -1,11 +1,15 @@
+import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/models/data_film.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/network/fetch_api_movie.dart';
 import 'package:bloc/bloc.dart';
+import 'package:translator/translator.dart';
 
 class MovieCubit extends Cubit<MovieState> {
   MovieCubit() : super(const MovieState());
+
+  final translator = GoogleTranslator();
 
   Future<void> getMovie() async {
     emit(state.copyWith(status: MovieStatus.loading));
@@ -25,22 +29,38 @@ class MovieCubit extends Cubit<MovieState> {
     ));
   }
 
-  Future<void> getMovieDetails(String slug) async {
+  Future<void> getMovieDetails(String slug, String languageCode) async {
     emit(state.copyWith(status: MovieStatus.loading));
-    final DataFilm newDataFilm;
+    DataFilm? newDataFilm;
 
     try {
       final data = await FetchApiMovie.getMovieDetails(slug);
+
       newDataFilm = DataFilm.fromJson(data);
 
-      emit(state.copyWith(
-        dataFilm: newDataFilm,
-        status: MovieStatus.success,
-      ));
+      if (languageCode == 'en') { // nếu là tiếng anh thì dịch nội dung phim
+        newDataFilm.movie.content = await translate(newDataFilm.movie.content);
+
+        for (var i = 0; i < newDataFilm.movie.category.length; i++) {
+          newDataFilm.movie.category[i].name =
+              await translate(newDataFilm.movie.category[i].name);
+        }
+      }
     } catch (e) {
       print("error: $e");
     }
+    printGreen(newDataFilm!.movie.content);
+    emit(state.copyWith(
+      dataFilm: newDataFilm,
+      status: MovieStatus.success,
+    ));
+  }
 
-    emit(state.copyWith(status: MovieStatus.success));
+  Future<String> translate(String content) async {
+    String newContent = '';
+    await translator.translate(content, to: 'en').then((value) => {
+          newContent = value.toString(),
+        });
+    return newContent;
   }
 }

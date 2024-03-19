@@ -89,13 +89,13 @@ class _SplashScreenState extends State<SplashScreen> {
               child: SvgPicture.asset(
                 'assets/icons/icon_app.svg',
                 height: 130,
-                color: Color(0xFFabc066),
+                color: const Color(0xFFabc066),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text(
+            const Text(
               'My Film',
               style: TextStyle(
                 letterSpacing: 0.5,

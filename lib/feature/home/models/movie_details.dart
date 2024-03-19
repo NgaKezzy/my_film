@@ -5,17 +5,21 @@ part 'movie_details.g.dart';
 
 @JsonSerializable()
 class MovieDetails {
-  final String content;
+  String content;
+  final String name;
+  final String origin_name;
   final String poster_url;
   final String thumb_url;
   final String trailer_url;
   final String time;
   final int year;
   final List<String> actor;
-  final List<MovieCategory> category;
+  List<MovieCategory> category;
   final List<MovieCategory> country;
 
   MovieDetails({
+    this.name = '',
+    this.origin_name = '',
     this.content = '',
     this.poster_url = '',
     this.thumb_url = '',

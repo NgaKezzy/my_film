@@ -4,7 +4,7 @@ part 'movie_category.g.dart';
 @JsonSerializable()
 class MovieCategory {
   final String id;
-  final String name;
+  String name;
   final String slug;
 
   MovieCategory({required this.id, required this.name, required this.slug});
