@@ -19,20 +19,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> items = [
-    'https://img.phimapi.com/upload/vod/20240310-1/d3cf47550315de51adf340b68af8cae6.jpg',
-    'https://img.phimapi.com/upload/vod/20240310-1/33e3f4325c95396f28ab762fbeff5d20.jpg',
-    'https://img.phimapi.com/upload/vod/20240311-1/e9007462ef67483e58bef1b8e03b8d3e.jpg',
-    'https://img.phimapi.com/upload/vod/20240310-1/66888488d881d52832849e9b78a15618.jpg',
-    'https://img.phimapi.com/upload/vod/20240310-1/54ba0039692b13292120265ce201f33c.jpg',
-    'https://img.phimapi.com/upload/vod/20240310-1/a2140d6775ee98b84e208ef1172e38db.jpg'
-  ];
   final CarouselController carouselController = CarouselController();
   late Timer _timer;
   late MovieCubit movieCubit;
   @override
   void initState() {
     movieCubit = context.read<MovieCubit>();
+    movieCubit.getAListOfIndividualMovies();
     movieCubit.getMovie().then((value) => {
           if (movieCubit.state.movies.isNotEmpty)
             {
@@ -84,8 +77,9 @@ class _HomePageState extends State<HomePage> {
                                         PageTransition(
                                           type: PageTransitionType.rightToLeft,
                                           child: WatchAMovie(
-                                              movieInformation:
-                                                  state.movies[index]),
+                                            
+                                            slug: state.movies[index].slug,
+                                          ),
                                         ),
                                       );
                                     },
@@ -96,28 +90,39 @@ class _HomePageState extends State<HomePage> {
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 30),
                 ),
-                ItemGridFilm(itemsFilm: items),
-                const SliverToBoxAdapter(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Phim thịnh hành',
-                      style: TextStyle(fontSize: AppSize.size20),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                )),
-                ItemFilmHorizontally(itemsFilm: items),
+                ItemGridFilm(
+                  itemsFilm: state.singleMovies,
+                  onTap: () {
+                    _timer.cancel();
+                   
+               
+                  
+                  },
+                ),
+                // const SliverToBoxAdapter(
+                //     child: Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     SizedBox(
+                //       height: 20,
+                //     ),
+                //     Text(
+                //       'Phim thịnh hành',
+                //       style: TextStyle(fontSize: AppSize.size20),
+                //     ),
+                //     SizedBox(
+                //       height: 20,
+                //     ),
+                //   ],
+                // )),
+                // ItemFilmHorizontally(itemsFilm: items),
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 30),
                 ),
-                ItemGridFilm(itemsFilm: items),
+                ItemGridFilm(
+                  itemsFilm: state.singleMovies,
+                  onTap: () {},
+                ),
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 30),
                 ),

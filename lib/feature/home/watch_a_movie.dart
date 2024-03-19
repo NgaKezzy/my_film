@@ -12,8 +12,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
 
 class WatchAMovie extends StatefulWidget {
-  const WatchAMovie({super.key, required this.movieInformation});
-  final MovieInformation movieInformation;
+  const WatchAMovie({super.key, required this.slug});
+  final String slug;
 
   @override
   State<WatchAMovie> createState() => _WatchAMovieState();
@@ -25,9 +25,6 @@ class _WatchAMovieState extends State<WatchAMovie> {
 
   bool isLoading = true;
   String linkPlay = '';
-  List<String> actors = [];
-  String content = '';
-  String languageCode = '';
 
   @override
   void initState() {
@@ -36,8 +33,7 @@ class _WatchAMovieState extends State<WatchAMovie> {
     localeCubit = context.read<LocaleCubit>();
 
     movieCubit
-        .getMovieDetails(
-            widget.movieInformation.slug, localeCubit.state.languageCode)
+        .getMovieDetails(widget.slug, localeCubit.state.languageCode)
         .then((value) => {
               // actors = movieCubit.state.dataFilm!.movie.actor,
               isLoading = false,

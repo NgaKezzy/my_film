@@ -11,16 +11,19 @@ enum MovieStatus { init, loading, success, error }
 class MovieState extends Equatable {
   const MovieState({
     this.movies = const [],
+    this.singleMovies = const [],
     this.status = MovieStatus.init,
     this.dataFilm,
   });
   final List<MovieInformation> movies;
+  final List<MovieInformation> singleMovies;
   final MovieStatus status;
   final DataFilm? dataFilm;
 
   @override
   List<Object?> get props => [
         movies,
+        singleMovies,
         dataFilm,
         status,
       ];

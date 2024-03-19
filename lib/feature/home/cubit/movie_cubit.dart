@@ -38,7 +38,8 @@ class MovieCubit extends Cubit<MovieState> {
 
       newDataFilm = DataFilm.fromJson(data);
 
-      if (languageCode == 'en') { // nếu là tiếng anh thì dịch nội dung phim
+      if (languageCode == 'en') {
+        // nếu là tiếng anh thì dịch nội dung phim
         newDataFilm.movie.content = await translate(newDataFilm.movie.content);
 
         for (var i = 0; i < newDataFilm.movie.category.length; i++) {
@@ -57,10 +58,29 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<String> translate(String content) async {
+    // hàm để dịch sang tiếng anh
     String newContent = '';
     await translator.translate(content, to: 'en').then((value) => {
           newContent = value.toString(),
         });
     return newContent;
+  }
+
+  Future<void> getAListOfIndividualMovies() async {
+    emit(state.copyWith(status: MovieStatus.loading));
+    List<MovieInformation> newSingleMovie = [];
+
+    final data = await FetchApiMovie.getAListOfIndividualMovies();
+
+    List items = data['data']['items'];
+    for (var i = 0; i < items.length; i++) {
+      final MovieInformation item;
+      item = MovieInformation.fromJson(items[i]);
+      newSingleMovie.add(item);
+    }
+    emit(state.copyWith(
+      singleMovies: newSingleMovie,
+      status: MovieStatus.success,
+    ));
   }
 }
