@@ -35,13 +35,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     );
   }
 
-  void playNewVideo() {
-    setState(() {
-      flickManager.handleChangeVideo(VideoPlayerController.networkUrl(
-          Uri.parse("https://s2.phim1280.tv/20240302/ehRMDzoh/index.m3u8")));
-    });
-  }
-
   @override
   void dispose() {
     flickManager.dispose();
@@ -104,25 +97,23 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   widget.dataFilm!.episodes[0].server_data.length == 1
                       ? const SizedBox()
                       : EpisodeNumberOfTheMovie(
+                          flickManager: flickManager,
                           items: widget.dataFilm!.episodes,
-                          onTap: () {
-                            playNewVideo();
-                          },
                         ),
                   const SizedBox(
                     height: 10,
                   ),
-                  titleAndContent(
+                  TitleAndContent(
                       title: AppLocalizations.of(context)!.content,
                       content: widget.dataFilm!.movie.content),
                   const SizedBox(
                     height: 10,
                   ),
-                  contentActor(items: widget.dataFilm?.movie.actor ?? []),
+                  ContentActor(items: widget.dataFilm?.movie.actor ?? []),
                   const SizedBox(
                     height: 10,
                   ),
-                  contentCategory(items: widget.dataFilm!.movie.category),
+                  ContentCategory(items: widget.dataFilm!.movie.category),
                 ],
               ),
             ),
@@ -133,12 +124,27 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   }
 }
 
-class EpisodeNumberOfTheMovie extends StatelessWidget {
+class EpisodeNumberOfTheMovie extends StatefulWidget {
   const EpisodeNumberOfTheMovie(
-      {super.key, required this.items, required this.onTap});
+      {super.key, required this.items, required this.flickManager});
 
   final List<MovieEpisodes> items;
-  final VoidCallback onTap;
+  final FlickManager flickManager;
+
+  @override
+  State<EpisodeNumberOfTheMovie> createState() =>
+      _EpisodeNumberOfTheMovieState();
+}
+
+class _EpisodeNumberOfTheMovieState extends State<EpisodeNumberOfTheMovie> {
+  int indexSelected = 0;
+
+  void playNewVideo(FlickManager flickManager, String url) {
+    setState(() {
+      flickManager
+          .handleChangeVideo(VideoPlayerController.networkUrl(Uri.parse(url)));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,10 +164,15 @@ class EpisodeNumberOfTheMovie extends StatelessWidget {
           runSpacing: 8.0, // Khoảng cách giữa các dòng
           alignment: WrapAlignment.center, // Căn giữa theo chiều ngang
           children: List.generate(
-            items[0].server_data.length,
+            widget.items[0].server_data.length,
             (index) => InkWell(
               onTap: () {
-                onTap.call();
+                setState(() {
+                  indexSelected = index;
+                  print(indexSelected);
+                });
+                playNewVideo(widget.flickManager,
+                    widget.items[0].server_data[index].link_m3u8);
               },
               child: Container(
                 alignment: Alignment.center,
@@ -169,7 +180,7 @@ class EpisodeNumberOfTheMovie extends StatelessWidget {
                 height: 45,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: Colors.blue,
+                  color: indexSelected == index ? Colors.pink : Colors.grey,
                 ),
                 child: Text('${index + 1}'),
               ),
@@ -182,8 +193,8 @@ class EpisodeNumberOfTheMovie extends StatelessWidget {
 }
 
 // ignore: camel_case_types
-class contentActor extends StatelessWidget {
-  const contentActor({super.key, required this.items});
+class ContentActor extends StatelessWidget {
+  const ContentActor({super.key, required this.items});
 
   final List<String> items;
 
@@ -208,7 +219,7 @@ class contentActor extends StatelessWidget {
               items.length,
               (index) => Container(
                   alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  width: handleWidthActor(items, context),
                   child: Text(items[index]))),
         )
       ],
@@ -217,8 +228,8 @@ class contentActor extends StatelessWidget {
 }
 
 // ignore: camel_case_types
-class contentCategory extends StatelessWidget {
-  const contentCategory({super.key, required this.items});
+class ContentCategory extends StatelessWidget {
+  const ContentCategory({super.key, required this.items});
 
   final List<MovieCategory> items;
 
@@ -243,7 +254,7 @@ class contentCategory extends StatelessWidget {
               items.length,
               (index) => Container(
                   alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * 0.3,
+                  width: handleWidthCategory(items, context),
                   child: Text(items[index].name))),
         )
       ],
@@ -251,9 +262,8 @@ class contentCategory extends StatelessWidget {
   }
 }
 
-// ignore: camel_case_types
-class titleAndContent extends StatelessWidget {
-  const titleAndContent({super.key, this.title = '', this.content = ''});
+class TitleAndContent extends StatelessWidget {
+  const TitleAndContent({super.key, this.title = '', this.content = ''});
   final String title;
   final String content;
 
@@ -280,4 +290,26 @@ class titleAndContent extends StatelessWidget {
       ),
     );
   }
+}
+
+double handleWidthCategory(List items, BuildContext context) {
+  double width = 0;
+  if (items.length == 1) {
+    width = MediaQuery.of(context).size.width - 20;
+  } else if (items.length == 2) {
+    width = (MediaQuery.of(context).size.width - 20) / 2;
+  } else {
+    width = (MediaQuery.of(context).size.width - 20) * 0.3;
+  }
+  return width;
+}
+
+double handleWidthActor(List items, BuildContext context) {
+  double width = 0;
+  if (items.length == 1) {
+    width = MediaQuery.of(context).size.width - 0.95;
+  } else {
+    width = (MediaQuery.of(context).size.width - 20) * 0.45;
+  }
+  return width;
 }
