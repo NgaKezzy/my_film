@@ -1,7 +1,5 @@
-
-
 ## Getting Started
-chạy cmd : 
-flutter pub get 
-dart run build_runner build
 
+<br>chạy cmd :</br>
+<br> flutter pub get </br>
+<br> dart run build_runner build </br>
