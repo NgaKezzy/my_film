@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 
 class WatchAMovie extends StatefulWidget {
@@ -56,6 +57,14 @@ class _WatchAMovieState extends State<WatchAMovie> {
       builder: (context, state) {
         return WillPopScope(
           onWillPop: () async {
+            Fluttertoast.showToast(
+                msg: AppLocalizations.of(context)!.pressTheButtonToExit,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.grey.withOpacity(0.5),
+                textColor: Colors.white,
+                fontSize: 16.0);
             return false;
           },
           child: Scaffold(

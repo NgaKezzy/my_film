@@ -167,12 +167,14 @@ class _EpisodeNumberOfTheMovieState extends State<EpisodeNumberOfTheMovie> {
             widget.items[0].server_data.length,
             (index) => InkWell(
               onTap: () {
-                setState(() {
-                  indexSelected = index;
-                  print(indexSelected);
-                });
-                playNewVideo(widget.flickManager,
-                    widget.items[0].server_data[index].link_m3u8);
+                if (indexSelected != index) {
+                  setState(() {
+                    indexSelected = index;
+                    print(indexSelected);
+                  });
+                  playNewVideo(widget.flickManager,
+                      widget.items[0].server_data[index].link_m3u8);
+                }
               },
               child: Container(
                 alignment: Alignment.center,
@@ -297,7 +299,7 @@ double handleWidthCategory(List items, BuildContext context) {
   if (items.length == 1) {
     width = MediaQuery.of(context).size.width - 20;
   } else if (items.length == 2) {
-    width = (MediaQuery.of(context).size.width - 20) / 2;
+    width = (MediaQuery.of(context).size.width - 20) * 0.45;
   } else {
     width = (MediaQuery.of(context).size.width - 20) * 0.3;
   }

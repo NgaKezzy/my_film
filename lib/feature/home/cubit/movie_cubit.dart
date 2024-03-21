@@ -42,6 +42,11 @@ class MovieCubit extends Cubit<MovieState> {
         // nếu là tiếng anh thì dịch nội dung phim
         newDataFilm.movie.content = await translate(newDataFilm.movie.content);
 
+        for (var i = 0; i < newDataFilm.movie.actor.length; i++) {
+          newDataFilm.movie.actor[i] =
+              await translate(newDataFilm.movie.actor[i]);
+        }
+
         for (var i = 0; i < newDataFilm.movie.category.length; i++) {
           newDataFilm.movie.category[i].name =
               await translate(newDataFilm.movie.category[i].name);
