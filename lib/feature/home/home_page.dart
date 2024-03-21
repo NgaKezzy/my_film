@@ -4,13 +4,13 @@ import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/widgets/item_film_horizontally.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:app/feature/home/widgets/item_slider_image.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'widgets/item_grid_film.dart';
-import 'widgets/item_slider_image.dart';
 import 'watch_a_movie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -22,12 +22,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final CarouselController carouselController = CarouselController();
-  late Timer _timer;
   late MovieCubit movieCubit;
   bool isLoading = true;
   @override
   void initState() {
+    super.initState();
+
     movieCubit = context.read<MovieCubit>();
     initialization().then((value) => {
           setState(
@@ -35,16 +35,7 @@ class _HomePageState extends State<HomePage> {
               isLoading = false;
             },
           ),
-          if (movieCubit.state.movies.isNotEmpty)
-            {
-              _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
-                carouselController.nextPage(
-                    duration: const Duration(milliseconds: 400),
-                    curve: Curves.linear);
-              })
-            },
         });
-    super.initState();
   }
 
   Future<void> initialization() async {
@@ -78,34 +69,33 @@ class _HomePageState extends State<HomePage> {
                     slivers: [
                       state.movies.isNotEmpty
                           ? SliverToBoxAdapter(
-                              child: CarouselSlider(
-                                carouselController: carouselController,
-                                options: CarouselOptions(
-                                  height: height * 0.5,
-                                  viewportFraction: 1.0,
-                                  autoPlay: true,
-                                ),
-                                items: List.generate(
-                                    10,
-                                    (index) => ItemSliderImage(
-                                          imageUrl:
-                                              state.movies[index].poster_url,
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType
-                                                    .rightToLeft,
-                                                child: WatchAMovie(
-                                                  slug:
-                                                      state.movies[index].slug,
-                                                ),
+                              child: SizedBox(
+                                  height: height * 0.35,
+                                  width: width,
+                                  child: Swiper(
+                                    autoplay: true,
+                                    autoplayDelay: 3000,
+                                    itemCount: state.movies.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return ItemSliderImage(
+                                        imageUrl:
+                                            state.movies[index].poster_url,
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            PageTransition(
+                                              type: PageTransitionType
+                                                  .rightToLeft,
+                                              child: WatchAMovie(
+                                                slug: state.movies[index].slug,
                                               ),
-                                            );
-                                          },
-                                        )),
-                              ),
-                            )
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  )))
                           : const SliverToBoxAdapter(),
                       const SliverToBoxAdapter(
                         child: SizedBox(height: 30),

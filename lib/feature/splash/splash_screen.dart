@@ -18,61 +18,19 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   late LocaleCubit localeCubit;
-  late HomePageCubit homePageCubit;
-
-  void checkStatusNetwork() {
-    homePageCubit.checkNetwork().then(
-          (value) => {
-            if (homePageCubit.state.isConnectNetwork == false)
-              {
-                if (isFirstCheck)
-                  {
-                    showSnackBar(
-                        color: Colors.white,
-                        messenger:
-                            AppLocalizations.of(context)!.noNetworkConnection,
-                        context: context),
-                    setState(
-                      () {
-                        isFirstCheck = false;
-                      },
-                    )
-                  },
-                Future.delayed(const Duration(seconds: 1), () {
-                  checkStatusNetwork();
-                }),
-              }
-            else
-              {
-                Timer(const Duration(seconds: 2), () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyHomeApp(),
-                      ));
-                }),
-                if (isFirstCheck == false)
-                  {
-                    showSnackBar(
-                        color: Colors.green,
-                        messenger: AppLocalizations.of(context)!
-                            .networkConnectionRestored,
-                        context: context)
-                  }
-              }
-          },
-        );
-  }
 
   @override
   void initState() {
+    super.initState();
     localeCubit = context.read<LocaleCubit>();
     localeCubit.checkIsSelectedLanguage();
-    homePageCubit = context.read<HomePageCubit>();
-    if (isFirstCheck) {
-      checkStatusNetwork();
-    }
-    super.initState();
+    Timer(const Duration(seconds: 3), () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MyHomeApp(),
+          ));
+    });
   }
 
   @override
@@ -110,18 +68,4 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-showSnackBar(
-    {required String messenger,
-    required BuildContext context,
-    required Color color}) {
-  SnackBar snackBar = SnackBar(
-    behavior: SnackBarBehavior.floating,
-    content: Text(
-      messenger,
-      style: TextStyle(color: color),
-    ),
-    backgroundColor: Theme.of(context).colorScheme.outline,
-    duration: const Duration(seconds: 3),
-  );
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-}
+

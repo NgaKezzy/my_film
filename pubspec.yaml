@@ -46,7 +46,6 @@ dependencies:
   flutter_localization: ^0.2.0
   cached_network_image: ^3.2.3
   connectivity_plus: ^5.0.2
-  carousel_slider: ^4.2.1
   flutter_staggered_animations: ^1.1.1
   loading_animation_widget: ^1.2.1
   page_transition: ^2.1.0
@@ -55,6 +54,7 @@ dependencies:
   http: ^1.2.0
   translator: ^1.0.0
   fluttertoast: ^8.2.4
+  card_swiper: ^3.0.1
 
 dev_dependencies:
   flutter_test:
