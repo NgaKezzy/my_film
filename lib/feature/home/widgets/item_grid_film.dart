@@ -1,4 +1,3 @@
-import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';

@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:app/my_home_app.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:app/feature/home/cubit/home_page_cubit.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

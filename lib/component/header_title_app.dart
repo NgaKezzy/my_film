@@ -18,6 +18,7 @@ class HeaderTitleApp extends StatelessWidget implements PreferredSizeWidget {
               onPressed: () {},
               icon: SvgPicture.asset(
                 'assets/icons/chevron_left.svg',
+                // ignore: deprecated_member_use
                 color: theme.colorScheme.tertiary,
               )),
           Text(

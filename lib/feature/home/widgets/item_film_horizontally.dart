@@ -1,4 +1,3 @@
-import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
@@ -17,8 +16,7 @@ class ItemFilmHorizontally extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
+   
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(left: 10),

@@ -1,6 +1,5 @@
 import 'package:app/component/loading_widget.dart';
 import 'package:app/config/app_size.dart';
-import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/models/data_film.dart';
 import 'package:app/feature/home/models/movie_category.dart';
 import 'package:app/feature/home/models/movie_episodes.dart';
@@ -53,7 +52,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           child: FlickVideoPlayer(
             flickManager: flickManager,
             flickVideoWithControls: FlickVideoWithControls(
-              videoFit: BoxFit.cover,
+              videoFit: BoxFit.fill,
               controls: FlickPortraitControls(
                 progressBarSettings: FlickProgressBarSettings(
                   playedColor: Colors.blue,

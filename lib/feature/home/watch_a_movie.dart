@@ -1,7 +1,6 @@
 import 'package:app/component/loading_widget.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
-import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/widgets/video_player_widget.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:app/my_home_app.dart';
@@ -55,6 +54,7 @@ class _WatchAMovieState extends State<WatchAMovie> {
   Widget build(BuildContext context) {
     return BlocBuilder<MovieCubit, MovieState>(
       builder: (context, state) {
+        // ignore: deprecated_member_use
         return WillPopScope(
           onWillPop: () async {
             Fluttertoast.showToast(
@@ -63,7 +63,7 @@ class _WatchAMovieState extends State<WatchAMovie> {
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.grey.withOpacity(0.5),
-                textColor: Colors.white,
+                textColor: Colors.green,
                 fontSize: 16.0);
             return false;
           },
