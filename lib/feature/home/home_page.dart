@@ -8,17 +8,19 @@ import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/widgets/item_film_horizontally.dart';
 import 'package:app/feature/home/widgets/item_slider_image.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'widgets/item_grid_film.dart';
 import 'watch_a_movie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({
+    super.key,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -90,88 +92,80 @@ class _HomePageState extends State<HomePage> {
                   ? const Center(
                       child: LoadingWidget(),
                     )
-                  : SafeArea(
-                      child: BlocBuilder<MovieCubit, MovieState>(
-                        builder: (context, state) {
-                          return CustomScrollView(
-                            slivers: [
-                              state.movies.isNotEmpty
-                                  ? SliverToBoxAdapter(
-                                      child: SizedBox(
-                                          height: height * 0.35,
-                                          width: width,
-                                          child: Swiper(
-                                            autoplay: true,
-                                            autoplayDelay: 3000,
-                                            itemCount: state.movies.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              return ItemSliderImage(
-                                                imageUrl: state
-                                                    .movies[index].poster_url,
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    PageTransition(
-                                                      type: PageTransitionType
-                                                          .rightToLeft,
-                                                      child: WatchAMovie(
-                                                        slug: state
-                                                            .movies[index].slug,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                          )))
-                                  : const SliverToBoxAdapter(),
-                              const SliverToBoxAdapter(
-                                child: SizedBox(height: 30),
-                              ),
-                              state.singleMovies.isEmpty
-                                  ? const SliverToBoxAdapter()
-                                  : TitleAndChevronRight(
-                                      title: app!.singleMovie,
-                                      color: theme.colorScheme.tertiary),
-                              state.singleMovies.isEmpty
-                                  ? const SliverToBoxAdapter()
-                                  : ItemGridFilm(
-                                      itemsFilm: state.singleMovies,
-                                    ),
-                              const SliverToBoxAdapter(
-                                child: SizedBox(height: 30),
-                              ),
-                              state.cartoon.isEmpty
-                                  ? const SliverToBoxAdapter()
-                                  : TitleAndChevronRight(
-                                      title: app!.cartoon,
-                                      color: theme.colorScheme.tertiary),
-                              state.cartoon.isEmpty
-                                  ? const SliverToBoxAdapter()
-                                  : ItemFilmHorizontally(
-                                      itemsFilm: state.cartoon,
-                                    ),
-                              const SliverToBoxAdapter(
-                                child: SizedBox(height: 30),
-                              ),
-                              state.seriesMovies.isEmpty
-                                  ? const SliverToBoxAdapter()
-                                  : TitleAndChevronRight(
-                                      title: app!.seriesMovie,
-                                      color: theme.colorScheme.tertiary),
-                              state.seriesMovies.isEmpty
-                                  ? const SliverToBoxAdapter()
-                                  : ItemGridFilm(
-                                      itemsFilm: state.seriesMovies,
-                                    ),
-                              const SliverToBoxAdapter(
-                                child: SizedBox(height: 30),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
+                  : BlocBuilder<MovieCubit, MovieState>(
+                      builder: (context, state) {
+                        return CustomScrollView(
+                          slivers: [
+                            state.movies.isNotEmpty
+                                ? SliverToBoxAdapter(
+                                    child: SizedBox(
+                                        height: height * 0.35,
+                                        width: width,
+                                        child: Swiper(
+                                          autoplay: true,
+                                          autoplayDelay: 3000,
+                                          itemCount: state.movies.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return ItemSliderImage(
+                                              imageUrl: state
+                                                  .movies[index].poster_url,
+                                              onTap: () {
+                                                context.goNamed('watchAMovie',
+                                                    queryParameters: {
+                                                      'slug': state
+                                                          .movies[index].slug
+                                                    });
+                                              },
+                                            );
+                                          },
+                                        )))
+                                : const SliverToBoxAdapter(),
+                            const SliverToBoxAdapter(
+                              child: SizedBox(height: 30),
+                            ),
+                            state.singleMovies.isEmpty
+                                ? const SliverToBoxAdapter()
+                                : TitleAndChevronRight(
+                                    title: app!.singleMovie,
+                                    color: theme.colorScheme.tertiary),
+                            state.singleMovies.isEmpty
+                                ? const SliverToBoxAdapter()
+                                : ItemGridFilm(
+                                    itemsFilm: state.singleMovies,
+                                  ),
+                            const SliverToBoxAdapter(
+                              child: SizedBox(height: 30),
+                            ),
+                            state.cartoon.isEmpty
+                                ? const SliverToBoxAdapter()
+                                : TitleAndChevronRight(
+                                    title: app!.cartoon,
+                                    color: theme.colorScheme.tertiary),
+                            state.cartoon.isEmpty
+                                ? const SliverToBoxAdapter()
+                                : ItemFilmHorizontally(
+                                    itemsFilm: state.cartoon,
+                                  ),
+                            const SliverToBoxAdapter(
+                              child: SizedBox(height: 30),
+                            ),
+                            state.seriesMovies.isEmpty
+                                ? const SliverToBoxAdapter()
+                                : TitleAndChevronRight(
+                                    title: app!.seriesMovie,
+                                    color: theme.colorScheme.tertiary),
+                            state.seriesMovies.isEmpty
+                                ? const SliverToBoxAdapter()
+                                : ItemGridFilm(
+                                    itemsFilm: state.seriesMovies,
+                                  ),
+                            const SliverToBoxAdapter(
+                              child: SizedBox(height: 30),
+                            ),
+                          ],
+                        );
+                      },
                     ),
         );
       },

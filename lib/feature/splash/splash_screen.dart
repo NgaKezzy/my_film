@@ -4,6 +4,7 @@ import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 bool isFirstCheck = true;
 
@@ -23,11 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     localeCubit = context.read<LocaleCubit>();
     localeCubit.checkIsSelectedLanguage();
     Timer(const Duration(seconds: 3), () {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MyHomeApp(),
-          ));
+      context.goNamed('home');
     });
   }
 
@@ -65,5 +62,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-
-

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ExplorePage extends StatefulWidget {
-  const ExplorePage({super.key});
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
 
   @override
-  State<ExplorePage> createState() => _ExplorePageState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _ExplorePageState extends State<ExplorePage> {
+class _SearchPageState extends State<SearchPage> {
   final List<String> items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
 
   @override

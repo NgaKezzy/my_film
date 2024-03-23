@@ -4,6 +4,7 @@ import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 
 // ignore: must_be_immutable
@@ -16,7 +17,6 @@ class ItemFilmHorizontally extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(left: 10),
@@ -34,13 +34,8 @@ class ItemFilmHorizontally extends StatelessWidget {
               // Tạo và trả về mục hiển thị trong danh sách
               return InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: WatchAMovie(
-                            slug: itemsFilm[index].slug,
-                          )));
+                  context.goNamed('watchAMovie',
+                      queryParameters: {'slug': itemsFilm[index].slug});
                 },
                 child: Column(
                   children: [

@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 
 class WatchAMovie extends StatefulWidget {
@@ -75,42 +76,29 @@ class _WatchAMovieState extends State<WatchAMovie> {
                 : context.watch<MovieCubit>().state.dataFilm == null
                     ? Center(
                         child: Text(AppLocalizations.of(context)!.movieUpdate))
-                    : SafeArea(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Stack(
-                              children: [
-                                VideoPlayerWidget(
-                                    url: linkPlay, dataFilm: state.dataFilm),
-                                Positioned(
-                                    left: 20,
-                                    top: 20,
-                                    child: InkWell(
-                                      onTap: () {
-                                        Navigator.pushAndRemoveUntil(
-                                          context,
-                                          PageTransition(
-                                            type:
-                                                PageTransitionType.topToBottom,
-                                            duration: const Duration(
-                                                milliseconds: 600),
-                                            child:
-                                                const MyHomeApp(), // Màn hình tiếp theo
-                                          ),
-                                          (route) => false,
-                                        );
-                                      },
-                                      child: SvgPicture.asset(
-                                        'assets/icons/chevron_down.svg',
-                                        color: Colors.red,
-                                        width: 30,
-                                      ),
-                                    ))
-                              ],
-                            ),
-                          ],
-                        ),
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              VideoPlayerWidget(
+                                  url: linkPlay, dataFilm: state.dataFilm),
+                              Positioned(
+                                  left: 20,
+                                  top: 20,
+                                  child: InkWell(
+                                    onTap: () {
+                                      context.goNamed('home');
+                                    },
+                                    child: SvgPicture.asset(
+                                      'assets/icons/chevron_down.svg',
+                                      color: Colors.red,
+                                      width: 30,
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        ],
                       ),
           ),
         );

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'config/print_color.dart';
 import 'feature/download/download_page.dart';
-import 'feature/explore/explore_page.dart';
+import 'feature/search/search_page.dart';
 import 'feature/home/home_page.dart';
 import 'feature/setting/setting_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyHomeApp extends StatefulWidget {
-  const MyHomeApp({super.key});
+  const MyHomeApp({super.key, required this.navigationShell});
+  final StatefulNavigationShell navigationShell;
 
   @override
   State<MyHomeApp> createState() => _MyHomeAppState();
@@ -17,20 +19,18 @@ class MyHomeApp extends StatefulWidget {
 class _MyHomeAppState extends State<MyHomeApp> {
   int pageIndex = 0;
 
-  List<Widget> pageList = <Widget>[
-    const HomePage(),
-    const ExplorePage(),
-    const DownloadPage(),
-    const SettingPage(),
-    // const MeScreen(),
-  ];
+  void _goToBranch(int index) {
+    widget.navigationShell.goBranch(index,
+        initialLocation: index == widget.navigationShell.currentIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        body: pageList[pageIndex],
+        body: widget.navigationShell,
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: theme.colorScheme.background,
           type: BottomNavigationBarType.fixed,
@@ -41,11 +41,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
           unselectedItemColor: theme.colorScheme.tertiary,
           selectedItemColor: theme.colorScheme.onPrimary,
           onTap: (value) {
-            setState(() {
-              pageIndex = value;
-
-              printRed(value.toString());
-            });
+            _goToBranch(value);
           },
           items: [
             BottomNavigationBarItem(

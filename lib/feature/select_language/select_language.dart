@@ -1,5 +1,7 @@
+import 'package:app/routers/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../component/button.dart';
 import '../../component/flag.dart';
 import '../../config/print_color.dart';
@@ -62,7 +64,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
             Button(
               onTap: () {
                 localeCubit.successSetLanguage();
-                Navigator.pop(context);
+                context.pop();
               },
               text: AppLocalizations.of(context)!.ok,
               colorBt: theme.colorScheme.primary,
