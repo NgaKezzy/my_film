@@ -11,13 +11,13 @@ class ThemeCubit extends Cubit<ThemeState> {
 
     emit(state.copyWith(status: ThemeStatus.loading));
     emit(state.copyWith(isDark: !state.isDark, status: ThemeStatus.success));
-    prefs.setBool(KeyApp.isDark, state.isDark);
+    prefs.setBool(KeyApp.IS_DARK, state.isDark);
   }
 
   Future<void> initTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     emit(state.copyWith(status: ThemeStatus.loading));
-    bool value = prefs.getBool(KeyApp.isDark) ?? false;
+    bool value = prefs.getBool(KeyApp.IS_DARK) ?? false;
     emit(state.copyWith(isDark: value, status: ThemeStatus.success));
   }
 }

@@ -12,7 +12,7 @@ class LocaleCubit extends Cubit<LocaleState> {
   Future<void> initLanguage() async {
     emit(state.copyWith(status: LocaleStatus.loading));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String code = prefs.getString(KeyApp.languageCode) ?? 'en';
+    String code = prefs.getString(KeyApp.LANGUAGE_CODE) ?? 'en';
 
     emit(state.copyWith(
         languageCode: code,
@@ -25,7 +25,7 @@ class LocaleCubit extends Cubit<LocaleState> {
   Future<void> setLanguageCode(String code) async {
     emit(state.copyWith(status: LocaleStatus.loading));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(KeyApp.languageCode, code);
+    prefs.setString(KeyApp.LANGUAGE_CODE, code);
     emit(state.copyWith(languageCode: code));
     printYellow('Language: $code');
   }
@@ -34,7 +34,7 @@ class LocaleCubit extends Cubit<LocaleState> {
     emit(state.copyWith(status: LocaleStatus.loading));
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setBool(KeyApp.isSetLanguage, true);
+    prefs.setBool(KeyApp.IS_SET_LANGUAGE, true);
     emit(state.copyWith(isSelectLanguage: true, status: LocaleStatus.success));
   }
 
@@ -42,7 +42,7 @@ class LocaleCubit extends Cubit<LocaleState> {
     emit(state.copyWith(status: LocaleStatus.loading));
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    bool? isSelected = prefs.getBool(KeyApp.isSetLanguage);
+    bool? isSelected = prefs.getBool(KeyApp.IS_SET_LANGUAGE);
     emit(state.copyWith(
         isSelectLanguage: isSelected, status: LocaleStatus.success));
   }

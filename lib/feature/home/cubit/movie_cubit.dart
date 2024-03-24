@@ -30,14 +30,16 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> getMovieDetails(String slug, String languageCode) async {
-    emit(state.copyWith(status: MovieStatus.loading));
     DataFilm? newDataFilm;
+    emit(state.copyWith(status: MovieStatus.loading, dataFilm: newDataFilm));
 
     try {
       final data = await FetchApiMovie.getMovieDetails(slug);
+      if (data['status'] == false) {
+        return;
+      }
 
       newDataFilm = DataFilm.fromJson(data);
-
       if (languageCode == 'en') {
         // nếu là tiếng anh thì dịch nội dung phim
         newDataFilm.movie.content = await translate(newDataFilm.movie.content);
@@ -120,6 +122,24 @@ class MovieCubit extends Cubit<MovieState> {
     }
     emit(state.copyWith(
       cartoon: newCartoons,
+      status: MovieStatus.success,
+    ));
+  }
+
+  Future<void> moviesSearch(String keyWord) async {
+    emit(state.copyWith(status: MovieStatus.loading));
+    List<MovieInformation> newMoviesSearch = [];
+
+    final data = await FetchApiMovie.movieSearch(keyWord);
+
+    List items = data['data']['items'];
+    for (var i = 0; i < items.length; i++) {
+      final MovieInformation item;
+      item = MovieInformation.fromJson(items[i]);
+      newMoviesSearch.add(item);
+    }
+    emit(state.copyWith(
+      moviesSearch: newMoviesSearch,
       status: MovieStatus.success,
     ));
   }

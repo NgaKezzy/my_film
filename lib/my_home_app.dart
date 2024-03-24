@@ -41,6 +41,9 @@ class _MyHomeAppState extends State<MyHomeApp> {
           unselectedItemColor: theme.colorScheme.tertiary,
           selectedItemColor: theme.colorScheme.onPrimary,
           onTap: (value) {
+            setState(() {
+              pageIndex = value;
+            });
             _goToBranch(value);
           },
           items: [
@@ -57,12 +60,12 @@ class _MyHomeAppState extends State<MyHomeApp> {
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/icons/package.svg',
+                'assets/icons/search.svg',
                 color: theme.colorScheme.tertiary,
               ),
-              label: AppLocalizations.of(context)?.explore,
+              label: AppLocalizations.of(context)?.search,
               activeIcon: SvgPicture.asset(
-                'assets/icons/package.svg',
+                'assets/icons/search.svg',
                 color: theme.colorScheme.onPrimary,
               ),
             ),

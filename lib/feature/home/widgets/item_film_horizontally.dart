@@ -62,8 +62,7 @@ class ItemFilmHorizontally extends StatelessWidget {
                       height: 10,
                     ),
                     Container(
-                      // color: Colors.red,
-                      // height: 35,
+                      height: 40,
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
                         context.watch<LocaleCubit>().state.languageCode == 'en'

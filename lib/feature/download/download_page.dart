@@ -13,21 +13,19 @@ int indexSelected = -1;
 class _DownloadPageState extends State<DownloadPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.separated(
-          itemBuilder: (context, index) => itemDownload(
-                onTap: () {
-                  setState(() {
-                    indexSelected = index;
-                  });
-                },
-                isSelected: indexSelected == index,
-              ),
-          separatorBuilder: (context, index) => const SizedBox(
-                height: 10,
-              ),
-          itemCount: items.length),
-    );
+    return ListView.separated(
+        itemBuilder: (context, index) => itemDownload(
+              onTap: () {
+                setState(() {
+                  indexSelected = index;
+                });
+              },
+              isSelected: indexSelected == index,
+            ),
+        separatorBuilder: (context, index) => const SizedBox(
+              height: 10,
+            ),
+        itemCount: items.length);
   }
 }
 

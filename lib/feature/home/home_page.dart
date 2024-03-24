@@ -75,31 +75,29 @@ class _HomePageState extends State<HomePage> {
 
     return BlocBuilder<HomePageCubit, HomePageState>(
       builder: (context, state) {
-        return Scaffold(
-          body: context.read<HomePageCubit>().state.isConnectNetwork == false
-              ? Scaffold(
-                  body: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.wifi_off, size: 80),
-                        Text(AppLocalizations.of(context)!.noNetworkConnection),
-                      ],
-                    ),
-                  ),
-                )
-              : isLoading
-                  ? const Center(
-                      child: LoadingWidget(),
-                    )
-                  : BlocBuilder<MovieCubit, MovieState>(
+        return context.read<HomePageCubit>().state.isConnectNetwork == false
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.wifi_off, size: 80),
+                    Text(AppLocalizations.of(context)!.noNetworkConnection),
+                  ],
+                ),
+              )
+            : isLoading
+                ? const Center(
+                    child: LoadingWidget(),
+                  )
+                : SafeArea(
+                    child: BlocBuilder<MovieCubit, MovieState>(
                       builder: (context, state) {
                         return CustomScrollView(
                           slivers: [
                             state.movies.isNotEmpty
                                 ? SliverToBoxAdapter(
                                     child: SizedBox(
-                                        height: height * 0.35,
+                                        height: height * 0.4,
                                         width: width,
                                         child: Swiper(
                                           autoplay: true,
@@ -167,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                     ),
-        );
+                  );
       },
     );
   }

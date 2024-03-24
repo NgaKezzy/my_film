@@ -38,13 +38,17 @@ class _WatchAMovieState extends State<WatchAMovie> {
         .then((value) => {
               // actors = movieCubit.state.dataFilm!.movie.actor,
               isLoading = false,
-              linkPlay = context
-                  .read<MovieCubit>()
-                  .state
-                  .dataFilm!
-                  .episodes[0]
-                  .server_data[0]
-                  .link_m3u8,
+              if (movieCubit.state.dataFilm != null)
+                {
+                  linkPlay = context
+                      .read<MovieCubit>()
+                      .state
+                      .dataFilm!
+                      .episodes[0]
+                      .server_data[0]
+                      .link_m3u8,
+                },
+
               setState(
                 () {},
               )
@@ -74,31 +78,52 @@ class _WatchAMovieState extends State<WatchAMovie> {
                     child: LoadingWidget(),
                   )
                 : context.watch<MovieCubit>().state.dataFilm == null
-                    ? Center(
-                        child: Text(AppLocalizations.of(context)!.movieUpdate))
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Stack(
-                            children: [
-                              VideoPlayerWidget(
-                                  url: linkPlay, dataFilm: state.dataFilm),
-                              Positioned(
-                                  left: 20,
-                                  top: 20,
-                                  child: InkWell(
-                                    onTap: () {
-                                      context.goNamed('home');
-                                    },
-                                    child: SvgPicture.asset(
-                                      'assets/icons/chevron_down.svg',
-                                      color: Colors.red,
-                                      width: 30,
-                                    ),
-                                  ))
-                            ],
+                          Center(
+                            child:
+                                Text(AppLocalizations.of(context)!.movieUpdate),
                           ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  context.pop();
+                                },
+                                child: Text(AppLocalizations.of(context)!.ok)),
+                          )
                         ],
+                      )
+                    : SafeArea(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Stack(
+                              children: [
+                                VideoPlayerWidget(
+                                    url: linkPlay, dataFilm: state.dataFilm),
+                                Positioned(
+                                    left: 20,
+                                    top: 20,
+                                    child: InkWell(
+                                      onTap: () {
+                                        context.pop();
+                                        FocusScope.of(context).unfocus();
+                                      },
+                                      child: SvgPicture.asset(
+                                        'assets/icons/chevron_down.svg',
+                                        color: Colors.red,
+                                        width: 30,
+                                      ),
+                                    ))
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
           ),
         );

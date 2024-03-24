@@ -63,7 +63,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height - 266,
+          height: MediaQuery.of(context).size.height - 322,
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),

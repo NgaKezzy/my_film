@@ -74,6 +74,18 @@ class AppNavigation {
                 builder: (context, state) => SearchPage(
                   key: state.pageKey,
                 ),
+                routes: [
+                  GoRoute(
+                    name: 'watchAMovieSearch',
+                    path: 'watchAMovieSearch',
+                    builder: (context, state) {
+                      return WatchAMovie(
+                        key: state.pageKey,
+                        slug: state.uri.queryParameters['slug']!,
+                      );
+                    },
+                  )
+                ],
               ),
             ],
           ),

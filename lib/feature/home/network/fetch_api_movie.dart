@@ -7,8 +7,8 @@ class FetchApiMovie {
   FetchApiMovie._();
 
   static Future<Map<String, dynamic>> getMovies() async {
-    var uri = Uri.https(
-        KeyApp.baseUrl, '/danh-sach/phim-moi-cap-nhat', {'page': '1'});
+    var uri =
+        Uri.https(KeyApp.baseUrl, KeyApp.NEW_UPDATE_MOVIES, {'page': '1'});
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
@@ -80,7 +80,7 @@ class FetchApiMovie {
   }
 
   static Future<Map<String, dynamic>> getAListOfIndividualMovies() async {
-    var uri = Uri.https(KeyApp.baseUrl, '/v1/api/danh-sach/phim-le');
+    var uri = Uri.https(KeyApp.baseUrl, KeyApp.SINGLE_MOVIES);
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
@@ -115,7 +115,7 @@ class FetchApiMovie {
   }
 
   static Future<Map<String, dynamic>> getTheListOfMoviesAndSeries() async {
-    var uri = Uri.https(KeyApp.baseUrl, '/v1/api/danh-sach/phim-bo');
+    var uri = Uri.https(KeyApp.baseUrl, KeyApp.SERIES_MOVIES);
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
@@ -150,7 +150,43 @@ class FetchApiMovie {
   }
 
   static Future<Map<String, dynamic>> getTheListOfCartoons() async {
-    var uri = Uri.https(KeyApp.baseUrl, '/v1/api/danh-sach/hoat-hinh');
+    var uri = Uri.https(KeyApp.baseUrl, KeyApp.CARTOON);
+    Map<String, dynamic> result = {};
+    try {
+      final response = await http.get(uri);
+
+      switch (response.statusCode) {
+        case 200:
+          var data = jsonDecode(response.body);
+          result = data;
+          break;
+        case 400:
+          var data = jsonDecode(response.body);
+          result = data;
+          break;
+        case 401:
+          var data = jsonDecode(response.body);
+          result = data;
+          break;
+        case 404:
+          var data = jsonDecode(response.body);
+          result = data;
+          break;
+        default:
+          var data = jsonDecode(response.body);
+          result = data;
+      }
+
+      return result;
+    } catch (e) {
+      printRed(e.toString());
+    }
+    return result;
+  }
+
+  static Future<Map<String, dynamic>> movieSearch(String keyWord) async {
+    var uri = Uri.https(KeyApp.baseUrl, KeyApp.MOVIES_SEARCH,
+        {'keyword': keyWord, 'limit': '10'});
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
