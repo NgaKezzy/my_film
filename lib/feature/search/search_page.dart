@@ -1,3 +1,4 @@
+import 'package:app/component/header_app.dart';
 import 'package:app/component/loading_widget.dart';
 import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
@@ -47,6 +48,48 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: theme.colorScheme.primary,
+        automaticallyImplyLeading: false,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: SizedBox(
+            height: 40,
+            child: TextField(
+              cursorColor: theme.colorScheme.onPrimary,
+              autofocus: false,
+              controller: searchController,
+              onChanged: (value) {
+                movieCubit.moviesSearch(value.trim());
+              },
+              decoration: InputDecoration(
+                suffixIcon:
+                    Icon(Icons.search, color: theme.colorScheme.tertiary),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                fillColor: theme.colorScheme.tertiary,
+                hintText: AppLocalizations.of(context)!.search,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: theme.colorScheme.tertiary,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: theme.colorScheme.tertiary,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: isLoading
             ? const Center(
@@ -55,54 +98,12 @@ class _SearchPageState extends State<SearchPage> {
             : Column(
                 children: [
                   const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: SizedBox(
-                      height: 40,
-                      child: TextField(
-                        cursorColor: theme.colorScheme.onPrimary,
-                        autofocus: false,
-                        controller: searchController,
-                        onChanged: (value) {
-                          movieCubit.moviesSearch(value.trim());
-                        },
-                        decoration: InputDecoration(
-                          suffixIcon: Icon(Icons.search,
-                              color: theme.colorScheme.tertiary),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          fillColor: theme.colorScheme.tertiary,
-                          hintText: AppLocalizations.of(context)!.search,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: theme.colorScheme.tertiary,
-                              style: BorderStyle.solid,
-                            ),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: theme.colorScheme.tertiary,
-                              style: BorderStyle.solid,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
                     height: 10,
                   ),
                   BlocBuilder<MovieCubit, MovieState>(
                     builder: (context, state) {
                       return Expanded(
                         child: ListView.separated(
-                          physics: const BouncingScrollPhysics(),
                           padding: const EdgeInsets.only(bottom: 50),
                           itemCount: state.moviesSearch.length,
                           separatorBuilder: (context, index) => const SizedBox(

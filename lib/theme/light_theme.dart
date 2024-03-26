@@ -27,7 +27,7 @@ ThemeData light = ThemeData(
       onErrorContainer: Color(0xFF410E0B),
       background: Color(0xFFFFFFFF),
       onBackground: Color(0xFF1C1B1F),
-      surface: Color(0xFF00FF00),
+      surface: Color(0xFF496989),
       onSurface: Color(0xFF1C1B1F),
       surfaceVariant: Color(0xFFE7E0EC),
       onSurfaceVariant: Color(0xFF49454F),

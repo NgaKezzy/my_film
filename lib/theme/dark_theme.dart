@@ -28,7 +28,7 @@ ThemeData dark = ThemeData(
       onErrorContainer: Color(0xFFF9DEDC),
       background: Color(0xFF1C1B1F),
       onBackground: Color(0xFFE6E1E5),
-      surface: Color(0xFF00FF00),
+      surface: Color(0xFF496989),
       onSurface: Color(0xFFE6E1E5),
       surfaceVariant: Color(0xFF49454F),
       onSurfaceVariant: Color(0xFFCAC4D0),
