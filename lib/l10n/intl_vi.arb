@@ -25,7 +25,11 @@
     "search":"Tìm kiếm",
     "featureUnderDevelopment":"Tính năng đang được phát triển !",
     "seeMore":"Xem thêm",
-    "hideLess":"Ẩn bớt"
+    "hideLess":"Ẩn bớt",
+    "cancel":"Hủy",
+    "movieNotFound":"Không tìm thấy phim !"
+
+
 
 
 

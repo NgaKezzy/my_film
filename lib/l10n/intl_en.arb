@@ -25,7 +25,9 @@
     "search":"Search",
     "featureUnderDevelopment":"Feature under development !",
     "seeMore":"See more",
-    "hideLess":"Hide less"
+    "hideLess":"Hide less",
+    "cancel":"Cancel",
+    "movieNotFound":"Movie not found !"
 
 
 
