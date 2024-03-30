@@ -6,15 +6,13 @@ import 'package:app/feature/home/cubit/home_page_state.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/widgets/item_film_horizontally.dart';
+import 'package:app/feature/home/widgets/item_grid_and_title.dart';
 import 'package:app/feature/home/widgets/item_slider_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
-import 'widgets/item_grid_film.dart';
-import 'watch_a_movie.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
@@ -119,48 +117,33 @@ class _HomePageState extends State<HomePage> {
                                           },
                                         )))
                                 : const SliverToBoxAdapter(),
-                            const SliverToBoxAdapter(
-                              child: SizedBox(height: 30),
+
+                            /// phim lẻ
+                            ItemGridAndTitle(
+                              itemsFilms: state.singleMovies,
+                              title: app!.singleMovie,
                             ),
-                            state.singleMovies.isEmpty
-                                ? const SliverToBoxAdapter()
-                                : TitleAndChevronRight(
-                                    title: app!.singleMovie,
-                                    color: theme.colorScheme.tertiary),
-                            state.singleMovies.isEmpty
-                                ? const SliverToBoxAdapter()
-                                : ItemGridFilm(
-                                    itemsFilm: state.singleMovies,
-                                  ),
-                            const SliverToBoxAdapter(
-                              child: SizedBox(height: 30),
-                            ),
+
+                            /// phim hoạt hình
                             state.cartoon.isEmpty
                                 ? const SliverToBoxAdapter()
                                 : TitleAndChevronRight(
-                                    title: app!.cartoon,
+                                    title: app.cartoon,
                                     color: theme.colorScheme.tertiary),
                             state.cartoon.isEmpty
                                 ? const SliverToBoxAdapter()
                                 : ItemFilmHorizontally(
                                     itemsFilm: state.cartoon,
                                   ),
+
+                            ///phim bộ
+                            ItemGridAndTitle(
+                              itemsFilms: state.seriesMovies,
+                              title: app.seriesMovie,
+                            ),
                             const SliverToBoxAdapter(
                               child: SizedBox(height: 30),
-                            ),
-                            state.seriesMovies.isEmpty
-                                ? const SliverToBoxAdapter()
-                                : TitleAndChevronRight(
-                                    title: app!.seriesMovie,
-                                    color: theme.colorScheme.tertiary),
-                            state.seriesMovies.isEmpty
-                                ? const SliverToBoxAdapter()
-                                : ItemGridFilm(
-                                    itemsFilm: state.seriesMovies,
-                                  ),
-                            const SliverToBoxAdapter(
-                              child: SizedBox(height: 30),
-                            ),
+                            )
                           ],
                         );
                       },
@@ -184,7 +167,7 @@ class TitleAndChevronRight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
       sliver: SliverToBoxAdapter(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

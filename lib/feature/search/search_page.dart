@@ -1,9 +1,7 @@
-import 'package:app/component/header_app.dart';
 import 'package:app/component/loading_widget.dart';
 import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
-import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +26,7 @@ class _SearchPageState extends State<SearchPage> {
     // TODO: implement initState
     super.initState();
     movieCubit = context.read<MovieCubit>();
-    movieCubit.moviesSearch('Siêu anh hùng').then((value) => {
+    movieCubit.moviesSearch('Anh hùng').then((value) => {
           setState(
             () {
               isLoading = false;
@@ -48,131 +46,159 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: theme.colorScheme.primary,
-        automaticallyImplyLeading: false,
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-          child: SizedBox(
-            height: 40,
-            child: TextField(
-              cursorColor: theme.colorScheme.onPrimary,
-              autofocus: false,
-              controller: searchController,
-              onChanged: (value) {
-                movieCubit.moviesSearch(value.trim());
-              },
-              decoration: InputDecoration(
-                suffixIcon:
-                    Icon(Icons.search, color: theme.colorScheme.tertiary),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                fillColor: theme.colorScheme.tertiary,
-                hintText: AppLocalizations.of(context)!.search,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: theme.colorScheme.tertiary,
-                    style: BorderStyle.solid,
-                  ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: theme.colorScheme.tertiary,
-                    style: BorderStyle.solid,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
       body: SafeArea(
         child: isLoading
             ? const Center(
                 child: LoadingWidget(),
               )
-            : Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  BlocBuilder<MovieCubit, MovieState>(
-                    builder: (context, state) {
-                      return Expanded(
-                        child: ListView.separated(
-                          padding: const EdgeInsets.only(bottom: 50),
-                          itemCount: state.moviesSearch.length,
-                          separatorBuilder: (context, index) => const SizedBox(
-                            height: 10,
-                          ),
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: InkWell(
-                                onTap: () {
-                                  printRed(state.moviesSearch[index].slug);
+            : SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 20),
+                      child: SizedBox(
+                        height: 35,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                cursorColor: theme.colorScheme.onPrimary,
+                                autofocus: false,
+                                controller: searchController,
+                                onSubmitted: (value) {
                                   FocusScope.of(context).unfocus();
 
-                                  context.goNamed('watchAMovieSearch',
-                                      queryParameters: {
-                                        'slug': state.moviesSearch[index].slug
-                                      });
+                                  movieCubit.moviesSearch(value.trim());
                                 },
-                                child: Row(children: [
-                                  SizedBox(
-                                    height: 100,
-                                    width: 100,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            'https://img.phimapi.com/${state.moviesSearch[index].poster_url}',
-                                        imageBuilder:
-                                            (context, imageProvider) =>
-                                                Container(
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
+                                decoration: InputDecoration(
+                                  suffixIcon: InkWell(
+                                      onTap: () {
+                                        FocusScope.of(context).unfocus();
+
+                                        movieCubit.moviesSearch(
+                                            searchController.text.trim());
+                                      },
+                                      child: Icon(Icons.search,
+                                          color: theme.colorScheme.tertiary)),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  fillColor: theme.colorScheme.tertiary,
+                                  hintText:
+                                      AppLocalizations.of(context)!.search,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      width: 1,
+                                      color: theme.colorScheme.tertiary,
+                                      style: BorderStyle.solid,
+                                    ),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      width: 1,
+                                      color: theme.colorScheme.tertiary,
+                                      style: BorderStyle.solid,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            InkWell(
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+                                },
+                                child: Text('Hủy'))
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    BlocBuilder<MovieCubit, MovieState>(
+                      builder: (context, state) {
+                        return Expanded(
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.only(bottom: 50),
+                            itemCount: state.moviesSearch.length,
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                              height: 10,
+                            ),
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: InkWell(
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+                                    printRed(state.moviesSearch[index].slug);
+
+                                    context.goNamed('watchAMovieSearch',
+                                        queryParameters: {
+                                          'slug': state.moviesSearch[index].slug
+                                        });
+                                  },
+                                  child: Row(children: [
+                                    SizedBox(
+                                      height: 100,
+                                      width: 100,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              'https://img.phimapi.com/${state.moviesSearch[index].poster_url}',
+                                          imageBuilder:
+                                              (context, imageProvider) =>
+                                                  Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
                                         ),
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      context
-                                                  .watch<LocaleCubit>()
-                                                  .state
-                                                  .languageCode ==
-                                              'en'
-                                          ? state
-                                              .moviesSearch[index].origin_name
-                                          : state.moviesSearch[index].name,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
+                                    const SizedBox(
+                                      width: 10,
                                     ),
-                                  ),
-                                ]),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  )
-                ],
+                                    Expanded(
+                                      child: Text(
+                                        context
+                                                    .watch<LocaleCubit>()
+                                                    .state
+                                                    .languageCode ==
+                                                'en'
+                                            ? state
+                                                .moviesSearch[index].origin_name
+                                            : state.moviesSearch[index].name,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    )
+                  ],
+                ),
               ),
       ),
     );

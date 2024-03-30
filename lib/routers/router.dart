@@ -1,5 +1,4 @@
 import 'package:app/feature/download/download_page.dart';
-import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/home_page.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/feature/search/search_page.dart';
@@ -138,6 +137,7 @@ class AppNavigation {
         path: '/',
         builder: (context, state) => const SplashScreen(),
       ),
+      
     ],
   );
 

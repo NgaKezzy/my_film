@@ -80,7 +80,7 @@ class FetchApiMovie {
   }
 
   static Future<Map<String, dynamic>> getAListOfIndividualMovies() async {
-    var uri = Uri.https(KeyApp.baseUrl, KeyApp.SINGLE_MOVIES);
+    var uri = Uri.https(KeyApp.baseUrl, KeyApp.SINGLE_MOVIES, {'limit': '50'});
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
@@ -115,7 +115,7 @@ class FetchApiMovie {
   }
 
   static Future<Map<String, dynamic>> getTheListOfMoviesAndSeries() async {
-    var uri = Uri.https(KeyApp.baseUrl, KeyApp.SERIES_MOVIES);
+    var uri = Uri.https(KeyApp.baseUrl, KeyApp.SERIES_MOVIES, {'limit': '50'});
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
@@ -150,7 +150,7 @@ class FetchApiMovie {
   }
 
   static Future<Map<String, dynamic>> getTheListOfCartoons() async {
-    var uri = Uri.https(KeyApp.baseUrl, KeyApp.CARTOON);
+    var uri = Uri.https(KeyApp.baseUrl, KeyApp.CARTOON, {'limit': '50'});
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);

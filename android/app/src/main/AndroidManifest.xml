@@ -2,7 +2,7 @@
     package="com.example.app">
    <application
         android:usesCleartextTraffic="true"
-        android:label="app"
+        android:label="MY FILM"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

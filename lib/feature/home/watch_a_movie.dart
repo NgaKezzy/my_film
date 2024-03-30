@@ -3,14 +3,12 @@ import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/widgets/video_player_widget.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
-import 'package:app/my_home_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
 
 class WatchAMovie extends StatefulWidget {
   const WatchAMovie({super.key, required this.slug});
