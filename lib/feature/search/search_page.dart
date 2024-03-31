@@ -2,6 +2,7 @@ import 'package:app/component/loading_widget.dart';
 import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
+import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -171,12 +172,13 @@ class _SearchPageState extends State<SearchPage> {
                                     onTap: () {
                                       FocusScope.of(context).unfocus();
                                       printRed(state.moviesSearch[index].slug);
-
-                                      context.goNamed('watchAMovieSearch',
-                                          queryParameters: {
-                                            'slug':
-                                                state.moviesSearch[index].slug
-                                          });
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => WatchAMovie(
+                                                  slug: state
+                                                      .moviesSearch[index]
+                                                      .slug)));
                                     },
                                     child: Row(children: [
                                       SizedBox(

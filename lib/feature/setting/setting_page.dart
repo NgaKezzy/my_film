@@ -1,5 +1,6 @@
 import 'package:app/component/header_app.dart';
 import 'package:app/component/item_setting.dart';
+import 'package:app/feature/select_language/select_language.dart';
 import 'package:app/theme/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +42,10 @@ class SettingsPage extends StatelessWidget {
           ItemSetting(
             text: AppLocalizations.of(context)!.language,
             onTap: () {
-              context.goNamed('selectLanguage');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SelectLanguage()));
             },
           )
         ],

@@ -1,6 +1,7 @@
 import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/movie_list.dart';
+import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                         ),
                         SvgPicture.asset(
                           'assets/icons/chevron-right.svg',
-                          color: Colors.red,
+                          color: theme.colorScheme.tertiary,
                         )
                       ],
                     ),
@@ -78,9 +79,13 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          context.goNamed('watchAMovie', queryParameters: {
-                            'slug': widget.itemFilms[index].slug
-                          });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WatchAMovie(
+                                        slug:widget.itemFilms[index].slug)));
+                           
+                          
                         },
                         child: Column(
                           children: [

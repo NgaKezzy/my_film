@@ -30,9 +30,7 @@ class AppNavigation {
         /// MainPage
 
         builder: (context, state, navigationShell) {
-          return MyHomeApp(
-            navigationShell: navigationShell,
-          );
+          return MyHomeApp();
         },
 
         branches: <StatefulShellBranch>[
@@ -48,30 +46,6 @@ class AppNavigation {
                 builder: (context, state) => HomePage(
                   key: state.pageKey,
                 ),
-                routes: [
-                  GoRoute(
-                    name: 'watchAMovie',
-                    path: 'watchAMovie',
-                    builder: (context, state) {
-                      return WatchAMovie(
-                        key: state.pageKey,
-                        slug: state.uri.queryParameters['slug']!,
-                      );
-                    },
-                  ),
-                  // GoRoute(
-                  //   name: 'movieList',
-                  //   path: 'movieList',
-                  //   builder: (context, state) {
-                  //     List items = state.extra != null ? state.extra as List<MovieInformation>:null;
-                  //     return MovieList(
-                  //       key: state.pageKey,
-                  //       itemFilms:  ,
-                  //       title: state.uri.queryParameters['title']!,
-                  //     );
-                  //   },
-                  // )
-                ],
               ),
             ],
           ),
@@ -87,18 +61,6 @@ class AppNavigation {
                 builder: (context, state) => SearchPage(
                   key: state.pageKey,
                 ),
-                routes: [
-                  GoRoute(
-                    name: 'watchAMovieSearch',
-                    path: 'watchAMovieSearch',
-                    builder: (context, state) {
-                      return WatchAMovie(
-                        key: state.pageKey,
-                        slug: state.uri.queryParameters['slug']!,
-                      );
-                    },
-                  )
-                ],
               ),
             ],
           ),
@@ -150,6 +112,16 @@ class AppNavigation {
             'splash', // Optional, add name to your routes. Allows you navigate by name instead of path
         path: '/',
         builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        name: 'watchAMovie',
+        path: '/watchAMovie',
+        builder: (context, state) {
+          return WatchAMovie(
+            key: state.pageKey,
+            slug: state.uri.queryParameters['slug']!,
+          );
+        },
       ),
     ],
   );

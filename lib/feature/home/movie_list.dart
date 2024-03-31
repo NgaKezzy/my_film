@@ -1,6 +1,7 @@
 import 'package:app/component/header_title_app.dart';
 import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/models/movie_information.dart';
+import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -40,9 +41,12 @@ class MovieList extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            context.goNamed('watchAMovie', queryParameters: {
-                              'slug': itemFilms[index].slug
-                            });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WatchAMovie(
+                                        slug: itemFilms[index].slug)));
+                         
                           },
                           child: Row(
                             children: [

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:app/l10n/cubit/locale_cubit.dart';
+import 'package:app/my_home_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -23,7 +24,11 @@ class _SplashScreenState extends State<SplashScreen> {
     localeCubit = context.read<LocaleCubit>();
     localeCubit.checkIsSelectedLanguage();
     Timer(const Duration(seconds: 3), () {
-      context.goNamed('home');
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const MyHomeApp()),
+          (route) => false);
     });
   }
 

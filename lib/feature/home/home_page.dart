@@ -7,6 +7,7 @@ import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/movie_list.dart';
+import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/feature/home/widgets/item_film_horizontally.dart';
 import 'package:app/feature/home/widgets/item_grid_and_title.dart';
 import 'package:app/feature/home/widgets/item_slider_image.dart';
@@ -42,13 +43,11 @@ class _HomePageState extends State<HomePage> {
           else
             {
               await initialization(),
-              Future.delayed(const Duration(seconds: 1), () {
-                setState(
-                  () {
-                    isLoading = false;
-                  },
-                );
-              }),
+              setState(
+                () {
+                  isLoading = false;
+                },
+              )
             }
         });
   }
@@ -111,11 +110,15 @@ class _HomePageState extends State<HomePage> {
                                               imageUrl: state
                                                   .movies[index].poster_url,
                                               onTap: () {
-                                                context.goNamed('watchAMovie',
-                                                    queryParameters: {
-                                                      'slug': state
-                                                          .movies[index].slug
-                                                    });
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            WatchAMovie(
+                                                                slug: state
+                                                                    .movies[
+                                                                        index]
+                                                                    .slug)));
                                               },
                                             );
                                           },

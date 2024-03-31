@@ -1,4 +1,5 @@
 import 'package:app/feature/home/models/movie_information.dart';
+import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,9 @@ import 'package:go_router/go_router.dart';
 class ItemGridFilm extends StatelessWidget {
   ItemGridFilm({
     super.key,
-    required this.itemsFilm,
+    required this.itemFilms,
   });
-  List<MovieInformation> itemsFilm;
+  List<MovieInformation> itemFilms;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +27,11 @@ class ItemGridFilm extends StatelessWidget {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            context.goNamed('watchAMovie',
-                queryParameters: {'slug': itemsFilm[index].slug});
+            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WatchAMovie(
+                                        slug:itemFilms[index].slug)));
           },
           child: Column(
             children: [
@@ -36,7 +40,7 @@ class ItemGridFilm extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
                     imageUrl:
-                        'https://img.phimapi.com/${itemsFilm[index].poster_url}',
+                        'https://img.phimapi.com/${itemFilms[index].poster_url}',
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -58,8 +62,8 @@ class ItemGridFilm extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
                   context.watch<LocaleCubit>().state.languageCode == 'en'
-                      ? itemsFilm[index].origin_name
-                      : itemsFilm[index].name,
+                      ? itemFilms[index].origin_name
+                      : itemFilms[index].name,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,

@@ -43,12 +43,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   @override
   Widget build(BuildContext context) {
     final LocaleCubit localeCubit = context.watch<LocaleCubit>();
+    final double height = MediaQuery.of(context).size.height;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.3,
+          height: height * 0.3,
           child: FlickVideoPlayer(
             flickManager: flickManager,
             flickVideoWithControls: FlickVideoWithControls(
@@ -62,59 +63,57 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             ),
           ),
         ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height - 322,
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          height: height - (height * 0.3 + 32),
           child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: Row(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.film,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: AppSize.size16),
-                        ),
-                        Text(
-                          localeCubit.state.languageCode == 'vi'
-                              ? widget.dataFilm!.movie.name
-                              : widget.dataFilm!.movie.origin_name,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(),
-                        ),
-                      ],
-                    ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 20,
+                  child: Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.film,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: AppSize.size16),
+                      ),
+                      Text(
+                        localeCubit.state.languageCode == 'vi'
+                            ? widget.dataFilm!.movie.name
+                            : widget.dataFilm!.movie.origin_name,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  widget.dataFilm!.episodes[0].server_data.length == 1
-                      ? const SizedBox()
-                      : EpisodeNumberOfTheMovie(
-                          flickManager: flickManager,
-                          items: widget.dataFilm!.episodes,
-                        ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TitleAndContent(
-                      title: AppLocalizations.of(context)!.content,
-                      content: widget.dataFilm!.movie.content),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ContentActor(items: widget.dataFilm?.movie.actor ?? []),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ContentCategory(items: widget.dataFilm!.movie.category),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                widget.dataFilm!.episodes[0].server_data.length == 1
+                    ? const SizedBox()
+                    : EpisodeNumberOfTheMovie(
+                        flickManager: flickManager,
+                        items: widget.dataFilm!.episodes,
+                      ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TitleAndContent(
+                    title: AppLocalizations.of(context)!.content,
+                    content: widget.dataFilm!.movie.content),
+                const SizedBox(
+                  height: 10,
+                ),
+                ContentActor(items: widget.dataFilm?.movie.actor ?? []),
+                const SizedBox(
+                  height: 10,
+                ),
+                ContentCategory(items: widget.dataFilm!.movie.category),
+              ],
             ),
           ),
         ),

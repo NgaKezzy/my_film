@@ -1,12 +1,16 @@
+import 'package:app/feature/download/download_page.dart';
+import 'package:app/feature/home/home_page.dart';
+import 'package:app/feature/search/search_page.dart';
+import 'package:app/feature/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shimmer/main.dart';
 
 class MyHomeApp extends StatefulWidget {
-  const MyHomeApp({super.key, required this.navigationShell});
-  final StatefulNavigationShell? navigationShell;
+  const MyHomeApp({super.key});
 
   @override
   State<MyHomeApp> createState() => _MyHomeAppState();
@@ -14,11 +18,12 @@ class MyHomeApp extends StatefulWidget {
 
 class _MyHomeAppState extends State<MyHomeApp> {
   int pageIndex = 0;
-
-  void _goToBranch(int index) {
-    widget.navigationShell!.goBranch(index,
-        initialLocation: index == widget.navigationShell!.currentIndex);
-  }
+  List<Widget> pages = [
+    const HomePage(),
+    const SearchPage(),
+    const DownloadPage(),
+    const SettingsPage()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        body: widget.navigationShell,
+        body: pages[pageIndex],
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: theme.colorScheme.background,
           type: BottomNavigationBarType.fixed,
@@ -41,7 +46,6 @@ class _MyHomeAppState extends State<MyHomeApp> {
             setState(() {
               pageIndex = value;
             });
-            _goToBranch(value);
           },
           items: [
             BottomNavigationBarItem(
