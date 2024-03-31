@@ -1,4 +1,5 @@
 # Miscellaneous
+.dart_tool
 *.g.dart
 *.class
 *.log

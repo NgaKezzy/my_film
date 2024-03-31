@@ -22,7 +22,7 @@ class ItemSliderImage extends StatelessWidget {
             ),
           ),
         ),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
+        errorWidget: (context, url, error) => const Icon(Icons.warning),
       ),
     );
   }

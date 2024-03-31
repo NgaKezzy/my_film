@@ -1,5 +1,6 @@
 import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/models/movie_information.dart';
+import 'package:app/feature/home/movie_list.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +12,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ItemGridAndTitle extends StatefulWidget {
   ItemGridAndTitle({
     super.key,
-    required this.itemsFilms,
+    required this.itemFilms,
     required this.title,
   });
-  final List<MovieInformation> itemsFilms;
+  final List<MovieInformation> itemFilms;
   final String title;
 
   @override
@@ -30,26 +31,37 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
     final app = AppLocalizations.of(context);
 
     return SliverToBoxAdapter(
-      child: widget.itemsFilms.isEmpty
+      child: widget.itemFilms.isEmpty
           ? const SizedBox()
           : Padding(
               padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        widget.title,
-                        style: const TextStyle(
-                            fontSize: AppSize.size20,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SvgPicture.asset(
-                        'assets/icons/chevron-right.svg',
-                        color: Colors.red,
-                      )
-                    ],
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MovieList(
+                                    itemFilms: widget.itemFilms,
+                                    title: widget.title,
+                                  )));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.title,
+                          style: const TextStyle(
+                              fontSize: AppSize.size20,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        SvgPicture.asset(
+                          'assets/icons/chevron-right.svg',
+                          color: Colors.red,
+                        )
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 10.0),
                   GridView.builder(
@@ -67,7 +79,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                       return InkWell(
                         onTap: () {
                           context.goNamed('watchAMovie', queryParameters: {
-                            'slug': widget.itemsFilms[index].slug
+                            'slug': widget.itemFilms[index].slug
                           });
                         },
                         child: Column(
@@ -77,7 +89,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                                 borderRadius: BorderRadius.circular(8),
                                 child: CachedNetworkImage(
                                   imageUrl:
-                                      'https://img.phimapi.com/${widget.itemsFilms[index].poster_url}',
+                                      'https://img.phimapi.com/${widget.itemFilms[index].poster_url}',
                                   imageBuilder: (context, imageProvider) =>
                                       Container(
                                     decoration: BoxDecoration(
@@ -88,7 +100,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                                     ),
                                   ),
                                   errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
+                                      const Icon(Icons.warning),
                                 ),
                               ),
                             ),
@@ -105,8 +117,8 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                                             .state
                                             .languageCode ==
                                         'en'
-                                    ? widget.itemsFilms[index].origin_name
-                                    : widget.itemsFilms[index].name,
+                                    ? widget.itemFilms[index].origin_name
+                                    : widget.itemFilms[index].name,
                                 textAlign: TextAlign.center,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,

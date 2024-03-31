@@ -5,6 +5,8 @@ import 'package:app/feature/home/cubit/home_page_cubit.dart';
 import 'package:app/feature/home/cubit/home_page_state.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
+import 'package:app/feature/home/models/movie_information.dart';
+import 'package:app/feature/home/movie_list.dart';
 import 'package:app/feature/home/widgets/item_film_horizontally.dart';
 import 'package:app/feature/home/widgets/item_grid_and_title.dart';
 import 'package:app/feature/home/widgets/item_slider_image.dart';
@@ -40,11 +42,13 @@ class _HomePageState extends State<HomePage> {
           else
             {
               await initialization(),
-              setState(
-                () {
-                  isLoading = false;
-                },
-              ),
+              Future.delayed(const Duration(seconds: 1), () {
+                setState(
+                  () {
+                    isLoading = false;
+                  },
+                );
+              }),
             }
         });
   }
@@ -120,7 +124,7 @@ class _HomePageState extends State<HomePage> {
 
                             /// phim lẻ
                             ItemGridAndTitle(
-                              itemsFilms: state.singleMovies,
+                              itemFilms: state.singleMovies,
                               title: app!.singleMovie,
                             ),
 
@@ -128,6 +132,7 @@ class _HomePageState extends State<HomePage> {
                             state.cartoon.isEmpty
                                 ? const SliverToBoxAdapter()
                                 : TitleAndChevronRight(
+                                    itemFilms: state.cartoon,
                                     title: app.cartoon,
                                     color: theme.colorScheme.tertiary),
                             state.cartoon.isEmpty
@@ -138,7 +143,7 @@ class _HomePageState extends State<HomePage> {
 
                             ///phim bộ
                             ItemGridAndTitle(
-                              itemsFilms: state.seriesMovies,
+                              itemFilms: state.seriesMovies,
                               title: app.seriesMovie,
                             ),
                             const SliverToBoxAdapter(
@@ -155,33 +160,45 @@ class _HomePageState extends State<HomePage> {
 }
 
 class TitleAndChevronRight extends StatelessWidget {
-  const TitleAndChevronRight({
-    super.key,
-    this.title = '',
-    this.color = Colors.black,
-  });
+  const TitleAndChevronRight(
+      {super.key,
+      this.title = '',
+      this.color = Colors.black,
+      this.itemFilms = const []});
 
   final String title;
   final Color color;
+  final List<MovieInformation> itemFilms;
 
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
       sliver: SliverToBoxAdapter(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                  fontSize: AppSize.size20, fontWeight: FontWeight.w600),
-            ),
-            SvgPicture.asset(
-              'assets/icons/chevron-right.svg',
-              color: color,
-            )
-          ],
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MovieList(
+                          itemFilms: itemFilms,
+                          title: title,
+                        )));
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                    fontSize: AppSize.size20, fontWeight: FontWeight.w600),
+              ),
+              SvgPicture.asset(
+                'assets/icons/chevron-right.svg',
+                color: color,
+              )
+            ],
+          ),
         ),
       ),
     );

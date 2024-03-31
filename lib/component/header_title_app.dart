@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class HeaderTitleApp extends StatelessWidget implements PreferredSizeWidget {
-  const HeaderTitleApp({super.key, this.title = 'Title'});
+  const HeaderTitleApp({super.key, this.title = 'Title', this.onTap});
   final String title;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,9 @@ class HeaderTitleApp extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                onTap?.call();
+              },
               icon: SvgPicture.asset(
                 'assets/icons/chevron_left.svg',
                 // ignore: deprecated_member_use

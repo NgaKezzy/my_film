@@ -1,11 +1,9 @@
 import 'package:app/feature/home/models/movie_information.dart';
-import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
 
 // ignore: must_be_immutable
 class ItemGridFilm extends StatelessWidget {
@@ -48,7 +46,7 @@ class ItemGridFilm extends StatelessWidget {
                       ),
                     ),
                     errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                        const Icon(Icons.warning),
                   ),
                 ),
               ),

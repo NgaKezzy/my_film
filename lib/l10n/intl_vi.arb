@@ -27,7 +27,9 @@
     "seeMore":"Xem thêm",
     "hideLess":"Ẩn bớt",
     "cancel":"Hủy",
-    "movieNotFound":"Không tìm thấy phim !"
+    "movieNotFound":"Không tìm thấy phim !",
+    "movieListIsEmpty":"Danh sách phim trống !"
+
 
 
 

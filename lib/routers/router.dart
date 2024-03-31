@@ -1,5 +1,7 @@
 import 'package:app/feature/download/download_page.dart';
 import 'package:app/feature/home/home_page.dart';
+import 'package:app/feature/home/models/movie_information.dart';
+import 'package:app/feature/home/movie_list.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/feature/search/search_page.dart';
 import 'package:app/feature/select_language/select_language.dart';
@@ -56,7 +58,19 @@ class AppNavigation {
                         slug: state.uri.queryParameters['slug']!,
                       );
                     },
-                  )
+                  ),
+                  // GoRoute(
+                  //   name: 'movieList',
+                  //   path: 'movieList',
+                  //   builder: (context, state) {
+                  //     List items = state.extra != null ? state.extra as List<MovieInformation>:null;
+                  //     return MovieList(
+                  //       key: state.pageKey,
+                  //       itemFilms:  ,
+                  //       title: state.uri.queryParameters['title']!,
+                  //     );
+                  //   },
+                  // )
                 ],
               ),
             ],
@@ -137,7 +151,6 @@ class AppNavigation {
         path: '/',
         builder: (context, state) => const SplashScreen(),
       ),
-      
     ],
   );
 

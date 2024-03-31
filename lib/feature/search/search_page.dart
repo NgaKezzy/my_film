@@ -200,7 +200,7 @@ class _SearchPageState extends State<SearchPage> {
                                             ),
                                             errorWidget:
                                                 (context, url, error) =>
-                                                    const Icon(Icons.error),
+                                                    const Icon(Icons.warning),
                                           ),
                                         ),
                                       ),

@@ -8,7 +8,7 @@ ThemeData dark = ThemeData(
       // 4 màu chủ đạo
       primary: Color(0xFF282a36),
       onPrimary: Color(0xFFEE4266),
-      primaryContainer: Color(0xFFB784B7),
+      primaryContainer: Color(0xFF435585),
       onPrimaryContainer: Color(0xFF1B4242),
       secondary: Color(0xFFE493B3),
       onSecondary: Color(0xFF5C8374),
