@@ -1,6 +1,6 @@
 import 'package:app/feature/download/download_page.dart';
 import 'package:app/feature/home/home_page.dart';
-import 'package:app/feature/search/search_page.dart';
+import 'package:app/feature/home/search_movie.dart';
 import 'package:app/feature/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,7 +20,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
   int pageIndex = 0;
   List<Widget> pages = [
     const HomePage(),
-    const SearchPage(),
+    const DownloadPage(),
     const DownloadPage(),
     const SettingsPage()
   ];

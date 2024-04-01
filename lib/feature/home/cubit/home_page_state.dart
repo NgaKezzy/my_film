@@ -8,10 +8,13 @@ enum HomePageStatus { init, loading, success, error }
 @CopyWith()
 class HomePageState extends Equatable {
   const HomePageState(
-      {this.isConnectNetwork = false, this.status = HomePageStatus.init});
+      {this.isConnectNetwork = false,
+      this.status = HomePageStatus.init,
+      this.isLoadingHome = true});
   final bool isConnectNetwork;
   final HomePageStatus status;
+  final bool isLoadingHome;
 
   @override
-  List<Object> get props => [isConnectNetwork, status];
+  List<Object> get props => [isConnectNetwork, status, isLoadingHome];
 }

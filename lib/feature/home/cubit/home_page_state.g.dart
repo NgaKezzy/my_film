@@ -11,6 +11,8 @@ abstract class _$HomePageStateCWProxy {
 
   HomePageState status(HomePageStatus status);
 
+  HomePageState isLoadingHome(bool isLoadingHome);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `HomePageState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -20,6 +22,7 @@ abstract class _$HomePageStateCWProxy {
   HomePageState call({
     bool? isConnectNetwork,
     HomePageStatus? status,
+    bool? isLoadingHome,
   });
 }
 
@@ -37,6 +40,10 @@ class _$HomePageStateCWProxyImpl implements _$HomePageStateCWProxy {
   HomePageState status(HomePageStatus status) => this(status: status);
 
   @override
+  HomePageState isLoadingHome(bool isLoadingHome) =>
+      this(isLoadingHome: isLoadingHome);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `HomePageState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -47,6 +54,7 @@ class _$HomePageStateCWProxyImpl implements _$HomePageStateCWProxy {
   HomePageState call({
     Object? isConnectNetwork = const $CopyWithPlaceholder(),
     Object? status = const $CopyWithPlaceholder(),
+    Object? isLoadingHome = const $CopyWithPlaceholder(),
   }) {
     return HomePageState(
       isConnectNetwork: isConnectNetwork == const $CopyWithPlaceholder() ||
@@ -58,6 +66,11 @@ class _$HomePageStateCWProxyImpl implements _$HomePageStateCWProxy {
           ? _value.status
           // ignore: cast_nullable_to_non_nullable
           : status as HomePageStatus,
+      isLoadingHome:
+          isLoadingHome == const $CopyWithPlaceholder() || isLoadingHome == null
+              ? _value.isLoadingHome
+              // ignore: cast_nullable_to_non_nullable
+              : isLoadingHome as bool,
     );
   }
 }

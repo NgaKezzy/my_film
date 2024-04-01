@@ -11,12 +11,14 @@ import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/feature/home/widgets/item_film_horizontally.dart';
 import 'package:app/feature/home/widgets/item_grid_and_title.dart';
 import 'package:app/feature/home/widgets/item_slider_image.dart';
+import 'package:app/feature/home/search_movie.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -30,7 +32,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late MovieCubit movieCubit;
   late HomePageCubit homePageCubit;
-  bool isLoading = true;
 
   Future<void> checkStatusNetwork() async {
     homePageCubit.checkNetwork().then((value) async => {
@@ -43,11 +44,9 @@ class _HomePageState extends State<HomePage> {
           else
             {
               await initialization(),
-              setState(
-                () {
-                  isLoading = false;
-                },
-              )
+              Future.delayed(const Duration(seconds: 1), () {
+                homePageCubit.loadingHomeIsFalse();
+              }),
             }
         });
   }
@@ -73,91 +72,144 @@ class _HomePageState extends State<HomePage> {
     final double width = MediaQuery.of(context).size.width;
     final app = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final HomePageCubit homePageCubitWatch = context.watch<HomePageCubit>();
 
-    return BlocBuilder<HomePageCubit, HomePageState>(
-      builder: (context, state) {
-        return context.read<HomePageCubit>().state.isConnectNetwork == false
-            ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.wifi_off, size: 80),
-                    Text(AppLocalizations.of(context)!.noNetworkConnection),
-                  ],
-                ),
-              )
-            : isLoading
-                ? const Center(
-                    child: LoadingWidget(),
-                  )
-                : SafeArea(
-                    child: BlocBuilder<MovieCubit, MovieState>(
-                      builder: (context, state) {
-                        return CustomScrollView(
-                          slivers: [
-                            state.movies.isNotEmpty
-                                ? SliverToBoxAdapter(
-                                    child: SizedBox(
-                                        height: height * 0.4,
-                                        width: width,
-                                        child: Swiper(
-                                          autoplay: true,
-                                          autoplayDelay: 3000,
-                                          itemCount: state.movies.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return ItemSliderImage(
-                                              imageUrl: state
-                                                  .movies[index].poster_url,
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            WatchAMovie(
-                                                                slug: state
-                                                                    .movies[
-                                                                        index]
-                                                                    .slug)));
-                                              },
-                                            );
-                                          },
-                                        )))
-                                : const SliverToBoxAdapter(),
-
-                            /// phim lẻ
-                            ItemGridAndTitle(
-                              itemFilms: state.singleMovies,
-                              title: app!.singleMovie,
-                            ),
-
-                            /// phim hoạt hình
-                            state.cartoon.isEmpty
-                                ? const SliverToBoxAdapter()
-                                : TitleAndChevronRight(
-                                    itemFilms: state.cartoon,
-                                    title: app.cartoon,
-                                    color: theme.colorScheme.tertiary),
-                            state.cartoon.isEmpty
-                                ? const SliverToBoxAdapter()
-                                : ItemFilmHorizontally(
-                                    itemsFilm: state.cartoon,
-                                  ),
-
-                            ///phim bộ
-                            ItemGridAndTitle(
-                              itemFilms: state.seriesMovies,
-                              title: app.seriesMovie,
-                            ),
-                            const SliverToBoxAdapter(
-                              child: SizedBox(height: 30),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: BlocBuilder<HomePageCubit, HomePageState>(
+        builder: (context, state) {
+          return context.read<HomePageCubit>().state.isConnectNetwork == false
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.wifi_off, size: 80),
+                      Text(AppLocalizations.of(context)!.noNetworkConnection),
+                    ],
+                  ),
+                )
+              : homePageCubitWatch.state.isLoadingHome
+                  ? const Center(
+                      child: LoadingWidget(),
+                    )
+                  : Scaffold(
+                      appBar: AppBar(
+                        automaticallyImplyLeading: false,
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SvgPicture.asset('assets/icons/icon_app.svg',
+                                color: theme.colorScheme.onPrimary),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        child: const SearchMovie(),
+                                        type: PageTransitionType.leftToRight));
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                alignment: Alignment.centerLeft,
+                                height: 32,
+                                width: width * 0.8,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1,
+                                        color: Colors.black,
+                                        style: BorderStyle.solid),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      app!.search,
+                                      style: TextStyle(
+                                          fontSize: AppSize.size13,
+                                          fontWeight: FontWeight.w200,
+                                          color: theme.colorScheme.tertiary),
+                                    ),
+                                    Icon(
+                                      Icons.search,
+                                      color: theme.colorScheme.tertiary,
+                                      size: 15,
+                                    )
+                                  ],
+                                ),
+                              ),
                             )
                           ],
-                        );
-                      },
-                    ),
-                  );
-      },
+                        ),
+                      ),
+                      body: BlocBuilder<MovieCubit, MovieState>(
+                        builder: (context, state) {
+                          return CustomScrollView(
+                            slivers: [
+                              state.movies.isNotEmpty
+                                  ? SliverToBoxAdapter(
+                                      child: SizedBox(
+                                          height: height * 0.4,
+                                          width: width,
+                                          child: Swiper(
+                                            autoplay: true,
+                                            autoplayDelay: 3000,
+                                            itemCount: state.movies.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return ItemSliderImage(
+                                                imageUrl: state
+                                                    .movies[index].poster_url,
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              WatchAMovie(
+                                                                  slug: state
+                                                                      .movies[
+                                                                          index]
+                                                                      .slug)));
+                                                },
+                                              );
+                                            },
+                                          )))
+                                  : const SliverToBoxAdapter(),
+
+                              /// phim lẻ
+                              ItemGridAndTitle(
+                                itemFilms: state.singleMovies,
+                                title: app!.singleMovie,
+                              ),
+
+                              /// phim hoạt hình
+                              state.cartoon.isEmpty
+                                  ? const SliverToBoxAdapter()
+                                  : TitleAndChevronRight(
+                                      itemFilms: state.cartoon,
+                                      title: app.cartoon,
+                                      color: theme.colorScheme.tertiary),
+                              state.cartoon.isEmpty
+                                  ? const SliverToBoxAdapter()
+                                  : ItemFilmHorizontally(
+                                      itemsFilm: state.cartoon,
+                                    ),
+
+                              ///phim bộ
+                              ItemGridAndTitle(
+                                itemFilms: state.seriesMovies,
+                                title: app.seriesMovie,
+                              ),
+                              const SliverToBoxAdapter(
+                                child: SizedBox(height: 30),
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                    );
+        },
+      ),
     );
   }
 }

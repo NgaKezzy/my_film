@@ -51,8 +51,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         SizedBox(
           height: height * 0.3,
           child: FlickVideoPlayer(
+            wakelockEnabled: true,
             flickManager: flickManager,
             flickVideoWithControls: FlickVideoWithControls(
+              aspectRatioWhenLoading: 16 / 9,
               videoFit: BoxFit.fill,
               controls: FlickPortraitControls(
                 progressBarSettings: FlickProgressBarSettings(
@@ -64,7 +66,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           ),
         ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
           height: height - (height * 0.3 + 32),
           child: SingleChildScrollView(
             child: Column(
@@ -113,6 +115,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   height: 10,
                 ),
                 ContentCategory(items: widget.dataFilm!.movie.category),
+                const SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),

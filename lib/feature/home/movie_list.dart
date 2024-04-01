@@ -23,7 +23,7 @@ class MovieList extends StatelessWidget {
         children: [
           HeaderTitleApp(
             onTap: () {
-              context.pop();
+              Navigator.pop(context);
             },
             title: title,
           ),
@@ -46,7 +46,6 @@ class MovieList extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (context) => WatchAMovie(
                                         slug: itemFilms[index].slug)));
-                         
                           },
                           child: Row(
                             children: [
@@ -54,7 +53,7 @@ class MovieList extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                                 child: SizedBox(
                                   width: width * 0.4,
-                                  height: 80,
+                                  height: 100,
                                   child: CachedNetworkImage(
                                     imageUrl:
                                         'https://img.phimapi.com/${itemFilms[index].thumb_url}',

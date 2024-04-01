@@ -11,9 +11,12 @@ class DownloadPage extends StatefulWidget {
 class _DownloadPageState extends State<DownloadPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(AppLocalizations.of(context)!.featureUnderDevelopment),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Center(
+          child: Text(AppLocalizations.of(context)!.featureUnderDevelopment),
+        ),
       ),
     );
   }

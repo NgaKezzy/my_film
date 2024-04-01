@@ -20,4 +20,10 @@ class HomePageCubit extends Cubit<HomePageState> {
           isConnectNetwork: true, status: HomePageStatus.success));
     }
   }
+
+  Future<void> loadingHomeIsFalse() async {
+    emit(state.copyWith(status: HomePageStatus.init));
+
+    emit(state.copyWith(isLoadingHome: false, status: HomePageStatus.success));
+  }
 }
