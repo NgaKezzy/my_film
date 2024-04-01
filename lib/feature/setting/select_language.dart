@@ -61,9 +61,9 @@ class _SelectLanguageState extends State<SelectLanguage> {
             ),
             // const Expanded(child: SizedBox())
             Button(
-              onTap: () {
-                localeCubit.successSetLanguage();
-                context.pop();
+              onTap: () async {
+                await localeCubit.successSetLanguage();
+                Navigator.pop(context);
               },
               text: AppLocalizations.of(context)!.ok,
               colorBt: theme.colorScheme.primary,

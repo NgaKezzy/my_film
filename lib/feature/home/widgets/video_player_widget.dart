@@ -1,8 +1,10 @@
 import 'package:app/component/loading_widget.dart';
 import 'package:app/config/app_size.dart';
+import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/models/data_film.dart';
 import 'package:app/feature/home/models/movie_category.dart';
 import 'package:app/feature/home/models/movie_episodes.dart';
+import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +12,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// ignore: must_be_immutable
 class VideoPlayerWidget extends StatefulWidget {
-  const VideoPlayerWidget(
-      {super.key, required this.url, required this.dataFilm});
+  VideoPlayerWidget(
+      {super.key,
+      required this.url,
+      required this.dataFilm,
+      required this.movieInformation});
   final String url;
   final DataFilm? dataFilm;
+  MovieInformation movieInformation;
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
@@ -44,6 +51,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   Widget build(BuildContext context) {
     final LocaleCubit localeCubit = context.watch<LocaleCubit>();
     final double height = MediaQuery.of(context).size.height;
+    final theme = Theme.of(context);
+    final MovieCubit movieCubit = context.read<MovieCubit>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,20 +84,54 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 20,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        AppLocalizations.of(context)!.film,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: AppSize.size16),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 44,
+                        child: Row(
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.film,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: AppSize.size16),
+                            ),
+                            Text(
+                              localeCubit.state.languageCode == 'vi'
+                                  ? widget.dataFilm!.movie.name
+                                  : widget.dataFilm!.movie.origin_name,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(),
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        localeCubit.state.languageCode == 'vi'
-                            ? widget.dataFilm!.movie.name
-                            : widget.dataFilm!.movie.origin_name,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(),
-                      ),
+                      InkWell(
+                        onTap: () {
+                          if (widget.movieInformation.isFavorite) {
+                            setState(() {
+                              widget.movieInformation.isFavorite =
+                                  !widget.movieInformation.isFavorite;
+                            });
+                            movieCubit.addMoviesToFavoritesList(
+                                itemFilm: widget.movieInformation);
+                          }else{
+                             setState(() {
+                              widget.movieInformation.isFavorite =
+                                  !widget.movieInformation.isFavorite;
+                            });
+                            movieCubit.removeMoviesToFavoritesList(
+                                itemFilm: widget.movieInformation);
+                          }
+
+                        },
+                        child: Icon(
+                          Icons.favorite,
+                          color: widget.movieInformation.isFavorite
+                              ? theme.colorScheme.onPrimary
+                              : Colors.black,
+                        ),
+                      )
                     ],
                   ),
                 ),

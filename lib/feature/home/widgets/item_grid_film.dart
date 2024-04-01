@@ -28,10 +28,10 @@ class ItemGridFilm extends StatelessWidget {
         return InkWell(
           onTap: () {
             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => WatchAMovie(
-                                        slug:itemFilms[index].slug)));
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        WatchAMovie(movieInformation: itemFilms[index])));
           },
           child: Column(
             children: [

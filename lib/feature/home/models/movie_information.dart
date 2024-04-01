@@ -9,6 +9,7 @@ class MovieInformation {
   final String poster_url;
   final String thumb_url;
   final int year;
+  bool isFavorite;
 
   MovieInformation(
       {required this.name,
@@ -16,7 +17,8 @@ class MovieInformation {
       required this.origin_name,
       required this.poster_url,
       required this.thumb_url,
-      required this.year});
+      required this.year,
+      this.isFavorite = false});
 
   factory MovieInformation.fromJson(Map<String, dynamic> json) =>
       _$MovieInformationFromJson(json);

@@ -1,6 +1,7 @@
 import 'package:app/component/loading_widget.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
+import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/widgets/video_player_widget.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 
 class WatchAMovie extends StatefulWidget {
-  const WatchAMovie({super.key, required this.slug});
-  final String slug;
+  const WatchAMovie({super.key, required this.movieInformation});
+  final MovieInformation movieInformation;
 
   @override
   State<WatchAMovie> createState() => _WatchAMovieState();
@@ -30,7 +31,8 @@ class _WatchAMovieState extends State<WatchAMovie> {
     localeCubit = context.read<LocaleCubit>();
 
     movieCubit
-        .getMovieDetails(widget.slug, localeCubit.state.languageCode)
+        .getMovieDetails(
+            widget.movieInformation.slug, localeCubit.state.languageCode)
         .then((value) => {
               // actors = movieCubit.state.dataFilm!.movie.actor,
               isLoading = false,
@@ -93,7 +95,9 @@ class _WatchAMovieState extends State<WatchAMovie> {
                             Stack(
                               children: [
                                 VideoPlayerWidget(
-                                    url: linkPlay, dataFilm: state.dataFilm),
+                                    movieInformation: widget.movieInformation,
+                                    url: linkPlay,
+                                    dataFilm: state.dataFilm),
                                 Positioned(
                                     left: 20,
                                     top: 20,

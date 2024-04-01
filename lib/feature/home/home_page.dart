@@ -166,10 +166,10 @@ class _HomePageState extends State<HomePage> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               WatchAMovie(
-                                                                  slug: state
+                                                                  movieInformation: state
                                                                       .movies[
                                                                           index]
-                                                                      .slug)));
+                                                                      )));
                                                 },
                                               );
                                             },

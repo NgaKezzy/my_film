@@ -30,14 +30,13 @@ class ItemFilmHorizontally extends StatelessWidget {
               childAspectRatio: 1.5,
             ),
             itemBuilder: (BuildContext context, int index) {
-              // Tạo và trả về mục hiển thị trong danh sách
               return InkWell(
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              WatchAMovie(slug: itemsFilm[index].slug)));
+                              WatchAMovie(movieInformation: itemsFilm[index])));
                 },
                 child: Column(
                   children: [

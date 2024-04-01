@@ -79,13 +79,12 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => WatchAMovie(
-                                        slug:widget.itemFilms[index].slug)));
-                           
-                          
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => WatchAMovie(
+                                      movieInformation:
+                                          widget.itemFilms[index])));
                         },
                         child: Column(
                           children: [

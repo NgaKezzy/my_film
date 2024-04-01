@@ -4,7 +4,7 @@ import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/movie_list.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/feature/home/search_movie.dart';
-import 'package:app/feature/select_language/select_language.dart';
+import 'package:app/feature/setting/select_language.dart';
 import 'package:app/feature/setting/setting_page.dart';
 import 'package:app/feature/splash/splash_screen.dart';
 import 'package:app/my_home_app.dart';
@@ -112,16 +112,6 @@ class AppNavigation {
             'splash', // Optional, add name to your routes. Allows you navigate by name instead of path
         path: '/',
         builder: (context, state) => const SplashScreen(),
-      ),
-      GoRoute(
-        name: 'watchAMovie',
-        path: '/watchAMovie',
-        builder: (context, state) {
-          return WatchAMovie(
-            key: state.pageKey,
-            slug: state.uri.queryParameters['slug']!,
-          );
-        },
       ),
     ],
   );

@@ -28,7 +28,9 @@
     "hideLess":"Hide less",
     "cancel":"Cancel",
     "movieNotFound":"Movie not found !",
-    "movieListIsEmpty":"Movie list is empty !"
+    "movieListIsEmpty":"Movie list is empty !",
+    "favorite":"Favorite"
+
 
 
 

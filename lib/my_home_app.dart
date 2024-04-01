@@ -72,12 +72,12 @@ class _MyHomeAppState extends State<MyHomeApp> {
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/icons/download.svg',
+                'assets/icons/love.svg',
                 color: theme.colorScheme.tertiary,
               ),
-              label: AppLocalizations.of(context)?.download,
+              label: AppLocalizations.of(context)?.favorite,
               activeIcon: SvgPicture.asset(
-                'assets/icons/download.svg',
+                'assets/icons/love.svg',
                 color: theme.colorScheme.onPrimary,
               ),
             ),

@@ -143,4 +143,26 @@ class MovieCubit extends Cubit<MovieState> {
       status: MovieStatus.success,
     ));
   }
+
+  Future<void> addMoviesToFavoritesList({
+    required MovieInformation itemFilm,
+  }) async {
+    emit(state.copyWith(status: MovieStatus.loading));
+    List<MovieInformation> items = state.favoriteMovies;
+    items.add(itemFilm);
+    emit(state.copyWith(favoriteMovies: items));
+  }
+
+  Future<void> removeMoviesToFavoritesList({
+    required MovieInformation itemFilm,
+  }) async {
+    emit(state.copyWith(status: MovieStatus.loading));
+    List<MovieInformation> items = state.favoriteMovies;
+    for (int i = 0; i < items.length; i++) {
+      if (itemFilm.slug == items[i].slug) {
+        items.removeAt(i);
+      }
+    }
+    emit(state.copyWith(favoriteMovies: items));
+  }
 }
