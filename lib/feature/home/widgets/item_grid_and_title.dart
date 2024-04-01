@@ -16,7 +16,7 @@ class ItemGridAndTitle extends StatefulWidget {
     required this.itemFilms,
     required this.title,
   });
-  final List<MovieInformation> itemFilms;
+  List<MovieInformation> itemFilms;
   final String title;
 
   @override
@@ -26,6 +26,7 @@ class ItemGridAndTitle extends StatefulWidget {
 class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
   bool isDetail = false;
   int itemCount = 6;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -92,8 +93,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: CachedNetworkImage(
-                                  imageUrl:
-                                      'https://img.phimapi.com/${widget.itemFilms[index].poster_url}',
+                                  imageUrl: widget.itemFilms[index].poster_url,
                                   imageBuilder: (context, imageProvider) =>
                                       Container(
                                     decoration: BoxDecoration(

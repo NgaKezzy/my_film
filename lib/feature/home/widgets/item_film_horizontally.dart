@@ -44,8 +44,7 @@ class ItemFilmHorizontally extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: CachedNetworkImage(
-                          imageUrl:
-                              'https://img.phimapi.com/${itemsFilm[index].poster_url}',
+                          imageUrl: itemsFilm[index].poster_url,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(

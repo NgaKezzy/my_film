@@ -1,4 +1,5 @@
-import 'package:app/feature/download/download_page.dart';
+import 'package:app/feature/favorite/download_page.dart';
+import 'package:app/feature/favorite/favorite_page.dart';
 import 'package:app/feature/home/home_page.dart';
 import 'package:app/feature/home/search_movie.dart';
 import 'package:app/feature/setting/setting_page.dart';
@@ -21,7 +22,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
   List<Widget> pages = [
     const HomePage(),
     const DownloadPage(),
-    const DownloadPage(),
+    const FavoritePage(),
     const SettingsPage()
   ];
 

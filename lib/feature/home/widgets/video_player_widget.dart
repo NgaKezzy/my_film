@@ -1,5 +1,6 @@
 import 'package:app/component/loading_widget.dart';
 import 'package:app/config/app_size.dart';
+import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/models/data_film.dart';
 import 'package:app/feature/home/models/movie_category.dart';
@@ -108,22 +109,20 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                       ),
                       InkWell(
                         onTap: () {
+                          setState(() {
+                            widget.movieInformation.isFavorite =
+                                !widget.movieInformation.isFavorite;
+                          });
                           if (widget.movieInformation.isFavorite) {
-                            setState(() {
-                              widget.movieInformation.isFavorite =
-                                  !widget.movieInformation.isFavorite;
-                            });
+                            printRed('Nhảy vào thêm phim');
                             movieCubit.addMoviesToFavoritesList(
                                 itemFilm: widget.movieInformation);
-                          }else{
-                             setState(() {
-                              widget.movieInformation.isFavorite =
-                                  !widget.movieInformation.isFavorite;
-                            });
+                          } else {
+                            printRed('Nhảy vào xóa phim');
+
                             movieCubit.removeMoviesToFavoritesList(
                                 itemFilm: widget.movieInformation);
                           }
-
                         },
                         child: Icon(
                           Icons.favorite,

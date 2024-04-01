@@ -6,8 +6,8 @@ class MovieInformation {
   final String name;
   final String slug;
   final String origin_name;
-  final String poster_url;
-  final String thumb_url;
+  String poster_url;
+  String thumb_url;
   final int year;
   bool isFavorite;
 

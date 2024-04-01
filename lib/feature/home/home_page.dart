@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                               /// phim lẻ
                               ItemGridAndTitle(
                                 itemFilms: state.singleMovies,
-                                title: app!.singleMovie,
+                                title: app.singleMovie,
                               ),
 
                               /// phim hoạt hình

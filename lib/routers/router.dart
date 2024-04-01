@@ -1,4 +1,4 @@
-import 'package:app/feature/download/download_page.dart';
+import 'package:app/feature/favorite/download_page.dart';
 import 'package:app/feature/home/home_page.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/movie_list.dart';

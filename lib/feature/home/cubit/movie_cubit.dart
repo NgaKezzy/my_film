@@ -7,7 +7,7 @@ import 'package:bloc/bloc.dart';
 import 'package:translator/translator.dart';
 
 class MovieCubit extends Cubit<MovieState> {
-  MovieCubit() : super(const MovieState());
+  MovieCubit() : super(MovieState());
 
   final translator = GoogleTranslator();
 
@@ -83,6 +83,9 @@ class MovieCubit extends Cubit<MovieState> {
     for (var i = 0; i < items.length; i++) {
       final MovieInformation item;
       item = MovieInformation.fromJson(items[i]);
+      item.poster_url = 'https://img.phimapi.com/${item.poster_url}';
+      item.thumb_url = 'https://img.phimapi.com/${item.thumb_url}';
+
       newSingleMovie.add(item);
     }
     emit(state.copyWith(
@@ -101,6 +104,8 @@ class MovieCubit extends Cubit<MovieState> {
     for (var i = 0; i < items.length; i++) {
       final MovieInformation item;
       item = MovieInformation.fromJson(items[i]);
+      item.poster_url = 'https://img.phimapi.com/${item.poster_url}';
+      item.thumb_url = 'https://img.phimapi.com/${item.thumb_url}';
       newSeriesMovies.add(item);
     }
     emit(state.copyWith(
@@ -118,6 +123,8 @@ class MovieCubit extends Cubit<MovieState> {
     for (var i = 0; i < items.length; i++) {
       final MovieInformation item;
       item = MovieInformation.fromJson(items[i]);
+      item.poster_url = 'https://img.phimapi.com/${item.poster_url}';
+      item.thumb_url = 'https://img.phimapi.com/${item.thumb_url}';
       newCartoons.add(item);
     }
     emit(state.copyWith(
@@ -148,7 +155,7 @@ class MovieCubit extends Cubit<MovieState> {
     required MovieInformation itemFilm,
   }) async {
     emit(state.copyWith(status: MovieStatus.loading));
-    List<MovieInformation> items = state.favoriteMovies;
+    List<MovieInformation> items = [...state.favoriteMovies];
     items.add(itemFilm);
     emit(state.copyWith(favoriteMovies: items));
   }
