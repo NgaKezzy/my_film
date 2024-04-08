@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> initialization() async {
-   await movieCubit.getMovieDataTheLocalStorage();
+    await movieCubit.getMovieDataTheLocalStorage();
     movieCubit.getMovie();
     movieCubit.getAListOfIndividualMovies();
     movieCubit.getTheListOfMoviesAndSeries();
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         width: 1,
-                                        color: Colors.black,
+                                        color: theme.colorScheme.tertiary,
                                         style: BorderStyle.solid),
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Row(

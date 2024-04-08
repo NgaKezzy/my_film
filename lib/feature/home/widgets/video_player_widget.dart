@@ -82,56 +82,51 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 20,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 44,
-                        child: Row(
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.film,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: AppSize.size16),
-                            ),
-                            Text(
-                              localeCubit.state.languageCode == 'vi'
-                                  ? widget.dataFilm!.movie.name
-                                  : widget.dataFilm!.movie.origin_name,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            widget.movieInformation!.isFavorite =
-                                !widget.movieInformation!.isFavorite;
-                          });
-                          if (widget.movieInformation!.isFavorite) {
-                            printRed('Nhảy vào thêm phim');
-                            movieCubit.addMoviesToFavoritesList(
-                                itemFilm: widget.movieInformation);
-                          } else {
-                            printRed('Nhảy vào xóa phim');
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.film,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: AppSize.size16),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          widget.movieInformation!.isFavorite =
+                              !widget.movieInformation!.isFavorite;
+                        });
+                        if (widget.movieInformation!.isFavorite) {
+                          printRed('Nhảy vào thêm phim');
+                          movieCubit.addMoviesToFavoritesList(
+                              itemFilm: widget.movieInformation);
+                        } else {
+                          printRed('Nhảy vào xóa phim');
 
-                            movieCubit.removeMoviesToFavoritesList(
-                                itemFilm: widget.movieInformation);
-                          }
-                        },
-                        child: Icon(
-                          Icons.favorite,
-                          color: widget.movieInformation!.isFavorite
-                              ? theme.colorScheme.onPrimary
-                              : theme.colorScheme.tertiary,
-                        ),
-                      )
-                    ],
+                          movieCubit.removeMoviesToFavoritesList(
+                              itemFilm: widget.movieInformation);
+                        }
+                      },
+                      child: Icon(
+                        Icons.favorite,
+                        size: AppSize.size35,
+                        color: widget.movieInformation!.isFavorite
+                            ? theme.colorScheme.onPrimary
+                            : theme.colorScheme.tertiary,
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Text(
+                    localeCubit.state.languageCode == 'vi'
+                        ? widget.dataFilm!.movie.name
+                        : widget.dataFilm!.movie.origin_name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(),
                   ),
                 ),
                 const SizedBox(

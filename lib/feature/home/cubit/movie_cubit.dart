@@ -25,7 +25,15 @@ class MovieCubit extends Cubit<MovieState> {
       item = MovieInformation.fromJson(items[i]);
       newMovies.add(item);
     }
-    if (state.favoriteMovies.isNotEmpty) {}
+    if (state.favoriteMovies.isNotEmpty && newMovies.isNotEmpty) {
+      for (int i = 0; i < newMovies.length; i++) {
+        for (int j = 0; j < state.favoriteMovies.length; j++) {
+          if (newMovies[i].slug == state.favoriteMovies[j]!.slug) {
+            newMovies[i].isFavorite = true;
+          }
+        }
+      }
+    }
     emit(state.copyWith(
       movies: newMovies,
       status: MovieStatus.success,
@@ -91,6 +99,15 @@ class MovieCubit extends Cubit<MovieState> {
 
       newSingleMovie.add(item);
     }
+    if (state.favoriteMovies.isNotEmpty && newSingleMovie.isNotEmpty) {
+      for (int i = 0; i < newSingleMovie.length; i++) {
+        for (int j = 0; j < state.favoriteMovies.length; j++) {
+          if (newSingleMovie[i].slug == state.favoriteMovies[j]!.slug) {
+            newSingleMovie[i].isFavorite = true;
+          }
+        }
+      }
+    }
     emit(state.copyWith(
       singleMovies: newSingleMovie,
       status: MovieStatus.success,
@@ -111,6 +128,15 @@ class MovieCubit extends Cubit<MovieState> {
       item.thumb_url = 'https://img.phimapi.com/${item.thumb_url}';
       newSeriesMovies.add(item);
     }
+    if (state.favoriteMovies.isNotEmpty && newSeriesMovies.isNotEmpty) {
+      for (int i = 0; i < newSeriesMovies.length; i++) {
+        for (int j = 0; j < state.favoriteMovies.length; j++) {
+          if (newSeriesMovies[i].slug == state.favoriteMovies[j]!.slug) {
+            newSeriesMovies[i].isFavorite = true;
+          }
+        }
+      }
+    }
     emit(state.copyWith(
       seriesMovies: newSeriesMovies,
       status: MovieStatus.success,
@@ -129,6 +155,16 @@ class MovieCubit extends Cubit<MovieState> {
       item.poster_url = 'https://img.phimapi.com/${item.poster_url}';
       item.thumb_url = 'https://img.phimapi.com/${item.thumb_url}';
       newCartoons.add(item);
+    }
+
+    if (state.favoriteMovies.isNotEmpty && newCartoons.isNotEmpty) {
+      for (int i = 0; i < newCartoons.length; i++) {
+        for (int j = 0; j < state.favoriteMovies.length; j++) {
+          if (newCartoons[i].slug == state.favoriteMovies[j]!.slug) {
+            newCartoons[i].isFavorite = true;
+          }
+        }
+      }
     }
     emit(state.copyWith(
       cartoon: newCartoons,
@@ -163,7 +199,6 @@ class MovieCubit extends Cubit<MovieState> {
     Box<MovieInformation> favoriteMovieBox =
         Hive.box(KeyApp.FAVORITE_MOVIE_BOX);
 
-    printGreen(favoriteMovieBox.length.toString());
     if (favoriteMovieBox.length == 0) {
       emit(
         state.copyWith(
