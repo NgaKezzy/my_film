@@ -10,6 +10,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// ignore: must_be_immutable
 class ItemGridAndTitle extends StatefulWidget {
   ItemGridAndTitle({
     super.key,
@@ -25,7 +26,7 @@ class ItemGridAndTitle extends StatefulWidget {
 
 class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
   bool isDetail = false;
-  int itemCount = 6;
+  int itemCount = 9;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
               padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
               child: Column(
                 children: [
-                  InkWell(
+                  GestureDetector(
                     onTap: () {
                       Navigator.push(
                           context,
@@ -78,7 +79,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                     ),
                     itemCount: itemCount, // Số lượng items trong grid view
                     itemBuilder: (context, index) {
-                      return InkWell(
+                      return GestureDetector(
                         onTap: () {
                           Navigator.push(
                               context,
@@ -136,14 +137,14 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                   const SizedBox(
                     height: 20,
                   ),
-                  InkWell(
+                  GestureDetector(
                     onTap: () {
                       isDetail = !isDetail;
 
                       if (isDetail) {
-                        itemCount = 12;
+                        itemCount = 15;
                       } else {
-                        itemCount = 6;
+                        itemCount = 9;
                       }
                       setState(() {});
                     },

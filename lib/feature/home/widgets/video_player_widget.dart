@@ -22,7 +22,7 @@ class VideoPlayerWidget extends StatefulWidget {
       required this.movieInformation});
   final String url;
   final DataFilm? dataFilm;
-  MovieInformation movieInformation;
+  MovieInformation? movieInformation;
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
@@ -107,13 +107,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                           ],
                         ),
                       ),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           setState(() {
-                            widget.movieInformation.isFavorite =
-                                !widget.movieInformation.isFavorite;
+                            widget.movieInformation!.isFavorite =
+                                !widget.movieInformation!.isFavorite;
                           });
-                          if (widget.movieInformation.isFavorite) {
+                          if (widget.movieInformation!.isFavorite) {
                             printRed('Nhảy vào thêm phim');
                             movieCubit.addMoviesToFavoritesList(
                                 itemFilm: widget.movieInformation);
@@ -126,9 +126,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                         },
                         child: Icon(
                           Icons.favorite,
-                          color: widget.movieInformation.isFavorite
+                          color: widget.movieInformation!.isFavorite
                               ? theme.colorScheme.onPrimary
-                              : Colors.black,
+                              : theme.colorScheme.tertiary,
                         ),
                       )
                     ],
@@ -210,7 +210,7 @@ class _EpisodeNumberOfTheMovieState extends State<EpisodeNumberOfTheMovie> {
           alignment: WrapAlignment.center, // Căn giữa theo chiều ngang
           children: List.generate(
             widget.items[0].server_data.length,
-            (index) => InkWell(
+            (index) => GestureDetector(
               onTap: () {
                 if (indexSelected != index) {
                   setState(() {

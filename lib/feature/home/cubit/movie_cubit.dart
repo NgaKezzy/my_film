@@ -1,9 +1,11 @@
+import 'package:app/config/key_app.dart';
 import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/models/data_film.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/network/fetch_api_movie.dart';
 import 'package:bloc/bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:translator/translator.dart';
 
 class MovieCubit extends Cubit<MovieState> {
@@ -23,6 +25,7 @@ class MovieCubit extends Cubit<MovieState> {
       item = MovieInformation.fromJson(items[i]);
       newMovies.add(item);
     }
+    if (state.favoriteMovies.isNotEmpty) {}
     emit(state.copyWith(
       movies: newMovies,
       status: MovieStatus.success,
@@ -143,6 +146,8 @@ class MovieCubit extends Cubit<MovieState> {
     for (var i = 0; i < items.length; i++) {
       final MovieInformation item;
       item = MovieInformation.fromJson(items[i]);
+      item.poster_url = 'https://img.phimapi.com/${item.poster_url}';
+      item.thumb_url = 'https://img.phimapi.com/${item.thumb_url}';
       newMoviesSearch.add(item);
     }
     emit(state.copyWith(
@@ -151,25 +156,73 @@ class MovieCubit extends Cubit<MovieState> {
     ));
   }
 
+  Future<void> getMovieDataTheLocalStorage() async {
+    emit(state.copyWith(status: MovieStatus.loading));
+    List<MovieInformation?> itemFilms = [];
+
+    Box<MovieInformation> favoriteMovieBox =
+        Hive.box(KeyApp.FAVORITE_MOVIE_BOX);
+
+    printGreen(favoriteMovieBox.length.toString());
+    if (favoriteMovieBox.length == 0) {
+      emit(
+        state.copyWith(
+          favoriteMovies: [],
+        ),
+      );
+    } else {
+      for (int i = 0; i < favoriteMovieBox.length; i++) {
+        itemFilms.add(favoriteMovieBox.getAt(i));
+      }
+      emit(state.copyWith(favoriteMovies: itemFilms));
+    }
+  }
+
   Future<void> addMoviesToFavoritesList({
-    required MovieInformation itemFilm,
+    required MovieInformation? itemFilm,
   }) async {
     emit(state.copyWith(status: MovieStatus.loading));
-    List<MovieInformation> items = [...state.favoriteMovies];
-    items.add(itemFilm);
-    emit(state.copyWith(favoriteMovies: items));
+    Box<MovieInformation> favoriteMovieBox =
+        Hive.box(KeyApp.FAVORITE_MOVIE_BOX);
+
+    // ! nếu danh sách phim yêu thích trống thì add luôn vào
+
+    if (state.favoriteMovies.isEmpty) {
+      favoriteMovieBox.add(itemFilm!);
+
+      List<MovieInformation> items = [itemFilm];
+      emit(
+        state.copyWith(favoriteMovies: items),
+      );
+    } else {
+      await favoriteMovieBox.clear();
+      List<MovieInformation?> items = [itemFilm, ...state.favoriteMovies];
+      items.forEach(
+        (element) {
+          favoriteMovieBox.add(element!);
+          printRed(element.slug);
+        },
+      );
+      emit(state.copyWith(favoriteMovies: items));
+    }
   }
 
   Future<void> removeMoviesToFavoritesList({
-    required MovieInformation itemFilm,
+    required MovieInformation? itemFilm,
   }) async {
     emit(state.copyWith(status: MovieStatus.loading));
-    List<MovieInformation> items = state.favoriteMovies;
+    List<MovieInformation?> items = state.favoriteMovies;
     for (int i = 0; i < items.length; i++) {
-      if (itemFilm.slug == items[i].slug) {
+      if (itemFilm!.slug == items[i]!.slug) {
         items.removeAt(i);
       }
     }
     emit(state.copyWith(favoriteMovies: items));
+    Box<MovieInformation> favoriteMovieBox =
+        Hive.box(KeyApp.FAVORITE_MOVIE_BOX);
+    favoriteMovieBox.clear();
+    items.forEach((element) {
+      favoriteMovieBox.add(element!);
+    });
   }
 }

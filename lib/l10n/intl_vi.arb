@@ -29,7 +29,11 @@
     "cancel":"Hủy",
     "movieNotFound":"Không tìm thấy phim !",
     "movieListIsEmpty":"Danh sách phim trống !",
-    "favorite":"Yêu thích"
+    "favorite":"Yêu thích",
+    "emptyList":"Danh sách trống !",
+    "favoriteFilm":"Phim yêu thích"
+
+
 
 
 

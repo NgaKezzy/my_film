@@ -9,7 +9,7 @@ enum MovieStatus { init, loading, success, error }
 
 @CopyWith()
 class MovieState extends Equatable {
-   MovieState(
+  MovieState(
       {this.movies = const [],
       this.moviesSearch = const [],
       this.singleMovies = const [],
@@ -25,7 +25,7 @@ class MovieState extends Equatable {
   final List<MovieInformation> cartoon;
   final MovieStatus status;
   final DataFilm? dataFilm;
-   List<MovieInformation> favoriteMovies;
+  List<MovieInformation?> favoriteMovies;
 
   @override
   List<Object?> get props => [

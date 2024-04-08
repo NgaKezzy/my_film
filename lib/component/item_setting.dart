@@ -9,7 +9,7 @@ class ItemSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         onTap.call();
       },

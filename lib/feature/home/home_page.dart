@@ -16,7 +16,6 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -60,6 +59,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> initialization() async {
+   await movieCubit.getMovieDataTheLocalStorage();
     movieCubit.getMovie();
     movieCubit.getAListOfIndividualMovies();
     movieCubit.getTheListOfMoviesAndSeries();
@@ -74,6 +74,7 @@ class _HomePageState extends State<HomePage> {
     final theme = Theme.of(context);
     final HomePageCubit homePageCubitWatch = context.watch<HomePageCubit>();
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
       child: BlocBuilder<HomePageCubit, HomePageState>(
@@ -94,13 +95,14 @@ class _HomePageState extends State<HomePage> {
                     )
                   : Scaffold(
                       appBar: AppBar(
+                        backgroundColor: theme.colorScheme.primary,
                         automaticallyImplyLeading: false,
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SvgPicture.asset('assets/icons/icon_app.svg',
                                 color: theme.colorScheme.onPrimary),
-                            InkWell(
+                            GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                     context,
@@ -109,7 +111,8 @@ class _HomePageState extends State<HomePage> {
                                         type: PageTransitionType.leftToRight));
                               },
                               child: Container(
-                                padding: const EdgeInsets.all(8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 4),
                                 alignment: Alignment.centerLeft,
                                 height: 32,
                                 width: width * 0.8,
@@ -166,10 +169,9 @@ class _HomePageState extends State<HomePage> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               WatchAMovie(
-                                                                  movieInformation: state
-                                                                      .movies[
-                                                                          index]
-                                                                      )));
+                                                                  movieInformation:
+                                                                      state.movies[
+                                                                          index])));
                                                 },
                                               );
                                             },
@@ -230,7 +232,7 @@ class TitleAndChevronRight extends StatelessWidget {
     return SliverPadding(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
       sliver: SliverToBoxAdapter(
-        child: InkWell(
+        child: GestureDetector(
           onTap: () {
             Navigator.push(
                 context,

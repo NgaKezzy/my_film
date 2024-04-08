@@ -29,7 +29,9 @@
     "cancel":"Cancel",
     "movieNotFound":"Movie not found !",
     "movieListIsEmpty":"Movie list is empty !",
-    "favorite":"Favorite"
+    "favorite":"Favorite",
+    "emptyList":"empty list !",
+    "favoriteFilm":"Favorite film"
 
 
 

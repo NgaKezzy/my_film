@@ -1,8 +1,9 @@
 import 'package:app/feature/home/cubit/home_page_cubit.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
+import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/splash/splash_screen.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
-import 'package:app/routers/router.dart';
+import 'package:app/local_storage/local_storage.dart';
 import 'package:app/theme/cubit/theme_cubit.dart';
 import 'package:app/theme/dark_theme.dart';
 import 'package:app/theme/light_theme.dart';
@@ -10,10 +11,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 String language = 'vi';
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter('dev_box');
+  await LocalStorage.hiveRegisterAdapter(
+  );
+  await LocalStorage.hiveOpenBox();
+
+
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     systemNavigationBarColor: Colors.blue, // navigation bar color
     statusBarColor: Colors.transparent, // status bar color

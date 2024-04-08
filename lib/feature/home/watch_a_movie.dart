@@ -11,7 +11,7 @@ import 'package:flutter_svg/svg.dart';
 
 class WatchAMovie extends StatefulWidget {
   const WatchAMovie({super.key, required this.movieInformation});
-  final MovieInformation movieInformation;
+  final MovieInformation? movieInformation;
 
   @override
   State<WatchAMovie> createState() => _WatchAMovieState();
@@ -32,7 +32,7 @@ class _WatchAMovieState extends State<WatchAMovie> {
 
     movieCubit
         .getMovieDetails(
-            widget.movieInformation.slug, localeCubit.state.languageCode)
+            widget.movieInformation!.slug, localeCubit.state.languageCode)
         .then((value) => {
               // actors = movieCubit.state.dataFilm!.movie.actor,
               isLoading = false,
@@ -101,7 +101,7 @@ class _WatchAMovieState extends State<WatchAMovie> {
                                 Positioned(
                                     left: 20,
                                     top: 20,
-                                    child: InkWell(
+                                    child: GestureDetector(
                                       onTap: () {
                                         Navigator.pop(context);
                                       },

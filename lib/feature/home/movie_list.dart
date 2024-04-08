@@ -39,7 +39,7 @@ class MovieList extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 20),
                       itemBuilder: (context, index) {
-                        return InkWell(
+                        return GestureDetector(
                           onTap: () {
                             Navigator.push(
                                 context,
@@ -55,8 +55,7 @@ class MovieList extends StatelessWidget {
                                   width: width * 0.4,
                                   height: 100,
                                   child: CachedNetworkImage(
-                                    imageUrl:
-                                        'https://img.phimapi.com/${itemFilms[index].thumb_url}',
+                                    imageUrl: itemFilms[index].thumb_url,
                                     imageBuilder: (context, imageProvider) =>
                                         Container(
                                       decoration: BoxDecoration(
