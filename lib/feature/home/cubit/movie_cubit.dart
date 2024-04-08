@@ -4,6 +4,7 @@ import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/models/data_film.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/network/fetch_api_movie.dart';
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:translator/translator.dart';

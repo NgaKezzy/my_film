@@ -25,7 +25,7 @@ class MovieState extends Equatable {
   final List<MovieInformation> cartoon;
   final MovieStatus status;
   final DataFilm? dataFilm;
-  List<MovieInformation?> favoriteMovies;
+  final List<MovieInformation?> favoriteMovies;
 
   @override
   List<Object?> get props => [

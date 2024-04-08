@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class WatchAMovie extends StatefulWidget {
   const WatchAMovie({super.key, required this.movieInformation});
@@ -86,6 +87,15 @@ class _WatchAMovieState extends State<WatchAMovie> {
                     )
                   : WillPopScope(
                       onWillPop: () async {
+                        Fluttertoast.showToast(
+                            msg: AppLocalizations.of(context)!
+                                .pressTheButtonToExit,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.SNACKBAR,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.grey,
+                            textColor: Colors.red,
+                            fontSize: 16.0);
                         return false;
                       },
                       child: SafeArea(
