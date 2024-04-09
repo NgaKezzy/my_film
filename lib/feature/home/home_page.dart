@@ -40,27 +40,27 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Thông Báo'),
-            content: const SingleChildScrollView(
+            title: Text(AppLocalizations.of(context)!.notification),
+            content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('Cho phép ứng dụng truy cập thông báo ?'),
+                  Text(AppLocalizations.of(context)!
+                      .allowAppsToAccessNotifications),
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Hủy'),
+                child: Text(AppLocalizations.of(context)!.cancel),
                 onPressed: () {
                   homePageCubit.notificationsEnabled();
                   Navigator.of(context).pop();
                 },
               ),
               TextButton(
-                child: const Text('Đồng ý'),
+                child: Text(AppLocalizations.of(context)!.ok),
                 onPressed: () {
                   homePageCubit.notificationsEnabled();
-
                   Navigator.of(context).pop();
                   openAppSettings();
                 },

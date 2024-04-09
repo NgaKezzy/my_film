@@ -31,7 +31,11 @@
     "movieListIsEmpty":"Danh sách phim trống !",
     "favorite":"Yêu thích",
     "emptyList":"Danh sách trống !",
-    "favoriteFilm":"Phim yêu thích"
+    "favoriteFilm":"Phim yêu thích",
+    "notification":"Thông báo",
+    "allowAppsToAccessNotifications":"Cho phép ứng dụng truy cập thông báo ?"
+
+
 
 
 

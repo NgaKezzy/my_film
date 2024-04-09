@@ -31,7 +31,9 @@
     "movieListIsEmpty":"Movie list is empty !",
     "favorite":"Favorite",
     "emptyList":"empty list !",
-    "favoriteFilm":"Favorite film"
+    "favoriteFilm":"Favorite film",
+    "notification":"Notification",
+    "allowAppsToAccessNotifications":"Allow apps to access notifications?"
 
 
 
