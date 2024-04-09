@@ -1,5 +1,7 @@
+import 'package:app/config/key_app.dart';
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../config/print_color.dart';
 import 'home_page_state.dart';
@@ -25,5 +27,20 @@ class HomePageCubit extends Cubit<HomePageState> {
     emit(state.copyWith(status: HomePageStatus.init));
 
     emit(state.copyWith(isLoadingHome: false, status: HomePageStatus.success));
+  }
+
+  Future<void> notificationsEnabled() async {
+    emit(state.copyWith(status: HomePageStatus.loading));
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(KeyApp.IS_SELECTED_NOTIFICATION, true);
+    emit(state.copyWith(isNotification: true));
+  }
+
+
+   Future<void> initIsSelectedNotifications() async {
+    emit(state.copyWith(status: HomePageStatus.loading));
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isSelected = await  prefs.getBool(KeyApp.IS_SELECTED_NOTIFICATION)?? false;
+    emit(state.copyWith(isNotification: isSelected));
   }
 }

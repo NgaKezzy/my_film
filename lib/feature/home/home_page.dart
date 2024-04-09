@@ -18,6 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -31,6 +32,45 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late MovieCubit movieCubit;
   late HomePageCubit homePageCubit;
+
+  Future<void> permissionHandle() async {
+    if (await Permission.notification.request().isDenied) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Thông Báo'),
+            content: const SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('Cho phép ứng dụng truy cập thông báo ?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Hủy'),
+                onPressed: () {
+                  homePageCubit.notificationsEnabled();
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Đồng ý'),
+                onPressed: () {
+                  homePageCubit.notificationsEnabled();
+
+                  Navigator.of(context).pop();
+                  openAppSettings();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   Future<void> checkStatusNetwork() async {
     homePageCubit.checkNetwork().then((value) async => {
@@ -55,6 +95,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     movieCubit = context.read<MovieCubit>();
     homePageCubit = context.read<HomePageCubit>();
+    homePageCubit.state.isNotification ? {} : permissionHandle();
+
     checkStatusNetwork();
   }
 

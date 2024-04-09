@@ -1,10 +1,10 @@
 import 'dart:async';
+import 'package:app/feature/home/cubit/home_page_cubit.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:app/my_home_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 
 bool isFirstCheck = true;
 
@@ -17,17 +17,20 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   late LocaleCubit localeCubit;
+  late HomePageCubit homePageCubit;
 
   @override
   void initState() {
     super.initState();
     localeCubit = context.read<LocaleCubit>();
+    homePageCubit = context.read<HomePageCubit>();
+    homePageCubit.initIsSelectedNotifications();
+
     localeCubit.checkIsSelectedLanguage();
     Timer(const Duration(seconds: 3), () {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(
-              builder: (context) => const MyHomeApp()),
+          MaterialPageRoute(builder: (context) => const MyHomeApp()),
           (route) => false);
     });
   }

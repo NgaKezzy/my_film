@@ -10,11 +10,14 @@ class HomePageState extends Equatable {
   const HomePageState(
       {this.isConnectNetwork = false,
       this.status = HomePageStatus.init,
-      this.isLoadingHome = true});
+      this.isLoadingHome = true,
+      this.isNotification = false
+      });
   final bool isConnectNetwork;
   final HomePageStatus status;
   final bool isLoadingHome;
+  final bool isNotification;
 
   @override
-  List<Object> get props => [isConnectNetwork, status, isLoadingHome];
+  List<Object> get props => [isConnectNetwork, status, isLoadingHome, isNotification];
 }
