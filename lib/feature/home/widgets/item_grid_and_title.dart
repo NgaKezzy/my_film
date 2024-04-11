@@ -1,4 +1,5 @@
 import 'package:app/config/app_size.dart';
+import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/movie_list.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
@@ -7,7 +8,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
@@ -30,6 +30,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
 
   @override
   Widget build(BuildContext context) {
+    final MovieCubit movieCubit = context.read<MovieCubit>();
     final theme = Theme.of(context);
     final app = AppLocalizations.of(context);
 
@@ -81,6 +82,8 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
+                          movieCubit.addToWatchHistory(
+                              itemFilm: widget.itemFilms[index]);
                           Navigator.push(
                               context,
                               MaterialPageRoute(

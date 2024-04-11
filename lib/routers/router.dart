@@ -1,8 +1,5 @@
 import 'package:app/feature/favorite/download_page.dart';
 import 'package:app/feature/home/home_page.dart';
-import 'package:app/feature/home/models/movie_information.dart';
-import 'package:app/feature/home/movie_list.dart';
-import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/feature/home/search_movie.dart';
 import 'package:app/feature/setting/select_language.dart';
 import 'package:app/feature/setting/setting_page.dart';
@@ -30,7 +27,7 @@ class AppNavigation {
         /// MainPage
 
         builder: (context, state, navigationShell) {
-          return MyHomeApp();
+          return const MyHomeApp();
         },
 
         branches: <StatefulShellBranch>[

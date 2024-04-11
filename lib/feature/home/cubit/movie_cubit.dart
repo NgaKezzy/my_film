@@ -234,8 +234,8 @@ class MovieCubit extends Cubit<MovieState> {
       await favoriteMovieBox.clear();
       List<MovieInformation?> items = [itemFilm, ...state.favoriteMovies];
       items.forEach(
-        (element) {
-          favoriteMovieBox.add(element!);
+        (element) async {
+          await favoriteMovieBox.add(element!);
           printRed(element.slug);
         },
       );
@@ -260,5 +260,94 @@ class MovieCubit extends Cubit<MovieState> {
     items.forEach((element) {
       favoriteMovieBox.add(element!);
     });
+  }
+
+  Future<void> addToWatchHistory({required MovieInformation? itemFilm}) async {
+    emit(state.copyWith(status: MovieStatus.loading));
+    Box<MovieInformation> viewHistoryBox = Hive.box(KeyApp.VIEW_HISTORY_BOX);
+
+    List<MovieInformation?> newViewHistory = [];
+    if (state.viewHistory.isEmpty) {
+      /// nếu mảng rỗng thêm luôn phim vào
+      viewHistoryBox.add(itemFilm!);
+      emit(
+          state.copyWith(viewHistory: [itemFilm], status: MovieStatus.success));
+      printRed(state.viewHistory.length.toString());
+    } else {
+      // nếu mảng có chứa phần từ thì
+      viewHistoryBox.clear();
+      // ! kiểm tra mảng có tồn tại phần tử đó chưa
+      bool isContains = false;
+      int index = -1;
+
+      for (int i = 0; i < state.viewHistory.length; i++) {
+        if (itemFilm!.slug == state.viewHistory[i]!.slug) {
+          isContains = true;
+          index = i;
+        }
+      }
+
+      if (isContains) {
+        // xóa phim ở vị trí cũ đi thay phim vào vị trí đầu tiên
+        List<MovieInformation?> items = state.viewHistory;
+        items.removeAt(index);
+        newViewHistory = [itemFilm, ...items];
+        newViewHistory.forEach(
+          (element) {
+            viewHistoryBox.add(element!);
+          },
+        );
+
+        emit(state.copyWith(
+            viewHistory: newViewHistory, status: MovieStatus.success));
+      } else {
+        if (state.viewHistory.length == 20) {
+          /// nếu 20 phần tử thì xóa phần tử cuối rồi thêm phim mới xem vào đầu tiên
+
+          List<MovieInformation?> items = [...state.viewHistory];
+          items.removeLast();
+          newViewHistory = [itemFilm, ...items];
+          newViewHistory.forEach(
+            (element) {
+              viewHistoryBox.add(element!);
+            },
+          );
+          emit(state.copyWith(
+              viewHistory: newViewHistory, status: MovieStatus.success));
+        } else {
+          // nhỏ hơn 20 phần tử thì thêm vào phim vào phần tử đầu tiên của mảng
+
+          List<MovieInformation?> items = [...state.viewHistory];
+          newViewHistory = [itemFilm, ...items];
+          newViewHistory.forEach(
+            (element) {
+              viewHistoryBox.add(element!);
+            },
+          );
+          emit(state.copyWith(
+              viewHistory: newViewHistory, status: MovieStatus.success));
+        }
+      }
+    }
+  }
+
+  Future<void> getViewHistoryTheLocalStorage() async {
+    emit(state.copyWith(status: MovieStatus.loading));
+    Box<MovieInformation> viewHistoryBox = Hive.box(KeyApp.VIEW_HISTORY_BOX);
+    printRed(viewHistoryBox.length.toString());
+    List<MovieInformation?> newViewHistory = [];
+    if (viewHistoryBox.length == 0) {
+      emit(
+        state.copyWith(
+          favoriteMovies: [],
+        ),
+      );
+    } else {
+      for (int i = 0; i < viewHistoryBox.length; i++) {
+        newViewHistory.add(viewHistoryBox.getAt(i));
+      }
+      emit(state.copyWith(viewHistory: newViewHistory));
+      printCyan(state.viewHistory.length.toString());
+    }
   }
 }

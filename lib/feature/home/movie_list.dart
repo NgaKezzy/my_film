@@ -2,9 +2,8 @@ import 'package:app/component/header_title_app.dart';
 import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:app/feature/home/widgets/item_movie_information.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MovieList extends StatelessWidget {
@@ -40,67 +39,18 @@ class MovieList extends StatelessWidget {
                           horizontal: 10, vertical: 20),
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => WatchAMovie(
-                                        movieInformation: itemFilms[index])));
-                          },
-                          child: Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: SizedBox(
-                                  width: width * 0.4,
-                                  height: 100,
-                                  child: CachedNetworkImage(
-                                    imageUrl: itemFilms[index].thumb_url,
-                                    imageBuilder: (context, imageProvider) =>
-                                        Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.warning),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 80,
-                                width: width * 0.6 - 20,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        itemFilms[index].name,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Container(
-                                          padding: EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          child: Text(itemFilms[index]
-                                              .year
-                                              .toString())),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        );
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WatchAMovie(
+                                          movieInformation: itemFilms[index])));
+                            },
+                            child: ItemMovieInformation(
+                              imageUrl: itemFilms[index].thumb_url,
+                              name: itemFilms[index].name,
+                              year: itemFilms[index].year.toString(),
+                            ));
                       },
                       separatorBuilder: (context, index) => const SizedBox(
                             height: AppSize.size10,

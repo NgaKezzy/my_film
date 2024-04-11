@@ -1,11 +1,10 @@
 import 'package:app/feature/favorite/download_page.dart';
-import 'package:app/feature/favorite/favorite_page.dart';
+import 'package:app/feature/favorite/favorite_movie_page.dart';
 import 'package:app/feature/home/home_page.dart';
 import 'package:app/feature/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class MyHomeApp extends StatefulWidget {
   const MyHomeApp({super.key});
@@ -19,11 +18,9 @@ class _MyHomeAppState extends State<MyHomeApp> {
   List<Widget> pages = [
     const HomePage(),
     const DownloadPage(),
-    const FavoritePage(),
+    const FavoriteMoviePage(),
     const SettingsPage()
   ];
-
-
 
   @override
   Widget build(BuildContext context) {

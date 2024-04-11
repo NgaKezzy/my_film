@@ -15,7 +15,7 @@ class KeyApp {
 
   /// local storage
   static const String FAVORITE_MOVIE_BOX = 'favorite_Movie_Box';
-  static const String VIEW_HISTORY = 'view_history';
+  static const String VIEW_HISTORY_BOX = 'view_history';
   static const String IS_SELECTED_NOTIFICATION = 'is_selected_notification';
 
 

@@ -33,7 +33,11 @@
     "emptyList":"Danh sách trống !",
     "favoriteFilm":"Phim yêu thích",
     "notification":"Thông báo",
-    "allowAppsToAccessNotifications":"Cho phép ứng dụng truy cập thông báo ?"
+    "allowAppsToAccessNotifications":"Cho phép ứng dụng truy cập thông báo ?",
+    "viewHistory":"Lịch sử xem",
+    "selectLanguage":"Chọn ngôn ngữ",
+    "viewHistoryIsEmpty":"Lịch sử xem trống !"
+
 
 
 

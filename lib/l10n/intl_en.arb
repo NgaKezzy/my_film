@@ -33,7 +33,12 @@
     "emptyList":"empty list !",
     "favoriteFilm":"Favorite film",
     "notification":"Notification",
-    "allowAppsToAccessNotifications":"Allow apps to access notifications?"
+    "allowAppsToAccessNotifications":"Allow apps to access notifications?",
+    "viewHistory":"View history",
+    "selectLanguage":"Select language",
+    "viewHistoryIsEmpty":"View history is empty !"
+
+
 
 
 

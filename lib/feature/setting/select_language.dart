@@ -1,6 +1,6 @@
+import 'package:app/component/header_title_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import '../../component/button.dart';
 import '../../component/flag.dart';
 import '../../config/print_color.dart';
@@ -28,6 +28,12 @@ class _SelectLanguageState extends State<SelectLanguage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            HeaderTitleApp(
+              title: AppLocalizations.of(context)!.selectLanguage,
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
             Expanded(
               child: BlocBuilder<LocaleCubit, LocaleState>(
                 builder: (context, state) {
@@ -60,14 +66,16 @@ class _SelectLanguageState extends State<SelectLanguage> {
               ),
             ),
             // const Expanded(child: SizedBox())
-            Button(
-              onTap: () async {
-                await localeCubit.successSetLanguage();
-                Navigator.pop(context);
-              },
-              text: AppLocalizations.of(context)!.ok,
-              colorBt: theme.colorScheme.primary,
-            ),
+            indexSelect != -1
+                ? Button(
+                    onTap: () async {
+                      await localeCubit.successSetLanguage();
+                      Navigator.pop(context);
+                    },
+                    text: AppLocalizations.of(context)!.ok,
+                    colorBt: theme.colorScheme.primary,
+                  )
+                : const SizedBox(),
             const SizedBox(
               height: 50,
             )

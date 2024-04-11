@@ -40,10 +40,8 @@ class FlagAndCountryName extends StatelessWidget {
                 width: width,
                 height: height,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                        style: BorderStyle.solid,
-                        color: theme.colorScheme.tertiary)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: Image.asset('assets/images/$pathImage')),
             Text(
               countryName,

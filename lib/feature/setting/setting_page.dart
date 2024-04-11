@@ -1,10 +1,13 @@
 import 'package:app/component/header_app.dart';
 import 'package:app/component/item_setting.dart';
+import 'package:app/config/app_size.dart';
 import 'package:app/feature/setting/select_language.dart';
+import 'package:app/feature/setting/view_history.dart';
 import 'package:app/theme/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -12,7 +15,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final theme = Theme.of(context);
+    final theme = Theme.of(context).colorScheme;
     final ThemeCubit themeCubit = context.watch<ThemeCubit>();
     // ignore: deprecated_member_use
     return WillPopScope(
@@ -29,7 +32,19 @@ class SettingsPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(AppLocalizations.of(context)!.darkMode),
+                  Row(
+                    children: [
+                      themeCubit.state.isDark
+                          ? SvgPicture.asset('assets/icons/moon.svg',
+                              color: theme.onPrimary)
+                          : SvgPicture.asset('assets/icons/sun.svg',
+                              color: theme.onPrimary),
+                      const SizedBox(
+                        width: AppSize.size10,
+                      ),
+                      Text(AppLocalizations.of(context)!.darkMode),
+                    ],
+                  ),
                   Switch(
                     // This bool value toggles the switch.
                     value: themeCubit.state.isDark,
@@ -42,12 +57,23 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
             ItemSetting(
+              path: 'assets/icons/global.svg',
               text: AppLocalizations.of(context)!.language,
               onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const SelectLanguage()));
+              },
+            ),
+            ItemSetting(
+              path: 'assets/icons/bookmark.svg',
+              text: AppLocalizations.of(context)!.viewHistory,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ViewHistory()));
               },
             )
           ],

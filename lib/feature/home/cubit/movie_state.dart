@@ -9,11 +9,12 @@ enum MovieStatus { init, loading, success, error }
 
 @CopyWith()
 class MovieState extends Equatable {
-  MovieState(
+  const MovieState(
       {this.movies = const [],
       this.moviesSearch = const [],
       this.singleMovies = const [],
       this.seriesMovies = const [],
+      this.viewHistory = const [],
       this.cartoon = const [],
       this.status = MovieStatus.init,
       this.dataFilm,
@@ -23,6 +24,7 @@ class MovieState extends Equatable {
   final List<MovieInformation> singleMovies;
   final List<MovieInformation> seriesMovies;
   final List<MovieInformation> cartoon;
+  final List<MovieInformation?> viewHistory;
   final MovieStatus status;
   final DataFilm? dataFilm;
   final List<MovieInformation?> favoriteMovies;
@@ -36,6 +38,7 @@ class MovieState extends Equatable {
         cartoon,
         dataFilm,
         status,
-        favoriteMovies
+        favoriteMovies,
+        viewHistory
       ];
 }

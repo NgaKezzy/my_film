@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class FavoritePage extends StatefulWidget {
-  const FavoritePage({super.key});
+class FavoriteMoviePage extends StatefulWidget {
+  const FavoriteMoviePage({super.key});
 
   @override
-  State<FavoritePage> createState() => _FavoritePageState();
+  State<FavoriteMoviePage> createState() => _FavoriteMoviePageState();
 }
 
-class _FavoritePageState extends State<FavoritePage> {
+class _FavoriteMoviePageState extends State<FavoriteMoviePage> {
   @override
   void initState() {
     // TODO: implement initState

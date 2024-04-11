@@ -12,7 +12,7 @@ class LocalStorage {
 
   static Future<void> hiveOpenBox() async {
     await Hive.openBox<MovieInformation>(KeyApp.FAVORITE_MOVIE_BOX);
-    await Hive.openBox<MovieInformation>(KeyApp.VIEW_HISTORY);
+    await Hive.openBox<MovieInformation>(KeyApp.VIEW_HISTORY_BOX);
   }
 
   static Future<void> hiveClearBox() async {
@@ -22,7 +22,7 @@ class LocalStorage {
         Hive.box(KeyApp.FAVORITE_MOVIE_BOX);
     favoriteMovieBox.clear();
 
-    Box<MovieInformation> viewHistory = Hive.box(KeyApp.VIEW_HISTORY);
+    Box<MovieInformation> viewHistory = Hive.box(KeyApp.VIEW_HISTORY_BOX);
     viewHistory.clear();
   }
 }

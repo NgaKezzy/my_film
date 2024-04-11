@@ -1,6 +1,5 @@
 import 'package:app/feature/home/cubit/home_page_cubit.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
-import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/splash/splash_screen.dart';
 import 'package:app/firebase/firebase_api.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';

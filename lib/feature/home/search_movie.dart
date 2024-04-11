@@ -4,12 +4,10 @@ import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
-import 'package:app/my_home_app.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class SearchMovie extends StatefulWidget {
   const SearchMovie({super.key});
@@ -137,7 +135,7 @@ class _SearchMovieState extends State<SearchMovie> {
                 isFirst
                     ? const Column(
 
-                        /// sua này sẽ viết lịch sử tìm kiếm
+                        /// sau này sẽ viết lịch sử tìm kiếm
                         )
                     : BlocBuilder<MovieCubit, MovieState>(
                         builder: (context, state) {
@@ -167,6 +165,8 @@ class _SearchMovieState extends State<SearchMovie> {
                                   child: GestureDetector(
                                     onTap: () {
                                       FocusScope.of(context).unfocus();
+                                      movieCubit.addToWatchHistory(
+                                          itemFilm: state.moviesSearch[index]);
                                       printRed(state.moviesSearch[index].slug);
                                       Navigator.push(
                                           context,
