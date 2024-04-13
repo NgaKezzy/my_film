@@ -24,63 +24,60 @@ class _SelectLanguageState extends State<SelectLanguage> {
     final theme = Theme.of(context);
     return Scaffold(
       // backgroundColor: theme.colorScheme.background,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            HeaderTitleApp(
-              title: AppLocalizations.of(context)!.selectLanguage,
-              onTap: () {
-                Navigator.pop(context);
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          HeaderTitleApp(
+            title: AppLocalizations.of(context)!.selectLanguage,
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          Expanded(
+            child: BlocBuilder<LocaleCubit, LocaleState>(
+              builder: (context, state) {
+                return ListView.separated(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  itemCount: state.languageCodes.length,
+                  itemBuilder: (context, index) {
+                    return FlagAndCountryName(
+                      onTap: () {
+                        localeCubit.setLanguageCode(state.languageCodes[index]);
+                        setState(() {
+                          indexSelect = index;
+                        });
+                        printRed(index.toString());
+                        printRed(indexSelect.toString());
+                      },
+                      isSelected: indexSelect == index,
+                      countryName: state.countryNames[index],
+                      pathImage: state.pathCountryFlags[index],
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      height: 10,
+                    );
+                  },
+                );
               },
             ),
-            Expanded(
-              child: BlocBuilder<LocaleCubit, LocaleState>(
-                builder: (context, state) {
-                  return ListView.separated(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    itemCount: state.languageCodes.length,
-                    itemBuilder: (context, index) {
-                      return FlagAndCountryName(
-                        onTap: () {
-                          localeCubit
-                              .setLanguageCode(state.languageCodes[index]);
-                          setState(() {
-                            indexSelect = index;
-                          });
-                          printRed(index.toString());
-                          printRed(indexSelect.toString());
-                        },
-                        isSelected: indexSelect == index,
-                        countryName: state.countryNames[index],
-                        pathImage: state.pathCountryFlags[index],
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(
-                        height: 10,
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-            // const Expanded(child: SizedBox())
-            indexSelect != -1
-                ? Button(
-                    onTap: () async {
-                      await localeCubit.successSetLanguage();
-                      Navigator.pop(context);
-                    },
-                    text: AppLocalizations.of(context)!.ok,
-                    colorBt: theme.colorScheme.primary,
-                  )
-                : const SizedBox(),
-            const SizedBox(
-              height: 50,
-            )
-          ],
-        ),
+          ),
+          // const Expanded(child: SizedBox())
+          indexSelect != -1
+              ? Button(
+                  onTap: () async {
+                    await localeCubit.successSetLanguage();
+                    Navigator.pop(context);
+                  },
+                  text: AppLocalizations.of(context)!.ok,
+                  colorBt: theme.colorScheme.primary,
+                )
+              : const SizedBox(),
+          const SizedBox(
+            height: 50,
+          )
+        ],
       ),
     );
   }

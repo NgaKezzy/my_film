@@ -144,8 +144,9 @@ class _HomePageState extends State<HomePage> {
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SvgPicture.asset('assets/icons/icon_app.svg',
-                                color: theme.colorScheme.onPrimary),
+                            SvgPicture.asset(
+                              'assets/icons/icon_app.svg',
+                            ),
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(

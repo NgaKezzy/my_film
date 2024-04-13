@@ -25,6 +25,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final app = AppLocalizations.of(context);
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
@@ -50,7 +51,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
                 'assets/icons/home.svg',
                 color: theme.colorScheme.tertiary,
               ),
-              label: AppLocalizations.of(context)?.home,
+              label: app?.home,
               activeIcon: SvgPicture.asset(
                 'assets/icons/home.svg',
                 color: theme.colorScheme.onPrimary,
@@ -61,7 +62,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
                 'assets/icons/search.svg',
                 color: theme.colorScheme.tertiary,
               ),
-              label: AppLocalizations.of(context)?.search,
+              label: app?.search,
               activeIcon: SvgPicture.asset(
                 'assets/icons/search.svg',
                 color: theme.colorScheme.onPrimary,
@@ -69,12 +70,12 @@ class _MyHomeAppState extends State<MyHomeApp> {
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/icons/love.svg',
+                'assets/icons/heart.svg',
                 color: theme.colorScheme.tertiary,
               ),
-              label: AppLocalizations.of(context)?.favorite,
+              label: app?.favorite,
               activeIcon: SvgPicture.asset(
-                'assets/icons/love.svg',
+                'assets/icons/heart.svg',
                 color: theme.colorScheme.onPrimary,
               ),
             ),
@@ -83,7 +84,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
                 'assets/icons/setting.svg',
                 color: theme.colorScheme.tertiary,
               ),
-              label: AppLocalizations.of(context)?.setting,
+              label: app?.setting,
               activeIcon: SvgPicture.asset(
                 'assets/icons/setting.svg',
                 color: theme.colorScheme.onPrimary,

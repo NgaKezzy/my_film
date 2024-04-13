@@ -12,7 +12,7 @@ class LocaleCubit extends Cubit<LocaleState> {
   Future<void> initLanguage() async {
     emit(state.copyWith(status: LocaleStatus.loading));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String code = prefs.getString(KeyApp.LANGUAGE_CODE) ?? 'en';
+    String code = prefs.getString(KeyApp.LANGUAGE_CODE) ?? 'vi';
 
     emit(state.copyWith(
         languageCode: code,

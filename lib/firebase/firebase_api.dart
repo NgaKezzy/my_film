@@ -14,6 +14,11 @@ class FirebaseApi {
     await firebaseMessaging.requestPermission();
     final FCMToken = await firebaseMessaging.getToken();
     printGreen('Token : ' + FCMToken.toString());
+
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      printGreen('Thông báo khi ứng dụng đang mở');
+      
+    });
   }
 }

@@ -56,7 +56,8 @@ class ViewHistory extends StatelessWidget {
                                   );
                                 },
                                 child: ItemMovieInformation(
-                                  imageUrl: state.viewHistory[index]!.thumb_url,
+                                  imageUrl:
+                                      state.viewHistory[index]!.poster_url,
                                   name: state.viewHistory[index]!.name,
                                   year:
                                       state.viewHistory[index]!.year.toString(),

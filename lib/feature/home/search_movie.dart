@@ -3,6 +3,7 @@ import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
+import 'package:app/feature/home/widgets/item_movie_information.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -175,50 +176,20 @@ class _SearchMovieState extends State<SearchMovie> {
                                                   movieInformation: state
                                                       .moviesSearch[index])));
                                     },
-                                    child: Row(children: [
-                                      SizedBox(
-                                        height: 100,
-                                        width: 100,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: CachedNetworkImage(
-                                            imageUrl: state
-                                                .moviesSearch[index].poster_url,
-                                            imageBuilder:
-                                                (context, imageProvider) =>
-                                                    Container(
-                                              decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    const Icon(Icons.warning),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          context
-                                                      .watch<LocaleCubit>()
-                                                      .state
-                                                      .languageCode ==
-                                                  'en'
-                                              ? state.moviesSearch[index]
-                                                  .origin_name
-                                              : state.moviesSearch[index].name,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                        ),
-                                      ),
-                                    ]),
+                                    child: ItemMovieInformation(
+                                      imageUrl:
+                                          state.moviesSearch[index].poster_url,
+                                      name: context
+                                                  .watch<LocaleCubit>()
+                                                  .state
+                                                  .languageCode ==
+                                              'en'
+                                          ? state
+                                              .moviesSearch[index].origin_name
+                                          : state.moviesSearch[index].name,
+                                      year: state.moviesSearch[index].year
+                                          .toString(),
+                                    ),
                                   ),
                                 );
                               },
