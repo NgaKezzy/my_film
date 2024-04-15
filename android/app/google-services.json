@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "716328186081",
-    "project_id": "my-film-a0b42",
-    "storage_bucket": "my-film-a0b42.appspot.com"
+    "project_number": "856710108082",
+    "project_id": "my-film-af367",
+    "storage_bucket": "my-film-af367.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:716328186081:android:8276a630312091b508c7a0",
+        "mobilesdk_app_id": "1:856710108082:android:03e1793c306b75058ccaab",
         "android_client_info": {
           "package_name": "com.example.app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDjZ6WGGmEtYzJ8Ex0VsVwA8CXy9R2hegM"
+          "current_key": "AIzaSyD9ijbxeeckEHi65171SrnxaJU9y5TaTIw"
         }
       ],
       "services": {

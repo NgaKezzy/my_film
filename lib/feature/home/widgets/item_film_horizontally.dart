@@ -20,15 +20,15 @@ class ItemFilmHorizontally extends StatelessWidget {
 
     return SliverToBoxAdapter(
       child: SizedBox(
-        height: 230, //
+        height: 300, //
         child: GridView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           scrollDirection: Axis.horizontal,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
+            crossAxisCount: 2,
             mainAxisSpacing: 10.0,
             crossAxisSpacing: 10.0,
-            childAspectRatio: 1.5,
+            childAspectRatio: 1,
           ),
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
@@ -79,7 +79,7 @@ class ItemFilmHorizontally extends StatelessWidget {
               ),
             );
           },
-          itemCount: 15, // Số lượng mục trong danh sách
+          itemCount: 20, // Số lượng mục trong danh sách
         ),
       ),
     );

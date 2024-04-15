@@ -10,7 +10,7 @@ import 'package:hive/hive.dart';
 import 'package:translator/translator.dart';
 
 class MovieCubit extends Cubit<MovieState> {
-  MovieCubit() : super(MovieState());
+  MovieCubit() : super(const MovieState());
 
   final translator = GoogleTranslator();
 
