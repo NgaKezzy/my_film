@@ -8,6 +8,7 @@ import 'locale_state.dart';
 
 class LocaleCubit extends Cubit<LocaleState> {
   LocaleCubit() : super(const LocaleState());
+  
 
   Future<void> initLanguage() async {
     emit(state.copyWith(status: LocaleStatus.loading));
