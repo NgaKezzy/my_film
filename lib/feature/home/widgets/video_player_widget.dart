@@ -93,20 +93,19 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        setState(() {
-                          widget.movieInformation!.isFavorite =
-                              !widget.movieInformation!.isFavorite;
-                        });
-                        if (widget.movieInformation!.isFavorite) {
-                          printRed('Nhảy vào thêm phim');
+                       
+                        if (widget.movieInformation!.isFavorite == false) {
                           movieCubit.addMoviesToFavoritesList(
                               itemFilm: widget.movieInformation);
                         } else {
-                          printRed('Nhảy vào xóa phim');
 
                           movieCubit.removeMoviesToFavoritesList(
                               itemFilm: widget.movieInformation);
                         }
+                         setState(() {
+                          widget.movieInformation!.isFavorite =
+                              !widget.movieInformation!.isFavorite;
+                        });
                       },
                       child: Icon(
                         Icons.favorite,

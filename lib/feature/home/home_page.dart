@@ -101,9 +101,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> initialization() async {
-    await movieCubit.getMovieDataTheLocalStorage();
-    await movieCubit.getViewHistoryTheLocalStorage();
-
     movieCubit.getMovie();
     movieCubit.getAListOfIndividualMovies();
     movieCubit.getTheListOfMoviesAndSeries();

@@ -220,27 +220,19 @@ class MovieCubit extends Cubit<MovieState> {
     emit(state.copyWith(status: MovieStatus.loading));
     Box<MovieInformation> favoriteMovieBox =
         Hive.box(KeyApp.FAVORITE_MOVIE_BOX);
+    favoriteMovieBox.clear();
+    List<MovieInformation?> newFavoriteMovies = [
+      itemFilm,
+      ...state.favoriteMovies
+    ];
 
-    // ! nếu danh sách phim yêu thích trống thì add luôn vào
+    newFavoriteMovies.forEach((element) async {
+      await favoriteMovieBox.add(element!);
+      printRed(element.slug);
+    });
 
-    if (state.favoriteMovies.isEmpty) {
-      favoriteMovieBox.add(itemFilm!);
-
-      List<MovieInformation> items = [itemFilm];
-      emit(
-        state.copyWith(favoriteMovies: items),
-      );
-    } else {
-      await favoriteMovieBox.clear();
-      List<MovieInformation?> items = [itemFilm, ...state.favoriteMovies];
-      items.forEach(
-        (element) async {
-          await favoriteMovieBox.add(element!);
-          printRed(element.slug);
-        },
-      );
-      emit(state.copyWith(favoriteMovies: items));
-    }
+    emit(state.copyWith(
+        favoriteMovies: newFavoriteMovies, status: MovieStatus.success));
   }
 
   Future<void> removeMoviesToFavoritesList({
