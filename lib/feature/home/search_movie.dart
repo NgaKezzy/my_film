@@ -5,7 +5,6 @@ import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/feature/home/widgets/item_movie_information.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

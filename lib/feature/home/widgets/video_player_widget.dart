@@ -30,9 +30,32 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late FlickManager flickManager;
+  bool isHidden = false;
+  List<String> items = [];
+  List<String> beginningOfContent = [];
+  String summaryContent = '';
+
+  void splitContent() {
+    // làm chức năng chia nhỏ content để hiện 1 phần
+    setState(() {
+      items = widget.dataFilm!.movie.content.split(' ');
+      if (items.length >= 50) {
+        isHidden = true;
+        for (var i = 0; i < 35; i++) {
+          beginningOfContent.add(items[i]);
+        }
+        summaryContent = beginningOfContent.join(' ');
+        summaryContent = summaryContent + ' ...';
+        printYellow(summaryContent);
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    splitContent();
+
     flickManager = FlickManager(
       autoPlay: true,
       autoInitialize: true,
@@ -54,6 +77,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     final double height = MediaQuery.of(context).size.height;
     final theme = Theme.of(context);
     final MovieCubit movieCubit = context.read<MovieCubit>();
+    final app = AppLocalizations.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,16 +117,14 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                     ),
                     GestureDetector(
                       onTap: () {
-                       
                         if (widget.movieInformation!.isFavorite == false) {
                           movieCubit.addMoviesToFavoritesList(
                               itemFilm: widget.movieInformation);
                         } else {
-
                           movieCubit.removeMoviesToFavoritesList(
                               itemFilm: widget.movieInformation);
                         }
-                         setState(() {
+                        setState(() {
                           widget.movieInformation!.isFavorite =
                               !widget.movieInformation!.isFavorite;
                         });
@@ -142,7 +164,38 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                 ),
                 TitleAndContent(
                     title: AppLocalizations.of(context)!.content,
-                    content: widget.dataFilm!.movie.content),
+                    content: isHidden
+                        ? summaryContent
+                        : widget.dataFilm!.movie.content),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isHidden = !isHidden;
+                        });
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        height: 20,
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Text(
+                          isHidden ? app!.seeMore : app!.hideLess,
+                          style: TextStyle(
+                              color: theme.colorScheme.onPrimary,
+                              fontSize: AppSize.size11),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
                 const SizedBox(
                   height: 10,
                 ),
