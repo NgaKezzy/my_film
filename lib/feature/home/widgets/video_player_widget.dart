@@ -31,6 +31,7 @@ class VideoPlayerWidget extends StatefulWidget {
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late FlickManager flickManager;
   bool isHidden = false;
+  bool isCheckHidden = true;
   List<String> items = [];
   List<String> beginningOfContent = [];
   String summaryContent = '';
@@ -40,6 +41,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     setState(() {
       items = widget.dataFilm!.movie.content.split(' ');
       if (items.length >= 50) {
+        isCheckHidden = false;
         isHidden = true;
         for (var i = 0; i < 35; i++) {
           beginningOfContent.add(items[i]);
@@ -170,32 +172,34 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                 const SizedBox(
                   height: 5,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isHidden = !isHidden;
-                        });
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        height: 20,
-                        decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(8)),
-                        child: Text(
-                          isHidden ? app!.seeMore : app!.hideLess,
-                          style: TextStyle(
-                              color: theme.colorScheme.onPrimary,
-                              fontSize: AppSize.size11),
-                        ),
+                isCheckHidden
+                    ? const SizedBox()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isHidden = !isHidden;
+                              });
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: MediaQuery.of(context).size.width * 0.25,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Text(
+                                isHidden ? app!.seeMore : app!.hideLess,
+                                style: TextStyle(
+                                    color: theme.colorScheme.onPrimary,
+                                    fontSize: AppSize.size11),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                ),
                 const SizedBox(
                   height: 10,
                 ),
