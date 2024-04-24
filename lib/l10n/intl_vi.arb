@@ -36,7 +36,10 @@
     "allowAppsToAccessNotifications":"Cho phép ứng dụng truy cập thông báo ?",
     "viewHistory":"Lịch sử xem",
     "selectLanguage":"Chọn ngôn ngữ",
-    "viewHistoryIsEmpty":"Lịch sử xem trống !"
+    "viewHistoryIsEmpty":"Lịch sử xem trống !",
+    "clearCache":"Xóa bộ nhớ đệm",
+    "areYouSureYouWantToClearTheCache":"Bạn có chắc muốn xóa bộ nhớ đệm ?"
+
 
 
 

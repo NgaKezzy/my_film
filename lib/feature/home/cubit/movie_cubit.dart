@@ -256,15 +256,16 @@ class MovieCubit extends Cubit<MovieState> {
 
   Future<void> addToWatchHistory({required MovieInformation? itemFilm}) async {
     emit(state.copyWith(status: MovieStatus.loading));
+    printCyan(itemFilm.toString());
     Box<MovieInformation> viewHistoryBox = Hive.box(KeyApp.VIEW_HISTORY_BOX);
 
     List<MovieInformation?> newViewHistory = [];
     if (state.viewHistory.isEmpty) {
       /// nếu mảng rỗng thêm luôn phim vào
-      viewHistoryBox.add(itemFilm!);
-      emit(
-          state.copyWith(viewHistory: [itemFilm], status: MovieStatus.success));
-      printRed(state.viewHistory.length.toString());
+      newViewHistory.add(itemFilm!);
+      viewHistoryBox.add(itemFilm);
+      emit(state.copyWith(
+          viewHistory: newViewHistory, status: MovieStatus.success));
     } else {
       // nếu mảng có chứa phần từ thì
       viewHistoryBox.clear();
@@ -341,5 +342,16 @@ class MovieCubit extends Cubit<MovieState> {
       emit(state.copyWith(viewHistory: newViewHistory));
       printCyan(state.viewHistory.length.toString());
     }
+  }
+
+  Future<void> clearCache() async {
+    emit(state.copyWith(status: MovieStatus.loading));
+    Box<MovieInformation> viewHistoryBox = Hive.box(KeyApp.VIEW_HISTORY_BOX);
+    Box<MovieInformation> favoriteMovieBox =
+        Hive.box(KeyApp.FAVORITE_MOVIE_BOX);
+    viewHistoryBox.clear();
+    favoriteMovieBox.clear();
+    emit(state.copyWith(
+        status: MovieStatus.success, favoriteMovies: [], viewHistory: []));
   }
 }

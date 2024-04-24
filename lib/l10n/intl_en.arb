@@ -36,7 +36,10 @@
     "allowAppsToAccessNotifications":"Allow apps to access notifications?",
     "viewHistory":"View history",
     "selectLanguage":"Select language",
-    "viewHistoryIsEmpty":"View history is empty !"
+    "viewHistoryIsEmpty":"View history is empty !",
+    "clearCache":"Clear cache",
+    "areYouSureYouWantToClearTheCache":"Are you sure you want to clear the cache?"
+
 
 
 

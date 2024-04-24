@@ -1,11 +1,13 @@
 import 'package:app/component/header_app.dart';
 import 'package:app/component/item_setting.dart';
 import 'package:app/config/app_size.dart';
+import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/setting/select_language.dart';
 import 'package:app/feature/setting/view_history.dart';
 import 'package:app/theme/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -17,6 +19,7 @@ class SettingsPage extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context).colorScheme;
     final ThemeCubit themeCubit = context.watch<ThemeCubit>();
+    final app = AppLocalizations.of(context);
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
@@ -42,7 +45,7 @@ class SettingsPage extends StatelessWidget {
                       const SizedBox(
                         width: AppSize.size10,
                       ),
-                      Text(AppLocalizations.of(context)!.darkMode),
+                      Text(app!.darkMode),
                     ],
                   ),
                   Switch(
@@ -58,7 +61,7 @@ class SettingsPage extends StatelessWidget {
             ),
             ItemSetting(
               path: 'assets/icons/global.svg',
-              text: AppLocalizations.of(context)!.language,
+              text: app.language,
               onTap: () {
                 Navigator.push(
                     context,
@@ -68,12 +71,19 @@ class SettingsPage extends StatelessWidget {
             ),
             ItemSetting(
               path: 'assets/icons/bookmark.svg',
-              text: AppLocalizations.of(context)!.viewHistory,
+              text: app.viewHistory,
               onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const ViewHistory()));
+              },
+            ),
+            ItemSetting(
+              path: 'assets/icons/trash.svg',
+              text: app.clearCache,
+              onTap: () {
+                _showMyDialog(context);
               },
             )
           ],
@@ -81,4 +91,39 @@ class SettingsPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _showMyDialog(BuildContext context) async {
+  final app = AppLocalizations.of(context);
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(app!.notification),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(app.areYouSureYouWantToClearTheCache),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(app.cancel),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text(app.ok),
+            onPressed: () async {
+              context.read<MovieCubit>().clearCache();
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

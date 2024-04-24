@@ -42,9 +42,6 @@ class ViewHistory extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: GestureDetector(
                                 onTap: () {
-                                  FocusScope.of(context).unfocus();
-                                  movieCubit.addToWatchHistory(
-                                      itemFilm: state.viewHistory[index]);
                                   printRed(state.viewHistory[index]!.slug);
                                   Navigator.push(
                                     context,

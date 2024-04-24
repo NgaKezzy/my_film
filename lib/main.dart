@@ -28,7 +28,7 @@ void main() async {
     systemNavigationBarColor: Colors.blue, // navigation bar color
     statusBarColor: Colors.transparent, // status bar color
   ));
-  Bloc.observer = MyBlocObserver();
+  // Bloc.observer = MyBlocObserver();
   runApp(
     MultiBlocProvider(
       providers: [
