@@ -13,12 +13,14 @@ import 'package:app/feature/home/widgets/item_grid_and_title.dart';
 import 'package:app/feature/home/widgets/item_slider_image.dart';
 import 'package:app/feature/home/search_movie.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -194,33 +196,41 @@ class _HomePageState extends State<HomePage> {
                               state.movies.isNotEmpty
                                   ? SliverToBoxAdapter(
                                       child: SizedBox(
-                                          height: height * 0.4,
-                                          width: width,
-                                          child: Swiper(
-                                            autoplay: true,
-                                            autoplayDelay: 3000,
-                                            itemCount: state.movies.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              return ItemSliderImage(
-                                                imageUrl: state
-                                                    .movies[index].poster_url,
-                                                onTap: () {
-                                                  movieCubit.addToWatchHistory(
-                                                      itemFilm:
-                                                          state.movies[index]);
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              WatchAMovie(
-                                                                  movieInformation:
-                                                                      state.movies[
-                                                                          index])));
-                                                },
+                                        height: height * 0.35,
+                                        width: width,
+                                        child: CarouselSlider.builder(
+                                          itemCount: state.movies.length,
+                                          itemBuilder: (BuildContext context,
+                                                  int itemIndex,
+                                                  int pageViewIndex) =>
+                                              ItemSliderImage(
+                                            imageUrl: state
+                                                .movies[itemIndex].poster_url,
+                                            onTap: () {
+                                              movieCubit.addToWatchHistory(
+                                                  itemFilm:
+                                                      state.movies[itemIndex]);
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      WatchAMovie(
+                                                    movieInformation:
+                                                        state.movies[itemIndex],
+                                                  ),
+                                                ),
                                               );
                                             },
-                                          )))
+                                          ),
+                                          options: CarouselOptions(
+                                            autoPlay: true,
+                                            enlargeCenterPage: true,
+                                            viewportFraction: 0.7,
+                                            // aspectRatio: 2.0,
+                                          ),
+                                        ),
+                                      ),
+                                    )
                                   : const SliverToBoxAdapter(),
 
                               /// phim lẻ

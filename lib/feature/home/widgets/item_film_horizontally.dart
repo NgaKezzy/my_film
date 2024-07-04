@@ -22,6 +22,7 @@ class ItemFilmHorizontally extends StatelessWidget {
       child: SizedBox(
         height: 300, //
         child: GridView.builder(
+          
           padding: const EdgeInsets.symmetric(horizontal: 10),
           scrollDirection: Axis.horizontal,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

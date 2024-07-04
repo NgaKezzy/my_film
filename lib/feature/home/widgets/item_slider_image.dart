@@ -11,18 +11,21 @@ class ItemSliderImage extends StatelessWidget {
     final double width = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: onTap,
-      child: CachedNetworkImage(
-        width: width,
-        imageUrl: imageUrl,
-        imageBuilder: (context, imageProvider) => Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.fill,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: CachedNetworkImage(
+          width: width,
+          imageUrl: imageUrl,
+          imageBuilder: (context, imageProvider) => Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
+          errorWidget: (context, url, error) => const Icon(Icons.warning),
         ),
-        errorWidget: (context, url, error) => const Icon(Icons.warning),
       ),
     );
   }
