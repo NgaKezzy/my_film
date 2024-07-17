@@ -40,7 +40,7 @@ class HomePageCubit extends Cubit<HomePageState> {
    Future<void> initIsSelectedNotifications() async {
     emit(state.copyWith(status: HomePageStatus.loading));
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isSelected = await  prefs.getBool(KeyApp.IS_SELECTED_NOTIFICATION)?? false;
+    bool isSelected = prefs.getBool(KeyApp.IS_SELECTED_NOTIFICATION)?? false;
     emit(state.copyWith(isNotification: isSelected));
   }
 }

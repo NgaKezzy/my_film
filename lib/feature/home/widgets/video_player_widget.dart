@@ -47,7 +47,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           beginningOfContent.add(items[i]);
         }
         summaryContent = beginningOfContent.join(' ');
-        summaryContent = summaryContent + ' ...';
+        summaryContent = '$summaryContent ...';
         printYellow(summaryContent);
       }
     });
@@ -93,6 +93,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
               aspectRatioWhenLoading: 16 / 9,
               videoFit: BoxFit.fill,
               controls: FlickPortraitControls(
+                iconSize: 40,
                 progressBarSettings: FlickProgressBarSettings(
                   playedColor: Colors.blue,
                 ),

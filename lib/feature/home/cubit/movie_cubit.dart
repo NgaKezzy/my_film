@@ -249,9 +249,9 @@ class MovieCubit extends Cubit<MovieState> {
     Box<MovieInformation> favoriteMovieBox =
         Hive.box(KeyApp.FAVORITE_MOVIE_BOX);
     favoriteMovieBox.clear();
-    items.forEach((element) {
+    for (var element in items) {
       favoriteMovieBox.add(element!);
-    });
+    }
   }
 
   Future<void> addToWatchHistory({required MovieInformation? itemFilm}) async {
@@ -285,11 +285,9 @@ class MovieCubit extends Cubit<MovieState> {
         List<MovieInformation?> items = state.viewHistory;
         items.removeAt(index);
         newViewHistory = [itemFilm, ...items];
-        newViewHistory.forEach(
-          (element) {
+        for (var element in newViewHistory) {
             viewHistoryBox.add(element!);
-          },
-        );
+          }
 
         emit(state.copyWith(
             viewHistory: newViewHistory, status: MovieStatus.success));
@@ -300,11 +298,9 @@ class MovieCubit extends Cubit<MovieState> {
           List<MovieInformation?> items = [...state.viewHistory];
           items.removeLast();
           newViewHistory = [itemFilm, ...items];
-          newViewHistory.forEach(
-            (element) {
+          for (var element in newViewHistory) {
               viewHistoryBox.add(element!);
-            },
-          );
+            }
           emit(state.copyWith(
               viewHistory: newViewHistory, status: MovieStatus.success));
         } else {
@@ -312,11 +308,9 @@ class MovieCubit extends Cubit<MovieState> {
 
           List<MovieInformation?> items = [...state.viewHistory];
           newViewHistory = [itemFilm, ...items];
-          newViewHistory.forEach(
-            (element) {
+          for (var element in newViewHistory) {
               viewHistoryBox.add(element!);
-            },
-          );
+            }
           emit(state.copyWith(
               viewHistory: newViewHistory, status: MovieStatus.success));
         }

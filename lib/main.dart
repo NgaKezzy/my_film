@@ -1,4 +1,3 @@
-import 'package:app/bloc_observer/my_bloc_observer.dart';
 import 'package:app/feature/home/cubit/home_page_cubit.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/splash/splash_screen.dart';
