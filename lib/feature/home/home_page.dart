@@ -242,6 +242,8 @@ class _HomePageState extends State<HomePage> {
                                               .currentIndexPage), // PageController
                                       count: state.movies.length,
                                       effect: WormEffect(
+                                          dotWidth: 13,
+                                          dotHeight: 13,
                                           activeDotColor: theme.colorScheme
                                               .onPrimary), // your preferred effect
                                       onDotClicked: (index) {}),
