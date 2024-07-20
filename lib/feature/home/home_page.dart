@@ -19,6 +19,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -224,12 +225,28 @@ class _HomePageState extends State<HomePage> {
                                             autoPlay: true,
                                             enlargeCenterPage: true,
                                             viewportFraction: 0.7,
+                                            onPageChanged: (index, reason) {
+                                              homePageCubit.setPageIndex(index);
+                                            },
                                             // aspectRatio: 2.0,
                                           ),
                                         ),
                                       ),
                                     )
                                   : const SliverToBoxAdapter(),
+                              SliverToBoxAdapter(
+                                child: Center(
+                                  child: SmoothPageIndicator(
+                                      controller: PageController(
+                                          initialPage: homePageCubit.state
+                                              .currentIndexPage), // PageController
+                                      count: state.movies.length,
+                                      effect: WormEffect(
+                                          activeDotColor: theme.colorScheme
+                                              .onPrimary), // your preferred effect
+                                      onDotClicked: (index) {}),
+                                ),
+                              ),
 
                               /// phim lẻ
                               ItemGridAndTitle(

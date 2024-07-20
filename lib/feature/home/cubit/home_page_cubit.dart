@@ -43,4 +43,8 @@ class HomePageCubit extends Cubit<HomePageState> {
     bool isSelected = prefs.getBool(KeyApp.IS_SELECTED_NOTIFICATION)?? false;
     emit(state.copyWith(isNotification: isSelected));
   }
+
+  void setPageIndex(int indexPage){
+    emit(state.copyWith(currentIndexPage: indexPage));
+  }
 }

@@ -11,13 +11,15 @@ class HomePageState extends Equatable {
       {this.isConnectNetwork = false,
       this.status = HomePageStatus.init,
       this.isLoadingHome = true,
+      this.currentIndexPage = 0,
       this.isNotification = false
       });
   final bool isConnectNetwork;
   final HomePageStatus status;
   final bool isLoadingHome;
   final bool isNotification;
+  final int currentIndexPage;
 
   @override
-  List<Object> get props => [isConnectNetwork, status, isLoadingHome, isNotification];
+  List<Object> get props => [isConnectNetwork, status, isLoadingHome, isNotification, currentIndexPage];
 }

@@ -13,6 +13,8 @@ abstract class _$HomePageStateCWProxy {
 
   HomePageState isLoadingHome(bool isLoadingHome);
 
+  HomePageState currentIndexPage(int currentIndexPage);
+
   HomePageState isNotification(bool isNotification);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `HomePageState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
@@ -25,6 +27,7 @@ abstract class _$HomePageStateCWProxy {
     bool? isConnectNetwork,
     HomePageStatus? status,
     bool? isLoadingHome,
+    int? currentIndexPage,
     bool? isNotification,
   });
 }
@@ -47,6 +50,10 @@ class _$HomePageStateCWProxyImpl implements _$HomePageStateCWProxy {
       this(isLoadingHome: isLoadingHome);
 
   @override
+  HomePageState currentIndexPage(int currentIndexPage) =>
+      this(currentIndexPage: currentIndexPage);
+
+  @override
   HomePageState isNotification(bool isNotification) =>
       this(isNotification: isNotification);
 
@@ -62,6 +69,7 @@ class _$HomePageStateCWProxyImpl implements _$HomePageStateCWProxy {
     Object? isConnectNetwork = const $CopyWithPlaceholder(),
     Object? status = const $CopyWithPlaceholder(),
     Object? isLoadingHome = const $CopyWithPlaceholder(),
+    Object? currentIndexPage = const $CopyWithPlaceholder(),
     Object? isNotification = const $CopyWithPlaceholder(),
   }) {
     return HomePageState(
@@ -79,6 +87,11 @@ class _$HomePageStateCWProxyImpl implements _$HomePageStateCWProxy {
               ? _value.isLoadingHome
               // ignore: cast_nullable_to_non_nullable
               : isLoadingHome as bool,
+      currentIndexPage: currentIndexPage == const $CopyWithPlaceholder() ||
+              currentIndexPage == null
+          ? _value.currentIndexPage
+          // ignore: cast_nullable_to_non_nullable
+          : currentIndexPage as int,
       isNotification: isNotification == const $CopyWithPlaceholder() ||
               isNotification == null
           ? _value.isNotification
