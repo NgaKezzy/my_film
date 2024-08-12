@@ -236,17 +236,19 @@ class _HomePageState extends State<HomePage> {
                                   : const SliverToBoxAdapter(),
                               SliverToBoxAdapter(
                                 child: Center(
-                                  child: SmoothPageIndicator(
-                                      controller: PageController(
-                                          initialPage: homePageCubit.state
-                                              .currentIndexPage), // PageController
-                                      count: state.movies.length,
-                                      effect: WormEffect(
-                                          dotWidth: 13,
-                                          dotHeight: 13,
-                                          activeDotColor: theme.colorScheme
-                                              .onPrimary), // your preferred effect
-                                      onDotClicked: (index) {}),
+                                  child: state.movies.isNotEmpty
+                                      ? SmoothPageIndicator(
+                                          controller: PageController(
+                                              initialPage: homePageCubit.state
+                                                  .currentIndexPage), // PageController
+                                          count: state.movies.length,
+                                          effect: WormEffect(
+                                              dotWidth: 10,
+                                              dotHeight: 10,
+                                              activeDotColor: theme.colorScheme
+                                                  .onPrimary), // your preferred effect
+                                          onDotClicked: (index) {})
+                                      : const SizedBox(),
                                 ),
                               ),
 

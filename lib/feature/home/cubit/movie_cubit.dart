@@ -1,3 +1,4 @@
+import 'package:app/config/debounce.dart';
 import 'package:app/config/key_app.dart';
 import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
@@ -286,8 +287,8 @@ class MovieCubit extends Cubit<MovieState> {
         items.removeAt(index);
         newViewHistory = [itemFilm, ...items];
         for (var element in newViewHistory) {
-            viewHistoryBox.add(element!);
-          }
+          viewHistoryBox.add(element!);
+        }
 
         emit(state.copyWith(
             viewHistory: newViewHistory, status: MovieStatus.success));
@@ -299,8 +300,8 @@ class MovieCubit extends Cubit<MovieState> {
           items.removeLast();
           newViewHistory = [itemFilm, ...items];
           for (var element in newViewHistory) {
-              viewHistoryBox.add(element!);
-            }
+            viewHistoryBox.add(element!);
+          }
           emit(state.copyWith(
               viewHistory: newViewHistory, status: MovieStatus.success));
         } else {
@@ -309,8 +310,8 @@ class MovieCubit extends Cubit<MovieState> {
           List<MovieInformation?> items = [...state.viewHistory];
           newViewHistory = [itemFilm, ...items];
           for (var element in newViewHistory) {
-              viewHistoryBox.add(element!);
-            }
+            viewHistoryBox.add(element!);
+          }
           emit(state.copyWith(
               viewHistory: newViewHistory, status: MovieStatus.success));
         }
@@ -347,5 +348,10 @@ class MovieCubit extends Cubit<MovieState> {
     favoriteMovieBox.clear();
     emit(state.copyWith(
         status: MovieStatus.success, favoriteMovies: [], viewHistory: []));
+  }
+
+  void debounce(Function() onChanged) {
+    final Debounce debounce = Debounce(milliseconds: 10000);
+    debounce.call(onChanged);
   }
 }

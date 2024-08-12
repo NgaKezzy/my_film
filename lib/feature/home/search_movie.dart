@@ -1,4 +1,5 @@
 import 'package:app/component/loading_widget.dart';
+import 'package:app/config/debounce.dart';
 import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
@@ -36,6 +37,8 @@ class _SearchMovieState extends State<SearchMovie> {
     searchController.dispose();
   }
 
+  final Debounce debounce = Debounce();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -59,19 +62,21 @@ class _SearchMovieState extends State<SearchMovie> {
                             cursorColor: theme.colorScheme.onPrimary,
                             autofocus: true,
                             controller: searchController,
-                            onSubmitted: (value) async {
-                              if (searchController.text.trim().isNotEmpty) {
-                                setState(() {
-                                  isPlaySearch = true;
-                                });
-                                FocusScope.of(context).unfocus();
-                                await movieCubit
-                                    .moviesSearch(searchController.text.trim());
-                                isPlaySearch = false;
-                                isFirst = false;
+                            onChanged: (value) {
+                              debounce.call(() async {
+                                if (searchController.text.trim().isNotEmpty) {
+                                  setState(() {
+                                    isPlaySearch = true;
+                                  });
+                                  FocusScope.of(context).unfocus();
+                                  await movieCubit.moviesSearch(
+                                      searchController.text.trim());
+                                  isPlaySearch = false;
+                                  isFirst = false;
 
-                                setState(() {});
-                              }
+                                  setState(() {});
+                                }
+                              });
                             },
                             decoration: InputDecoration(
                               suffixIcon: GestureDetector(
