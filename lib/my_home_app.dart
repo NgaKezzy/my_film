@@ -17,7 +17,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
   int pageIndex = 0;
   List<Widget> pages = [
     const HomePage(),
-    const DownloadPage(),
+    // const SearchPage(),
     const FavoriteMoviePage(),
     const SettingsPage()
   ];
@@ -57,17 +57,17 @@ class _MyHomeAppState extends State<MyHomeApp> {
                 color: theme.colorScheme.onPrimary,
               ),
             ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/search.svg',
-                color: theme.colorScheme.tertiary,
-              ),
-              label: app?.search,
-              activeIcon: SvgPicture.asset(
-                'assets/icons/search.svg',
-                color: theme.colorScheme.onPrimary,
-              ),
-            ),
+            // BottomNavigationBarItem(
+            //   icon: SvgPicture.asset(
+            //     'assets/icons/search.svg',
+            //     color: theme.colorScheme.tertiary,
+            //   ),
+            //   label: app?.search,
+            //   activeIcon: SvgPicture.asset(
+            //     'assets/icons/search.svg',
+            //     color: theme.colorScheme.onPrimary,
+            //   ),
+            // ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/heart.svg',

@@ -108,6 +108,7 @@ class _HomePageState extends State<HomePage> {
     movieCubit.getTheListOfCartoons();
   }
 
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -142,8 +143,15 @@ class _HomePageState extends State<HomePage> {
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SvgPicture.asset(
-                              'assets/icons/icon_app.svg',
+                            GestureDetector(
+                              onTap: () {
+                                _scrollController.animateTo(0.0,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut);
+                              },
+                              child: SvgPicture.asset(
+                                'assets/icons/icon_app.svg',
+                              ),
                             ),
                             GestureDetector(
                               onTap: () {
@@ -191,6 +199,7 @@ class _HomePageState extends State<HomePage> {
                       body: BlocBuilder<MovieCubit, MovieState>(
                         builder: (context, state) {
                           return CustomScrollView(
+                            controller: _scrollController,
                             slivers: [
                               state.movies.isNotEmpty
                                   ? SliverToBoxAdapter(

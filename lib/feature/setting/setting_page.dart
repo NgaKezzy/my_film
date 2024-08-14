@@ -94,6 +94,8 @@ class SettingsPage extends StatelessWidget {
 
 Future<void> _showMyDialog(BuildContext context) async {
   final app = AppLocalizations.of(context);
+  final theme = Theme.of(context).colorScheme;
+
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -109,13 +111,19 @@ Future<void> _showMyDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           TextButton(
-            child: Text(app.cancel),
+            child: Text(
+              app.cancel,
+              style: TextStyle(color: theme.tertiary),
+            ),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           TextButton(
-            child: Text(app.ok),
+            child: Text(
+              app.ok,
+              style: TextStyle(color: theme.tertiary),
+            ),
             onPressed: () async {
               context.read<MovieCubit>().clearCache();
               Navigator.of(context).pop();

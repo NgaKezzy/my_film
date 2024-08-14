@@ -70,7 +70,7 @@ class AppNavigation {
                 name:
                     'downLoad', // Optional, add name to your routes. Allows you navigate by name instead of path
                 path: '/downLoad',
-                builder: (context, state) => DownloadPage(
+                builder: (context, state) => SearchPage(
                   key: state.pageKey,
                 ),
               ),
