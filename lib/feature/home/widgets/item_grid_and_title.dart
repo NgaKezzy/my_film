@@ -38,7 +38,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
       child: widget.itemFilms.isEmpty
           ? const SizedBox()
           : Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
               child: Column(
                 children: [
                   GestureDetector(

@@ -203,8 +203,9 @@ class _HomePageState extends State<HomePage> {
                             slivers: [
                               state.movies.isNotEmpty
                                   ? SliverToBoxAdapter(
-                                      child: SizedBox(
-                                        height: height * 0.35,
+                                      child: Container(
+                                        margin: const EdgeInsets.only(top: 8),
+                                        height: height * 0.23,
                                         width: width,
                                         child: CarouselSlider.builder(
                                           itemCount: state.movies.length,
@@ -233,7 +234,7 @@ class _HomePageState extends State<HomePage> {
                                           options: CarouselOptions(
                                             autoPlay: true,
                                             enlargeCenterPage: true,
-                                            viewportFraction: 0.7,
+                                            viewportFraction: 0.75,
                                             onPageChanged: (index, reason) {
                                               homePageCubit.setPageIndex(index);
                                             },
@@ -246,17 +247,26 @@ class _HomePageState extends State<HomePage> {
                               SliverToBoxAdapter(
                                 child: Center(
                                   child: state.movies.isNotEmpty
-                                      ? SmoothPageIndicator(
-                                          controller: PageController(
-                                              initialPage: homePageCubit.state
-                                                  .currentIndexPage), // PageController
-                                          count: state.movies.length,
-                                          effect: WormEffect(
-                                              dotWidth: 10,
-                                              dotHeight: 10,
-                                              activeDotColor: theme.colorScheme
-                                                  .onPrimary), // your preferred effect
-                                          onDotClicked: (index) {})
+                                      ? Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            SmoothPageIndicator(
+                                                controller: PageController(
+                                                    initialPage: homePageCubit
+                                                        .state
+                                                        .currentIndexPage), // PageController
+                                                count: state.movies.length,
+                                                effect: WormEffect(
+                                                    dotWidth: 10,
+                                                    dotHeight: 10,
+                                                    activeDotColor: theme
+                                                        .colorScheme
+                                                        .onPrimary), // your preferred effect
+                                                onDotClicked: (index) {}),
+                                          ],
+                                        )
                                       : const SizedBox(),
                                 ),
                               ),
