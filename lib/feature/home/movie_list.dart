@@ -35,6 +35,7 @@ class MovieList extends StatelessWidget {
                 )
               : Expanded(
                   child: ListView.separated(
+                      physics: const BouncingScrollPhysics(),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 20),
                       itemBuilder: (context, index) {

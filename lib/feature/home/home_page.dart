@@ -142,6 +142,7 @@ class _HomePageState extends State<HomePage> {
                       body: BlocBuilder<MovieCubit, MovieState>(
                         builder: (context, state) {
                           return CustomScrollView(
+                            physics: const BouncingScrollPhysics(),
                             controller: _scrollController,
                             slivers: [
                               state.movies.isNotEmpty
@@ -259,6 +260,7 @@ Widget _bodyShimmer(BuildContext context) {
   final theme = Theme.of(context);
   final HomePageCubit homePageCubitWatch = context.watch<HomePageCubit>();
   return CustomScrollView(
+    physics: const BouncingScrollPhysics(),
     slivers: [
       SliverToBoxAdapter(
         child: Container(

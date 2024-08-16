@@ -106,6 +106,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
           height: height - (height * 0.3 + 32),
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -256,36 +257,38 @@ class _EpisodeNumberOfTheMovieState extends State<EpisodeNumberOfTheMovie> {
         const SizedBox(
           height: 10,
         ),
-        Wrap(
-          spacing: 8.0, // Khoảng cách giữa các widget con
-          runSpacing: 8.0, // Khoảng cách giữa các dòng
-          alignment: WrapAlignment.center, // Căn giữa theo chiều ngang
-          children: List.generate(
-            widget.items[0].server_data.length,
-            (index) => GestureDetector(
-              onTap: () {
-                if (indexSelected != index) {
-                  setState(() {
-                    indexSelected = index;
-                    print(indexSelected);
-                  });
-                  playNewVideo(widget.flickManager,
-                      widget.items[0].server_data[index].link_m3u8);
-                }
-              },
-              child: Container(
-                alignment: Alignment.center,
-                width: 35,
-                height: 45,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: indexSelected == index ? Colors.pink : Colors.grey,
-                ),
-                child: Text('${index + 1}'),
+        GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: widget.items[0].server_data.length,
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 8,
+              crossAxisSpacing: 10,
+              childAspectRatio: 0.8,
+              mainAxisSpacing: 10),
+          itemBuilder: (context, index) => GestureDetector(
+            onTap: () {
+              if (indexSelected != index) {
+                setState(() {
+                  indexSelected = index;
+                  print(indexSelected);
+                });
+                playNewVideo(widget.flickManager,
+                    widget.items[0].server_data[index].link_m3u8);
+              }
+            },
+            child: Container(
+              alignment: Alignment.center,
+              width: 35,
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: indexSelected == index ? Colors.pink : Colors.grey,
               ),
+              child: Text('${index + 1}'),
             ),
           ),
-        )
+        ),
       ],
     );
   }
