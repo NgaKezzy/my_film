@@ -17,7 +17,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   Future<void> initTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     emit(state.copyWith(status: ThemeStatus.loading));
-    bool value = prefs.getBool(KeyApp.IS_DARK) ?? false;
+    bool value = prefs.getBool(KeyApp.IS_DARK) ?? true;
     emit(state.copyWith(isDark: value, status: ThemeStatus.success));
   }
 }

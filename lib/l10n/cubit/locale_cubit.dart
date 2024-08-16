@@ -8,12 +8,11 @@ import 'locale_state.dart';
 
 class LocaleCubit extends Cubit<LocaleState> {
   LocaleCubit() : super(const LocaleState());
-  
 
   Future<void> initLanguage() async {
     emit(state.copyWith(status: LocaleStatus.loading));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String code = prefs.getString(KeyApp.LANGUAGE_CODE) ?? 'vi';
+    String code = prefs.getString(KeyApp.LANGUAGE_CODE) ?? 'en';
 
     emit(state.copyWith(
         languageCode: code,

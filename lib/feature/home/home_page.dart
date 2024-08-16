@@ -19,6 +19,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
@@ -133,69 +134,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 )
               : homePageCubitWatch.state.isLoadingHome
-                  ? const Center(
-                      child: LoadingWidget(),
-                    )
+                  ? Scaffold(
+                      appBar: _appBar(context, _scrollController),
+                      body: _bodyShimmer(context))
                   : Scaffold(
-                      appBar: AppBar(
-                        backgroundColor: theme.colorScheme.primary,
-                        automaticallyImplyLeading: false,
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                _scrollController.animateTo(0.0,
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.easeInOut);
-                              },
-                              child: SvgPicture.asset(
-                                'assets/icons/icon_app.svg',
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        child: const SearchMovie(),
-                                        type: PageTransitionType.leftToRight));
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 4),
-                                alignment: Alignment.centerLeft,
-                                height: 32,
-                                width: width * 0.8,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 1,
-                                        color: theme.colorScheme.tertiary,
-                                        style: BorderStyle.solid),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      app!.search,
-                                      style: TextStyle(
-                                          fontSize: AppSize.size13,
-                                          fontWeight: FontWeight.w200,
-                                          color: theme.colorScheme.tertiary),
-                                    ),
-                                    Icon(
-                                      Icons.search,
-                                      color: theme.colorScheme.tertiary,
-                                      size: 15,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                      appBar: _appBar(context, _scrollController),
                       body: BlocBuilder<MovieCubit, MovieState>(
                         builder: (context, state) {
                           return CustomScrollView(
@@ -274,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                               /// phim lẻ
                               ItemGridAndTitle(
                                 itemFilms: state.singleMovies,
-                                title: app.singleMovie,
+                                title: app?.singleMovie ?? '',
                               ),
 
                               /// phim hoạt hình
@@ -282,7 +225,7 @@ class _HomePageState extends State<HomePage> {
                                   ? const SliverToBoxAdapter()
                                   : TitleAndChevronRight(
                                       itemFilms: state.cartoon,
-                                      title: app.cartoon,
+                                      title: app?.cartoon ?? '',
                                       color: theme.colorScheme.tertiary),
                               state.cartoon.isEmpty
                                   ? const SliverToBoxAdapter()
@@ -293,7 +236,7 @@ class _HomePageState extends State<HomePage> {
                               ///phim bộ
                               ItemGridAndTitle(
                                 itemFilms: state.seriesMovies,
-                                title: app.seriesMovie,
+                                title: app?.seriesMovie ?? '',
                               ),
                               const SliverToBoxAdapter(
                                 child: SizedBox(height: 30),
@@ -307,6 +250,148 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+Widget _bodyShimmer(BuildContext context) {
+  final double height = MediaQuery.of(context).size.height;
+  final double width = MediaQuery.of(context).size.width;
+  final app = AppLocalizations.of(context);
+  final theme = Theme.of(context);
+  final HomePageCubit homePageCubitWatch = context.watch<HomePageCubit>();
+  return CustomScrollView(
+    slivers: [
+      SliverToBoxAdapter(
+        child: Container(
+          margin: const EdgeInsets.only(top: 8),
+          height: height * 0.23,
+          width: width,
+          child: CarouselSlider.builder(
+            itemCount: 10,
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) =>
+                    Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(24)),
+              ),
+            ),
+            options: CarouselOptions(
+              autoPlay: true,
+              enlargeCenterPage: true,
+              viewportFraction: 0.75,
+              onPageChanged: (index, reason) {},
+              // aspectRatio: 2.0,
+            ),
+          ),
+        ),
+      ),
+      SliverToBoxAdapter(
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              SmoothPageIndicator(
+                  controller: PageController(initialPage: 0), // PageController
+                  count: 10,
+                  effect: WormEffect(
+                      dotWidth: 10,
+                      dotHeight: 10,
+                      activeDotColor:
+                          theme.colorScheme.onPrimary), // your preferred effect
+                  onDotClicked: (index) {}),
+            ],
+          ),
+        ),
+      ),
+
+      /// phim lẻ
+      ItemGridAndTitleShimmer(
+        title: app?.singleMovie ?? '',
+      ),
+
+      /// phim hoạt hình
+      TitleAndChevronRightShimmer(
+          title: app?.cartoon ?? '', color: theme.colorScheme.tertiary),
+      const ItemFilmHorizontallyShimmer(),
+
+      ///phim bộ
+
+      ItemGridAndTitleShimmer(
+        title: app?.seriesMovie ?? '',
+      ),
+      const SliverToBoxAdapter(
+        child: SizedBox(height: 30),
+      )
+    ],
+  );
+}
+
+AppBar _appBar(BuildContext context, ScrollController scrollController) {
+  final theme = Theme.of(context);
+  final double width = MediaQuery.of(context).size.width;
+  final app = AppLocalizations.of(context);
+  return AppBar(
+    backgroundColor: theme.colorScheme.primary,
+    automaticallyImplyLeading: false,
+    title: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () {
+            scrollController.animateTo(0.0,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInOut);
+          },
+          child: SvgPicture.asset(
+            'assets/icons/icon_app.svg',
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                PageTransition(
+                    child: const SearchMovie(),
+                    type: PageTransitionType.leftToRight));
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            alignment: Alignment.centerLeft,
+            height: 32,
+            width: width * 0.8,
+            decoration: BoxDecoration(
+                border: Border.all(
+                    width: 1,
+                    color: theme.colorScheme.tertiary,
+                    style: BorderStyle.solid),
+                borderRadius: BorderRadius.circular(8)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  app?.search ?? '',
+                  style: TextStyle(
+                      fontSize: AppSize.size13,
+                      fontWeight: FontWeight.w200,
+                      color: theme.colorScheme.tertiary),
+                ),
+                Icon(
+                  Icons.search,
+                  color: theme.colorScheme.tertiary,
+                  size: 15,
+                )
+              ],
+            ),
+          ),
+        )
+      ],
+    ),
+  );
 }
 
 class TitleAndChevronRight extends StatelessWidget {
@@ -349,6 +434,37 @@ class TitleAndChevronRight extends StatelessWidget {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class TitleAndChevronRightShimmer extends StatelessWidget {
+  const TitleAndChevronRightShimmer(
+      {super.key, this.title = '', this.color = Colors.black});
+
+  final String title;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
+      sliver: SliverToBoxAdapter(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                  fontSize: AppSize.size20, fontWeight: FontWeight.w600),
+            ),
+            SvgPicture.asset(
+              'assets/icons/chevron-right.svg',
+              color: color,
+            )
+          ],
         ),
       ),
     );
