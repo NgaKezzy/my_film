@@ -47,8 +47,9 @@ class ViewHistory extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => WatchAMovie(
-                                          movieInformation:
-                                              state.viewHistory[index]),
+                                          slug:
+                                              state.viewHistory[index]?.slug ??
+                                                  ''),
                                     ),
                                   );
                                 },

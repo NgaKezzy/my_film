@@ -19,10 +19,12 @@ class VideoPlayerWidget extends StatefulWidget {
       {super.key,
       required this.url,
       required this.dataFilm,
-      required this.movieInformation});
+      // required this.movieInformation
+      
+      });
   final String url;
   final DataFilm? dataFilm;
-  MovieInformation? movieInformation;
+  // MovieInformation? movieInformation;
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
@@ -119,28 +121,28 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                           fontWeight: FontWeight.w600,
                           fontSize: AppSize.size16),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        if (widget.movieInformation!.isFavorite == false) {
-                          movieCubit.addMoviesToFavoritesList(
-                              itemFilm: widget.movieInformation);
-                        } else {
-                          movieCubit.removeMoviesToFavoritesList(
-                              itemFilm: widget.movieInformation);
-                        }
-                        setState(() {
-                          widget.movieInformation!.isFavorite =
-                              !widget.movieInformation!.isFavorite;
-                        });
-                      },
-                      child: Icon(
-                        Icons.favorite,
-                        size: AppSize.size35,
-                        color: widget.movieInformation!.isFavorite
-                            ? theme.colorScheme.onPrimary
-                            : theme.colorScheme.tertiary,
-                      ),
-                    )
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     if (widget.movieInformation!.isFavorite == false) {
+                    //       movieCubit.addMoviesToFavoritesList(
+                    //           itemFilm: widget.movieInformation);
+                    //     } else {
+                    //       movieCubit.removeMoviesToFavoritesList(
+                    //           itemFilm: widget.movieInformation);
+                    //     }
+                    //     setState(() {
+                    //       widget.movieInformation!.isFavorite =
+                    //           !widget.movieInformation!.isFavorite;
+                    //     });
+                    //   },
+                    //   child: Icon(
+                    //     Icons.favorite,
+                    //     size: AppSize.size35,
+                    //     color: widget.movieInformation!.isFavorite
+                    //         ? theme.colorScheme.onPrimary
+                    //         : theme.colorScheme.tertiary,
+                    //   ),
+                    // )
                   ],
                 ),
                 SizedBox(

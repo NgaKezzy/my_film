@@ -177,8 +177,8 @@ class _SearchMovieState extends State<SearchMovie> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => WatchAMovie(
-                                                  movieInformation: state
-                                                      .moviesSearch[index])));
+                                                  slug: state
+                                                      .moviesSearch[index].slug)));
                                     },
                                     child: ItemMovieInformation(
                                       imageUrl:

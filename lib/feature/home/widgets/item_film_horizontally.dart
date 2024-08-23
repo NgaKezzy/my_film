@@ -41,7 +41,7 @@ class ItemFilmHorizontally extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            WatchAMovie(movieInformation: itemsFilm[index])));
+                            WatchAMovie(slug: itemsFilm[index].slug)));
               },
               child: Column(
                 children: [

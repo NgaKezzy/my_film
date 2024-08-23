@@ -12,28 +12,8 @@ class FetchApiMovie {
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
-
-      switch (response.statusCode) {
-        case 200:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 400:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 401:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 404:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        default:
-          var data = jsonDecode(response.body);
-          result = data;
-      }
+      var data = jsonDecode(response.body);
+      result = data;
 
       return result;
     } catch (e) {
@@ -50,27 +30,9 @@ class FetchApiMovie {
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
+      var data = jsonDecode(response.body);
+      result = data;
 
-      switch (response.statusCode) {
-        case 200:
-          Map<String, dynamic> data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 400:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 401:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 404:
-          var data = jsonDecode(response.body);
-          result = data;
-
-          break;
-        default:
-      }
       return result;
     } catch (e) {
       printRed(e.toString());
@@ -84,28 +46,8 @@ class FetchApiMovie {
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
-
-      switch (response.statusCode) {
-        case 200:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 400:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 401:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 404:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        default:
-          var data = jsonDecode(response.body);
-          result = data;
-      }
+      var data = jsonDecode(response.body);
+      result = data;
 
       return result;
     } catch (e) {
@@ -119,28 +61,8 @@ class FetchApiMovie {
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
-
-      switch (response.statusCode) {
-        case 200:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 400:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 401:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 404:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        default:
-          var data = jsonDecode(response.body);
-          result = data;
-      }
+      var data = jsonDecode(response.body);
+      result = data;
 
       return result;
     } catch (e) {
@@ -154,28 +76,8 @@ class FetchApiMovie {
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
-
-      switch (response.statusCode) {
-        case 200:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 400:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 401:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 404:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        default:
-          var data = jsonDecode(response.body);
-          result = data;
-      }
+      var data = jsonDecode(response.body);
+      result = data;
 
       return result;
     } catch (e) {
@@ -190,28 +92,8 @@ class FetchApiMovie {
     Map<String, dynamic> result = {};
     try {
       final response = await http.get(uri);
-
-      switch (response.statusCode) {
-        case 200:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 400:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 401:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        case 404:
-          var data = jsonDecode(response.body);
-          result = data;
-          break;
-        default:
-          var data = jsonDecode(response.body);
-          result = data;
-      }
+      var data = jsonDecode(response.body);
+      result = data;
 
       return result;
     } catch (e) {

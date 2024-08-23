@@ -44,8 +44,8 @@ class FavoriteMoviePage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => WatchAMovie(
-                                  movieInformation:
-                                      state.favoriteMovies[index])));
+                                  slug: state.favoriteMovies[index]?.slug ??
+                                      '')));
                     },
                     child: Column(
                       children: [

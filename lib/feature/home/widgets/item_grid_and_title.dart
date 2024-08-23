@@ -89,8 +89,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => WatchAMovie(
-                                      movieInformation:
-                                          widget.itemFilms[index])));
+                                      slug: widget.itemFilms[index].slug)));
                         },
                         child: Column(
                           children: [

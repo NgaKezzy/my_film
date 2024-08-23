@@ -45,7 +45,7 @@ class MovieList extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => WatchAMovie(
-                                          movieInformation: itemFilms[index])));
+                                          slug: itemFilms[index].slug)));
                             },
                             child: ItemMovieInformation(
                               imageUrl: itemFilms[index].thumb_url,
