@@ -182,7 +182,7 @@ class _SearchMovieState extends State<SearchMovie> {
                                     },
                                     child: ItemMovieInformation(
                                       imageUrl:
-                                          state.moviesSearch[index].poster_url,
+                                          state.moviesSearch[index].thumb_url,
                                       name: context
                                                   .watch<LocaleCubit>()
                                                   .state

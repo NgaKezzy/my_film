@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -64,7 +65,7 @@ class SettingsPage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    SwipeablePageRoute(
                         builder: (context) => const SelectLanguage()));
               },
             ),
@@ -74,7 +75,7 @@ class SettingsPage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    SwipeablePageRoute(
                         builder: (context) => const ViewHistory()));
               },
             ),

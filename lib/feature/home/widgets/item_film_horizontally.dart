@@ -49,7 +49,7 @@ class ItemFilmHorizontally extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: CachedNetworkImage(
-                        imageUrl: itemsFilm[index].poster_url,
+                        imageUrl: itemsFilm[index].thumb_url,
                         imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(

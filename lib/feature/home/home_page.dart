@@ -21,6 +21,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -158,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                                                   int pageViewIndex) =>
                                               ItemSliderImage(
                                             imageUrl: state
-                                                .movies[itemIndex].poster_url,
+                                                .movies[itemIndex].thumb_url,
                                             onTap: () {
                                               movieCubit.addToWatchHistory(
                                                   itemFilm:
@@ -168,8 +169,8 @@ class _HomePageState extends State<HomePage> {
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       WatchAMovie(
-                                                    slug:
-                                                        state.movies[itemIndex].slug,
+                                                    slug: state
+                                                        .movies[itemIndex].slug,
                                                   ),
                                                 ),
                                               );
@@ -416,7 +417,7 @@ class TitleAndChevronRight extends StatelessWidget {
           onTap: () {
             Navigator.push(
                 context,
-                MaterialPageRoute(
+                SwipeablePageRoute(
                     builder: (context) => MovieList(
                           itemFilms: itemFilms,
                           title: title,

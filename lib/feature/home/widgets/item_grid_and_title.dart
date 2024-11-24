@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 // ignore: must_be_immutable
 class ItemGridAndTitle extends StatefulWidget {
@@ -46,7 +47,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                     onTap: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(
+                          SwipeablePageRoute(
                               builder: (context) => MovieList(
                                     itemFilms: widget.itemFilms,
                                     title: widget.title,
@@ -97,7 +98,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: CachedNetworkImage(
-                                  imageUrl: widget.itemFilms[index].poster_url,
+                                  imageUrl: widget.itemFilms[index].thumb_url,
                                   imageBuilder: (context, imageProvider) =>
                                       Container(
                                     decoration: BoxDecoration(
