@@ -5,7 +5,6 @@ import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/models/data_film.dart';
 import 'package:app/feature/home/models/movie_category.dart';
 import 'package:app/feature/home/models/movie_episodes.dart';
-import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class VideoPlayerWidget extends StatefulWidget {
-  VideoPlayerWidget(
+  const VideoPlayerWidget(
       {super.key,
       required this.url,
       required this.dataFilm,

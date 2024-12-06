@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:app/component/loading_widget.dart';
 import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/cubit/home_page_cubit.dart';
 import 'package:app/feature/home/cubit/home_page_state.dart';

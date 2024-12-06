@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     localeCubit = context.read<LocaleCubit>();
     homePageCubit = context.read<HomePageCubit>();
     movieCubit = context.read<MovieCubit>();
-    
+
     homePageCubit.initIsSelectedNotifications();
 
     getData();
@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: theme.colorScheme.background,
+      backgroundColor: theme.colorScheme.surface,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -62,18 +62,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 130,
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              'My Film',
-              style: TextStyle(
-                color: Color(0xFFcfaf30),
-                letterSpacing: 0.5,
-                fontSize: 70,
-                fontWeight: FontWeight.w600,
-              ),
-            )
           ],
         ),
       ),

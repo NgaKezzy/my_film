@@ -50,6 +50,7 @@ dependencies:
   smooth_page_indicator: ^1.2.0+3
   swipeable_page_route: ^0.4.4
 
+  bloc: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

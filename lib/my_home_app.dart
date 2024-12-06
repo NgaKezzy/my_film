@@ -1,4 +1,3 @@
-import 'package:app/feature/favorite/download_page.dart';
 import 'package:app/feature/favorite/favorite_movie_page.dart';
 import 'package:app/feature/home/home_page.dart';
 import 'package:app/feature/setting/setting_page.dart';
@@ -32,7 +31,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
       child: Scaffold(
         body: pages[pageIndex],
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: theme.colorScheme.background,
+          backgroundColor: theme.colorScheme.surface,
           type: BottomNavigationBarType.fixed,
           currentIndex: pageIndex,
           unselectedIconTheme: IconThemeData(color: theme.colorScheme.tertiary),
