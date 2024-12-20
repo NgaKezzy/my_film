@@ -51,6 +51,7 @@ dependencies:
   swipeable_page_route: ^0.4.4
 
   bloc: any
+  chewie: ^1.8.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

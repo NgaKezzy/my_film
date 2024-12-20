@@ -464,7 +464,7 @@ class TitleAndChevronRightShimmer extends StatelessWidget {
             ),
             SvgPicture.asset(
               'assets/icons/chevron-right.svg',
-              color: color,
+              colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
             )
           ],
         ),

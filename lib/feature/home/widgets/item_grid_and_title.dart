@@ -207,7 +207,8 @@ class _ItemGridAndTitleShimmerState extends State<ItemGridAndTitleShimmer> {
                 ),
                 SvgPicture.asset(
                   'assets/icons/chevron-right.svg',
-                  color: theme.colorScheme.tertiary,
+                  colorFilter: ColorFilter.mode(
+                      theme.colorScheme.tertiary, BlendMode.srcIn),
                 )
               ],
             ),
