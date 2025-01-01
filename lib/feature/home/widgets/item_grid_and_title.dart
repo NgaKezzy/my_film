@@ -4,11 +4,13 @@ import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/movie_list.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
+import 'package:app/routers/router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
@@ -86,11 +88,9 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                         onTap: () {
                           movieCubit.addToWatchHistory(
                               itemFilm: widget.itemFilms[index]);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => WatchAMovie(
-                                      slug: widget.itemFilms[index].slug)));
+                          context.push(
+                              '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                              extra: widget.itemFilms[index].slug);
                         },
                         child: Column(
                           children: [

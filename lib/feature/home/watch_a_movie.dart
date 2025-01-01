@@ -1,4 +1,5 @@
 import 'package:app/component/loading_widget.dart';
+import 'package:app/config/di.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/widgets/video_player_widget.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 
 class WatchAMovie extends StatefulWidget {
   const WatchAMovie({super.key, required this.slug});
@@ -18,116 +20,95 @@ class WatchAMovie extends StatefulWidget {
 }
 
 class _WatchAMovieState extends State<WatchAMovie> {
-  late MovieCubit movieCubit;
+  final MovieCubit movieCubit = di.get();
   late LocaleCubit localeCubit;
-
-  bool isLoading = true;
-  String linkPlay = '';
 
   @override
   void initState() {
     super.initState();
-    movieCubit = context.read<MovieCubit>();
     localeCubit = context.read<LocaleCubit>();
+    getData();
+  }
 
-    movieCubit
-        .getMovieDetails(
-            widget.slug, localeCubit.state.languageCode)
-        .then((value) => {
-              // actors = movieCubit.state.dataFilm!.movie.actor,
-              isLoading = false,
-              if (movieCubit.state.dataFilm != null)
-                {
-                  linkPlay = context
-                      .read<MovieCubit>()
-                      .state
-                      .dataFilm!
-                      .episodes[0]
-                      .server_data[0]
-                      .link_m3u8,
-                },
-
-              setState(
-                () {},
-              )
-            });
+  Future<void> getData() async {
+    movieCubit.getMovieDetails(widget.slug, localeCubit.state.languageCode);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieCubit, MovieState>(
-      builder: (context, state) {
-        // ignore: deprecated_member_use
-        return Scaffold(
-          body: isLoading
-              ? const Center(
-                  child: LoadingWidget(),
-                )
-              : context.watch<MovieCubit>().state.dataFilm == null
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Center(
-                          child:
-                              Text(AppLocalizations.of(context)!.movieUpdate),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text(AppLocalizations.of(context)!.ok)),
-                        )
-                      ],
-                    )
-                  : WillPopScope(
-                      onWillPop: () async {
-                        Fluttertoast.showToast(
-                            msg: AppLocalizations.of(context)!
-                                .pressTheButtonToExit,
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.SNACKBAR,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.grey,
-                            textColor: Colors.red,
-                            fontSize: 16.0);
-                        return false;
+    return Scaffold(
+      body: BlocBuilder<MovieCubit, MovieState>(
+        builder: (context, state) {
+          if (movieCubit.state.status == MovieStatus.loading) {
+            return const Center(
+              child: LoadingWidget(),
+            );
+          }
+          if (movieCubit.state.dataFilm == null) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(AppLocalizations.of(context)!.movieUpdate),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        context.pop();
                       },
-                      child: SafeArea(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Stack(
-                              children: [
-                                VideoPlayerWidget(
-                                    // movieInformation: widget.movieInformation,
-                                    url: linkPlay,
-                                    dataFilm: state.dataFilm),
-                                Positioned(
-                                    left: 20,
-                                    top: 20,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: SvgPicture.asset(
-                                        'assets/icons/chevron_down.svg',
-                                        color: Colors.red,
-                                        width: 30,
-                                      ),
-                                    ))
-                              ],
+                      child: Text(AppLocalizations.of(context)!.ok)),
+                )
+              ],
+            );
+          }
+          return WillPopScope(
+            onWillPop: () async {
+              Fluttertoast.showToast(
+                  msg: AppLocalizations.of(context)!.pressTheButtonToExit,
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.SNACKBAR,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.grey,
+                  textColor: Colors.red,
+                  fontSize: 16.0);
+              return false;
+            },
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      VideoPlayerWidget(
+                          // movieInformation: widget.movieInformation,
+                          url: state
+                              .dataFilm!.episodes[0].server_data[0].link_m3u8,
+                          dataFilm: state.dataFilm),
+                      Positioned(
+                          left: 20,
+                          top: 20,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: SvgPicture.asset(
+                              'assets/icons/chevron_down.svg',
+                              color: Colors.red,
+                              width: 30,
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-        );
-      },
+                          ))
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -1,9 +1,12 @@
 import 'package:app/feature/favorite/favorite_movie_page.dart';
 import 'package:app/feature/home/home_page.dart';
+import 'package:app/feature/home/home_page_provider.dart';
 import 'package:app/feature/setting/setting_page.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class MyHomeApp extends StatefulWidget {
   const MyHomeApp({super.key});
@@ -15,11 +18,36 @@ class MyHomeApp extends StatefulWidget {
 class _MyHomeAppState extends State<MyHomeApp> {
   int pageIndex = 0;
   List<Widget> pages = [
-    const HomePage(),
+    const HomePageProvider(),
     // const SearchPage(),
     const FavoriteMoviePage(),
     const SettingsPage()
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // Lắng nghe thông báo khi app đang mở
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("Foreground Notification: ${message.notification?.title}");
+    });
+
+    // Lắng nghe sự kiện nhấn vào thông báo
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("Foreground Notification: ${message.notification?.title}");
+    });
+
+    // Kiểm tra nếu app được mở từ thông báo
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message?.data['route'] != null && message?.data['slug'] != null) {
+        final String slug = message?.data['slug'];
+        final String route = message?.data['route'];
+        context.pushReplacement(route, extra: slug);
+      }
+      print("Foreground Notification: ${message?.notification?.title}");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,17 +84,6 @@ class _MyHomeAppState extends State<MyHomeApp> {
                 color: theme.colorScheme.onPrimary,
               ),
             ),
-            // BottomNavigationBarItem(
-            //   icon: SvgPicture.asset(
-            //     'assets/icons/search.svg',
-            //     color: theme.colorScheme.tertiary,
-            //   ),
-            //   label: app?.search,
-            //   activeIcon: SvgPicture.asset(
-            //     'assets/icons/search.svg',
-            //     color: theme.colorScheme.onPrimary,
-            //   ),
-            // ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/heart.svg',

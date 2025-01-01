@@ -16,6 +16,7 @@ class FirebaseApi {
     printGreen('Token : $FCMToken');
 
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
+    
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       printGreen('Thông báo khi ứng dụng đang mở');
     });

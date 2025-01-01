@@ -11,11 +11,13 @@ import 'package:app/feature/home/widgets/item_film_horizontally.dart';
 import 'package:app/feature/home/widgets/item_grid_and_title.dart';
 import 'package:app/feature/home/widgets/item_slider_image.dart';
 import 'package:app/feature/home/search_movie.dart';
+import 'package:app/routers/router.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmer/shimmer.dart';
@@ -172,17 +174,11 @@ class _HomePageState extends State<HomePage> {
                                                         .addToWatchHistory(
                                                             itemFilm: state
                                                                 .movies[index]);
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            WatchAMovie(
-                                                          slug: state
-                                                              .movies[index]
-                                                              .slug,
-                                                        ),
-                                                      ),
-                                                    );
+                                                    context.push(
+                                                        '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                                                        extra: state
+                                                            .movies[index]
+                                                            .slug);
                                                   },
                                                 ),
                                               );
