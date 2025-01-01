@@ -100,6 +100,9 @@ class _HomePageState extends State<HomePage> {
     homePageCubit.state.isNotification ? {} : permissionHandle();
 
     checkStatusNetwork();
+    _pageController = PageController(
+      initialPage: homePageCubit.state.currentIndexPage,
+    );
   }
 
   Future<void> initialization() async {
@@ -110,6 +113,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   final ScrollController _scrollController = ScrollController();
+  late PageController _pageController;
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -123,7 +127,7 @@ class _HomePageState extends State<HomePage> {
       onWillPop: () async => false,
       child: BlocBuilder<HomePageCubit, HomePageState>(
         builder: (context, state) {
-          return context.read<HomePageCubit>().state.isConnectNetwork == false
+          return state.isConnectNetwork == false
               ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -142,50 +146,48 @@ class _HomePageState extends State<HomePage> {
                       body: BlocBuilder<MovieCubit, MovieState>(
                         builder: (context, state) {
                           return CustomScrollView(
-                            physics: const BouncingScrollPhysics(),
                             controller: _scrollController,
                             slivers: [
                               state.movies.isNotEmpty
                                   ? SliverToBoxAdapter(
                                       child: Container(
-                                        margin: const EdgeInsets.only(top: 8),
-                                        height: height * 0.23,
-                                        width: width,
-                                        child: CarouselSlider.builder(
-                                          itemCount: state.movies.length,
-                                          itemBuilder: (BuildContext context,
-                                                  int itemIndex,
-                                                  int pageViewIndex) =>
-                                              ItemSliderImage(
-                                            imageUrl: state
-                                                .movies[itemIndex].thumb_url,
-                                            onTap: () {
-                                              movieCubit.addToWatchHistory(
-                                                  itemFilm:
-                                                      state.movies[itemIndex]);
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      WatchAMovie(
-                                                    slug: state
-                                                        .movies[itemIndex].slug,
-                                                  ),
+                                          margin: const EdgeInsets.only(top: 8),
+                                          height: height * 0.23,
+                                          width: width,
+                                          child: PageView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            controller: _pageController,
+                                            padEnds: false,
+                                            itemCount: state.movies.length,
+                                            itemBuilder: (context, index) {
+                                              return SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: ItemSliderImage(
+                                                  imageUrl: state
+                                                      .movies[index].thumb_url,
+                                                  onTap: () {
+                                                    movieCubit
+                                                        .addToWatchHistory(
+                                                            itemFilm: state
+                                                                .movies[index]);
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            WatchAMovie(
+                                                          slug: state
+                                                              .movies[index]
+                                                              .slug,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
                                                 ),
                                               );
                                             },
-                                          ),
-                                          options: CarouselOptions(
-                                            autoPlay: true,
-                                            enlargeCenterPage: true,
-                                            viewportFraction: 0.75,
-                                            onPageChanged: (index, reason) {
-                                              homePageCubit.setPageIndex(index);
-                                            },
-                                            // aspectRatio: 2.0,
-                                          ),
-                                        ),
-                                      ),
+                                          )),
                                     )
                                   : const SliverToBoxAdapter(),
                               SliverToBoxAdapter(
@@ -197,12 +199,10 @@ class _HomePageState extends State<HomePage> {
                                               height: 10,
                                             ),
                                             SmoothPageIndicator(
-                                                controller: PageController(
-                                                    initialPage: homePageCubit
-                                                        .state
-                                                        .currentIndexPage), // PageController
+                                                controller:
+                                                    _pageController, // PageController
                                                 count: state.movies.length,
-                                                effect: WormEffect(
+                                                effect: ExpandingDotsEffect(
                                                     dotWidth: 10,
                                                     dotHeight: 10,
                                                     activeDotColor: theme
