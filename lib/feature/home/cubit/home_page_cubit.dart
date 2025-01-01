@@ -7,7 +7,9 @@ import '../../../config/print_color.dart';
 import 'home_page_state.dart';
 
 class HomePageCubit extends Cubit<HomePageState> {
-  HomePageCubit() : super(const HomePageState());
+  HomePageCubit() : super(const HomePageState()) {
+    initIsSelectedNotifications();
+  }
 
   Future<void> checkNetwork() async {
     emit(state.copyWith(status: HomePageStatus.init));
@@ -36,15 +38,14 @@ class HomePageCubit extends Cubit<HomePageState> {
     emit(state.copyWith(isNotification: true));
   }
 
-
-   Future<void> initIsSelectedNotifications() async {
+  Future<void> initIsSelectedNotifications() async {
     emit(state.copyWith(status: HomePageStatus.loading));
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isSelected = prefs.getBool(KeyApp.IS_SELECTED_NOTIFICATION)?? false;
+    bool isSelected = prefs.getBool(KeyApp.IS_SELECTED_NOTIFICATION) ?? false;
     emit(state.copyWith(isNotification: isSelected));
   }
 
-  void setPageIndex(int indexPage){
+  void setPageIndex(int indexPage) {
     emit(state.copyWith(currentIndexPage: indexPage));
   }
 }

@@ -21,40 +21,23 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  late LocaleCubit localeCubit;
-  late HomePageCubit homePageCubit;
-  late MovieCubit movieCubit;
-
   @override
   void initState() {
     super.initState();
-    localeCubit = context.read<LocaleCubit>();
-    homePageCubit = context.read<HomePageCubit>();
-    movieCubit = context.read<MovieCubit>();
 
-    homePageCubit.initIsSelectedNotifications();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.top,
+    ]);
 
-    getData();
-    localeCubit.checkIsSelectedLanguage();
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+    );
 
     Timer(const Duration(seconds: 3), () {
-      
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-        SystemUiOverlay.top,
-      ]);
-
-      SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-        ),
-      );
       context.go(AppRouteConstant.myHomeApp);
     });
-  }
-
-  void getData() async {
-    await movieCubit.getMovieDataTheLocalStorage();
-    await movieCubit.getViewHistoryTheLocalStorage();
   }
 
   @override

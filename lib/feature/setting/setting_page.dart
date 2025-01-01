@@ -4,11 +4,13 @@ import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/setting/select_language.dart';
 import 'package:app/feature/setting/view_history.dart';
+import 'package:app/routers/router.dart';
 import 'package:app/theme/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -73,10 +75,7 @@ class SettingsPage extends StatelessWidget {
               path: 'assets/icons/bookmark.svg',
               text: app.viewHistory,
               onTap: () {
-                Navigator.push(
-                    context,
-                    SwipeablePageRoute(
-                        builder: (context) => const ViewHistory()));
+                context.push(AppRouteConstant.viewHistory);
               },
             ),
             ItemSetting(

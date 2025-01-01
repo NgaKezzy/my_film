@@ -1,5 +1,6 @@
 import 'package:app/component/loading_widget.dart';
 import 'package:app/config/debounce.dart';
+import 'package:app/config/di.dart';
 import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
@@ -19,7 +20,7 @@ class SearchMovie extends StatefulWidget {
 
 class _SearchMovieState extends State<SearchMovie> {
   final TextEditingController searchController = TextEditingController();
-  late MovieCubit movieCubit;
+   MovieCubit movieCubit = di.get();
   bool isPlaySearch = false;
   bool isFirst = true;
 
@@ -27,7 +28,6 @@ class _SearchMovieState extends State<SearchMovie> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    movieCubit = context.read<MovieCubit>();
   }
 
   @override

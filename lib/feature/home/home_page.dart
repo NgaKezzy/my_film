@@ -351,11 +351,8 @@ AppBar _appBar(BuildContext context, ScrollController scrollController) {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    child: const SearchMovie(),
-                    type: PageTransitionType.leftToRight));
+            context.push(
+                '${AppRouteConstant.myHomeApp}/${AppRouteConstant.searchMovie}');
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),

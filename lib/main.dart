@@ -28,20 +28,18 @@ void main() async {
       statusBarColor: Colors.transparent,
     ),
   );
-  await setup();
-  await Firebase.initializeApp();
-  await FirebaseApi().initNotifications();
   await Hive.initFlutter('dev_box');
   await LocalStorage.hiveRegisterAdapter();
   await LocalStorage.hiveOpenBox();
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-  FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
-
-  
+  await setup();
+  await Firebase.initializeApp();
+  await FirebaseApi().initNotifications();
+  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+  //   alert: true,
+  //   badge: true,
+  //   sound: true,
+  // );
+  // FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
 
   // Bloc.observer = MyBlocObserver();
   runApp(

@@ -1,19 +1,22 @@
 import 'package:app/component/header_title_app.dart';
+import 'package:app/config/di.dart';
 import 'package:app/config/print_color.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/feature/home/widgets/item_movie_information.dart';
+import 'package:app/routers/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class ViewHistory extends StatelessWidget {
   const ViewHistory({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final MovieCubit movieCubit = context.read<MovieCubit>();
+    final MovieCubit movieCubit = di.get();
     final app = AppLocalizations.of(context);
     return Scaffold(
       body: Column(

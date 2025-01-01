@@ -11,7 +11,11 @@ import 'package:hive/hive.dart';
 import 'package:translator/translator.dart';
 
 class MovieCubit extends Cubit<MovieState> {
-  MovieCubit() : super(const MovieState());
+  MovieCubit() : super(const MovieState()){
+    getMovieDataTheLocalStorage();
+    getViewHistoryTheLocalStorage();
+
+  }
 
   final translator = GoogleTranslator();
 

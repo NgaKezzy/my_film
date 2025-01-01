@@ -7,7 +7,9 @@ import '../../config/print_color.dart';
 import 'locale_state.dart';
 
 class LocaleCubit extends Cubit<LocaleState> {
-  LocaleCubit() : super(const LocaleState());
+  LocaleCubit() : super(const LocaleState()) {
+    checkIsSelectedLanguage();
+  }
 
   Future<void> initLanguage() async {
     emit(state.copyWith(status: LocaleStatus.loading));
