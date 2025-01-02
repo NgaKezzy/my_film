@@ -53,6 +53,7 @@ dependencies:
   bloc: any
   chewie: ^1.8.5
   get_it: ^8.0.3
+  flutter_gen: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,5 +1,4 @@
 import 'package:app/feature/favorite/favorite_movie_page.dart';
-import 'package:app/feature/home/home_page.dart';
 import 'package:app/feature/home/home_page_provider.dart';
 import 'package:app/feature/setting/setting_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
