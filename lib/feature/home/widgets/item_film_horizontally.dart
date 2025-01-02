@@ -1,6 +1,5 @@
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/models/movie_information.dart';
-import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:app/routers/router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
