@@ -3,10 +3,12 @@ import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
+import 'package:app/routers/router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class FavoriteMoviePage extends StatelessWidget {
   const FavoriteMoviePage({super.key});
@@ -40,12 +42,9 @@ class FavoriteMoviePage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => WatchAMovie(
-                                  slug: state.favoriteMovies[index]?.slug ??
-                                      '')));
+                      context.push(
+                          '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                          extra: state.favoriteMovies[index]?.slug);
                     },
                     child: Column(
                       children: [

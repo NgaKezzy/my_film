@@ -48,6 +48,7 @@ class MovieCubit extends Cubit<MovieState> {
 
   Future<void> getMovieDetails(String slug, String languageCode) async {
     DataFilm? newDataFilm;
+    Box<MovieDetails> favoriteMovieBox = Hive.box(KeyApp.FAVORITE_MOVIE_BOX);
     emit(state.copyWith(status: MovieStatus.loading, dataFilm: newDataFilm));
 
     try {
@@ -69,6 +70,11 @@ class MovieCubit extends Cubit<MovieState> {
         for (var i = 0; i < newDataFilm.movie.category.length; i++) {
           newDataFilm.movie.category[i].name =
               await translate(newDataFilm.movie.category[i].name);
+        }
+      }
+      for (var movieDetails in favoriteMovieBox.values) {
+        if (movieDetails.slug == newDataFilm.movie.slug) {
+          newDataFilm.movie.isFavorite = true;
         }
       }
     } catch (e) {
@@ -237,7 +243,6 @@ class MovieCubit extends Cubit<MovieState> {
   Future<void> removeMoviesToFavoritesList({
     required MovieDetails? itemFilm,
   }) async {
-    emit(state.copyWith(status: MovieStatus.loading));
     List<MovieDetails?> items = state.favoriteMovies;
     for (int i = 0; i < items.length; i++) {
       if (itemFilm!.slug == items[i]!.slug) {
@@ -250,6 +255,14 @@ class MovieCubit extends Cubit<MovieState> {
     for (var element in items) {
       favoriteMovieBox.add(element!);
     }
+  }
+
+  Future<void> setHeart() async {
+    emit(state.copyWith(status: MovieStatus.star));
+
+    DataFilm? newDataFilm = state.dataFilm;
+    newDataFilm!.movie.isFavorite = !state.dataFilm!.movie.isFavorite;
+    emit(state.copyWith(dataFilm: newDataFilm, status: MovieStatus.success));
   }
 
   Future<void> addToWatchHistory({required String slug}) async {

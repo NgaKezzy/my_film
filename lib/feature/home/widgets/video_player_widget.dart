@@ -119,28 +119,31 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                           fontWeight: FontWeight.w600,
                           fontSize: AppSize.size16),
                     ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     if (movieCubit.movieInformation!.isFavorite == false) {
-                    //       movieCubit.addMoviesToFavoritesList(
-                    //           itemFilm: widget.movieInformation);
-                    //     } else {
-                    //       movieCubit.removeMoviesToFavoritesList(
-                    //           itemFilm: widget.movieInformation);
-                    //     }
-                    //     setState(() {
-                    //       widget.movieInformation!.isFavorite =
-                    //           !widget.movieInformation!.isFavorite;
-                    //     });
-                    //   },
-                    //   child: Icon(
-                    //     Icons.favorite,
-                    //     size: AppSize.size35,
-                    //     color: widget.movieInformation!.isFavorite
-                    //         ? theme.colorScheme.onPrimary
-                    //         : theme.colorScheme.tertiary,
-                    //   ),
-                    // )
+                    GestureDetector(
+                      onTap: () {
+                        if (movieCubit.state.dataFilm?.movie.isFavorite ==
+                            false) {
+                          movieCubit.addMoviesToFavoritesList(
+                              itemFilm: movieCubit.state.dataFilm?.movie);
+                        } else {
+                          movieCubit.removeMoviesToFavoritesList(
+                              itemFilm: movieCubit.state.dataFilm?.movie);
+                        }
+                        movieCubit.setHeart();
+                      },
+                      child: Icon(
+                        Icons.favorite,
+                        size: AppSize.size35,
+                        color: context
+                                .watch<MovieCubit>()
+                                .state
+                                .dataFilm!
+                                .movie
+                                .isFavorite
+                            ? theme.colorScheme.onPrimary
+                            : theme.colorScheme.tertiary,
+                      ),
+                    )
                   ],
                 ),
                 SizedBox(

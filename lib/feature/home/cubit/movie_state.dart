@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 
 part 'movie_state.g.dart';
 
-enum MovieStatus { init, loading, success, error }
+enum MovieStatus { init,star, loading, success, error }
 
 @CopyWith()
 class MovieState extends Equatable {
