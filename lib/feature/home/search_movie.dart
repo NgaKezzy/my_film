@@ -170,8 +170,7 @@ class _SearchMovieState extends State<SearchMovie> {
                                   child: GestureDetector(
                                     onTap: () {
                                       FocusScope.of(context).unfocus();
-                                      movieCubit.addToWatchHistory(
-                                          itemFilm: state.moviesSearch[index]);
+                                   
                                       printRed(state.moviesSearch[index].slug);
                                       Navigator.push(
                                           context,

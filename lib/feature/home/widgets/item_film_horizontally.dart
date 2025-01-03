@@ -37,7 +37,6 @@ class ItemFilmHorizontally extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {
-                movieCubit.addToWatchHistory(itemFilm: itemsFilm[index]);
                 context.push(
                                                         '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
                                                         extra: itemsFilm[index].slug);

@@ -1,25 +1,22 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'movie_information.g.dart';
 
 @JsonSerializable()
-@HiveType(typeId: 0)
 class MovieInformation {
-  @HiveField(0)
   final String name;
-  @HiveField(1)
+
   final String slug;
-  @HiveField(2)
+
   final String origin_name;
-  @HiveField(3)
+
   String poster_url;
-  @HiveField(4)
+
   String thumb_url;
-  @HiveField(5)
+
   final int year;
-  @HiveField(6)
+
   bool isFavorite;
 
   MovieInformation(

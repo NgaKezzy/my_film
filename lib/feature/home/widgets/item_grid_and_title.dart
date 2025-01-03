@@ -85,8 +85,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          movieCubit.addToWatchHistory(
-                              itemFilm: widget.itemFilms[index]);
+                        
                           context.push(
                               '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
                               extra: widget.itemFilms[index].slug);

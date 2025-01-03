@@ -1,6 +1,7 @@
 import 'package:app/component/header_app.dart';
 import 'package:app/component/item_setting.dart';
 import 'package:app/config/app_size.dart';
+import 'package:app/config/di.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/setting/select_language.dart';
 import 'package:app/routers/router.dart';
@@ -92,6 +93,8 @@ class SettingsPage extends StatelessWidget {
 }
 
 Future<void> _showMyDialog(BuildContext context) async {
+  final MovieCubit movieCubit = di.get();
+
   final app = AppLocalizations.of(context);
   final theme = Theme.of(context).colorScheme;
 
@@ -124,7 +127,7 @@ Future<void> _showMyDialog(BuildContext context) async {
               style: TextStyle(color: theme.tertiary),
             ),
             onPressed: () async {
-              context.read<MovieCubit>().clearCache();
+              movieCubit.clearCache();
               Navigator.of(context).pop();
             },
           ),

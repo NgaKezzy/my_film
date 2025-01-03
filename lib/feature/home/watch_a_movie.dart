@@ -31,7 +31,9 @@ class _WatchAMovieState extends State<WatchAMovie> {
   }
 
   Future<void> getData() async {
-    movieCubit.getMovieDetails(widget.slug, localeCubit.state.languageCode);
+    await movieCubit.getMovieDetails(
+        widget.slug, localeCubit.state.languageCode);
+    movieCubit.addToWatchHistory(slug: widget.slug);
   }
 
   @override

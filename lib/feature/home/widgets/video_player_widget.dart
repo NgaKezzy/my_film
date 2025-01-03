@@ -14,13 +14,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class VideoPlayerWidget extends StatefulWidget {
-  const VideoPlayerWidget(
-      {super.key,
-      required this.url,
-      required this.dataFilm,
-      // required this.movieInformation
-      
-      });
+  const VideoPlayerWidget({
+    super.key,
+    required this.url,
+    required this.dataFilm,
+    // required this.movieInformation
+  });
   final String url;
   final DataFilm? dataFilm;
   // MovieInformation? movieInformation;
@@ -103,10 +102,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             ),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+        SizedBox(
           height: height - (height * 0.3 + 32),
           child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
             physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +121,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                     ),
                     // GestureDetector(
                     //   onTap: () {
-                    //     if (widget.movieInformation!.isFavorite == false) {
+                    //     if (movieCubit.movieInformation!.isFavorite == false) {
                     //       movieCubit.addMoviesToFavoritesList(
                     //           itemFilm: widget.movieInformation);
                     //     } else {

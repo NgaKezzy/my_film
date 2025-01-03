@@ -1,21 +1,38 @@
 import 'package:app/feature/home/models/movie_category.dart';
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'movie_details.g.dart';
 
 @JsonSerializable()
+@HiveType(typeId: 0)
 class MovieDetails {
+  @HiveField(0)
   String content;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final String origin_name;
+  @HiveField(3)
   final String poster_url;
+  @HiveField(4)
   final String thumb_url;
+  @HiveField(5)
   final String trailer_url;
+  @HiveField(6)
   final String time;
+  @HiveField(7)
   final int year;
+  @HiveField(8)
   final List<String> actor;
+  @HiveField(9)
   List<MovieCategory> category;
+  @HiveField(10)
   final List<MovieCategory> country;
+  @HiveField(11)
+  bool isFavorite;
+  @HiveField(12)
+  String slug;
 
   MovieDetails({
     this.name = '',
@@ -29,6 +46,8 @@ class MovieDetails {
     this.actor = const [],
     this.category = const [],
     this.country = const [],
+    this.isFavorite = false,
+    this.slug = '',
   });
 
   factory MovieDetails.fromJson(Map<String, dynamic> json) =>

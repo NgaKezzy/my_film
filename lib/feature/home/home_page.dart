@@ -167,10 +167,7 @@ class _HomePageState extends State<HomePage> {
                                                   imageUrl: state
                                                       .movies[index].thumb_url,
                                                   onTap: () {
-                                                    movieCubit
-                                                        .addToWatchHistory(
-                                                            itemFilm: state
-                                                                .movies[index]);
+                                               
                                                     context.push(
                                                         '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
                                                         extra: state

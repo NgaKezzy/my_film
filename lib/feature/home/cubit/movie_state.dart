@@ -1,4 +1,5 @@
 import 'package:app/feature/home/models/data_film.dart';
+import 'package:app/feature/home/models/movie_details.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
@@ -24,10 +25,10 @@ class MovieState extends Equatable {
   final List<MovieInformation> singleMovies;
   final List<MovieInformation> seriesMovies;
   final List<MovieInformation> cartoon;
-  final List<MovieInformation?> viewHistory;
+  final List<MovieDetails?> viewHistory;
   final MovieStatus status;
   final DataFilm? dataFilm;
-  final List<MovieInformation?> favoriteMovies;
+  final List<MovieDetails?> favoriteMovies;
 
   @override
   List<Object?> get props => [

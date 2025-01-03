@@ -1,10 +1,15 @@
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'movie_category.g.dart';
 
 @JsonSerializable()
+@HiveType(typeId: 1)
 class MovieCategory {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   String name;
+  @HiveField(2)
   final String slug;
 
   MovieCategory({required this.id, required this.name, required this.slug});

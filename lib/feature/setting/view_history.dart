@@ -5,9 +5,11 @@ import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/feature/home/widgets/item_movie_information.dart';
+import 'package:app/routers/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class ViewHistory extends StatelessWidget {
   const ViewHistory({super.key});
@@ -44,15 +46,9 @@ class ViewHistory extends StatelessWidget {
                             child: GestureDetector(
                                 onTap: () {
                                   printRed(state.viewHistory[index]!.slug);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => WatchAMovie(
-                                          slug:
-                                              state.viewHistory[index]?.slug ??
-                                                  ''),
-                                    ),
-                                  );
+                                  context.push(
+                                      '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                                      extra: state.viewHistory[index]?.slug);
                                 },
                                 child: ItemMovieInformation(
                                   imageUrl: state.viewHistory[index]!.thumb_url,
