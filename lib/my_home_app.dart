@@ -19,7 +19,6 @@ class _MyHomeAppState extends State<MyHomeApp> {
   int pageIndex = 0;
   List<Widget> pages = [
     const HomePageProvider(),
-    // const SearchPage(),
     const FavoriteMoviePage(),
     const SettingPageProvider()
   ];

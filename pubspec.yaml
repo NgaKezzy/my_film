@@ -16,7 +16,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.5
-  shimmer: ^3.0.0
   shared_preferences: ^2.2.2
   json_annotation: ^4.9.0
   copy_with_extension: ^5.0.2
@@ -53,6 +52,8 @@ dependencies:
   bloc: any
   chewie: ^1.8.5
   get_it: ^8.0.3
+  skeletonizer: ^1.4.2
+  skeletons: ^0.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

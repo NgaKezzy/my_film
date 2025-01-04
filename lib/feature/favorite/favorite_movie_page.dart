@@ -1,4 +1,5 @@
 import 'package:app/component/header_app.dart';
+import 'package:app/component/loading_widget.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
@@ -61,6 +62,9 @@ class FavoriteMoviePage extends StatelessWidget {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
+                              ),
+                              placeholder: (context, url) => const Center(
+                                child: LoadingWidget(),
                               ),
                               errorWidget: (context, url, error) =>
                                   const Icon(Icons.warning),

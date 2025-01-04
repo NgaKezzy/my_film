@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 // ignore: must_be_immutable
@@ -33,7 +32,6 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
 
   @override
   Widget build(BuildContext context) {
-    final MovieCubit movieCubit = context.read<MovieCubit>();
     final theme = Theme.of(context);
     final app = AppLocalizations.of(context);
 
@@ -163,136 +161,6 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                 ],
               ),
             ),
-    );
-  }
-}
-
-// ignore: must_be_immutable
-class ItemGridAndTitleShimmer extends StatefulWidget {
-  const ItemGridAndTitleShimmer({
-    super.key,
-    required this.title,
-  });
-  final String title;
-
-  @override
-  State<ItemGridAndTitleShimmer> createState() =>
-      _ItemGridAndTitleShimmerState();
-}
-
-class _ItemGridAndTitleShimmerState extends State<ItemGridAndTitleShimmer> {
-  bool isDetail = false;
-  int itemCount = 9;
-
-  @override
-  Widget build(BuildContext context) {
-    final MovieCubit movieCubit = context.read<MovieCubit>();
-    final theme = Theme.of(context);
-    final app = AppLocalizations.of(context);
-
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.title,
-                  style: const TextStyle(
-                      fontSize: AppSize.size20, fontWeight: FontWeight.w600),
-                ),
-                SvgPicture.asset(
-                  'assets/icons/chevron-right.svg',
-                  colorFilter: ColorFilter.mode(
-                      theme.colorScheme.tertiary, BlendMode.srcIn),
-                )
-              ],
-            ),
-            const SizedBox(height: 10.0),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 10.0,
-                mainAxisSpacing: 10.0,
-                childAspectRatio: 0.6,
-              ),
-              itemCount: itemCount, // Số lượng items trong grid view
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Shimmer.fromColors(
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.grey.shade100,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: 40,
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        children: [
-                          Shimmer.fromColors(
-                            baseColor: Colors.grey.shade400,
-                            highlightColor: Colors.grey.shade100,
-                            child: Container(
-                              height: 10,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Shimmer.fromColors(
-                            baseColor: Colors.grey.shade400,
-                            highlightColor: Colors.grey.shade100,
-                            child: Container(
-                              height: 10,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              alignment: Alignment.center,
-              height: 30,
-              width: MediaQuery.of(context).size.width * 0.8,
-              decoration: BoxDecoration(
-                  color: theme.colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(8)),
-              child: Text(isDetail ? app!.hideLess : app!.seeMore),
-            )
-          ],
-        ),
-      ),
     );
   }
 }

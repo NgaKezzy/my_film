@@ -1,12 +1,15 @@
+import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/models/movie_information.dart';
+import 'package:app/feature/home/movie_list.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
 import 'package:app/routers/router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 // ignore: must_be_immutable
 
@@ -15,159 +18,121 @@ class ItemFilmHorizontally extends StatelessWidget {
   ItemFilmHorizontally({
     super.key,
     this.itemsFilm = const [],
+    required this.title,
+    required this.color,
   });
   List<MovieInformation> itemsFilm;
+  final String title;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    final MovieCubit movieCubit = context.read<MovieCubit>();
+    final Size size = MediaQuery.of(context).size;
 
     return SliverToBoxAdapter(
-      child: SizedBox(
-        height: 300, //
-        child: GridView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          scrollDirection: Axis.horizontal,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10.0,
-            crossAxisSpacing: 10.0,
-            childAspectRatio: 1,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () {
-                context.push(
-                                                        '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
-                                                        extra: itemsFilm[index].slug);
-            
-              },
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: CachedNetworkImage(
-                        imageUrl: itemsFilm[index].thumb_url,
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 40,
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      context.watch<LocaleCubit>().state.languageCode == 'en'
-                          ? itemsFilm[index].origin_name
-                          : itemsFilm[index].name,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                  )
-                ],
-              ),
-            );
-          },
-          itemCount: 20, // Số lượng mục trong danh sách
-        ),
-      ),
-    );
-  }
-}
-
-class ItemFilmHorizontallyShimmer extends StatelessWidget {
-  const ItemFilmHorizontallyShimmer({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final MovieCubit movieCubit = context.read<MovieCubit>();
-
-    return SliverToBoxAdapter(
-      child: SizedBox(
-        height: 300, //
-        child: GridView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          scrollDirection: Axis.horizontal,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10.0,
-            crossAxisSpacing: 10.0,
-            childAspectRatio: 1,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
+      child: itemsFilm.isEmpty
+          ? const SizedBox()
+          : Column(
               children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Shimmer.fromColors(
-                      baseColor: Colors.grey.shade300,
-                      highlightColor: Colors.grey.shade100,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.grey,
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 10, right: 10, top: 30, bottom: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          SwipeablePageRoute(
+                              builder: (context) => MovieList(
+                                    itemFilms: itemsFilm,
+                                    title: title,
+                                  )));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                              fontSize: AppSize.size20,
+                              fontWeight: FontWeight.w600),
                         ),
-                      ),
+                        SvgPicture.asset(
+                          'assets/icons/chevron-right.svg',
+                          color: color,
+                        )
+                      ],
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: 40,
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Column(
-                    children: [
-                      Shimmer.fromColors(
-                        baseColor: Colors.grey.shade400,
-                        highlightColor: Colors.grey.shade100,
-                        child: Container(
-                          height: 10,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.grey,
+                SizedBox(
+                  height: 250, //
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    scrollDirection: Axis.horizontal,
+                    separatorBuilder: (context, index) => const SizedBox(
+                      width: 10,
+                    ),
+
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          context.push(
+                              '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                              extra: itemsFilm[index].slug);
+                        },
+                        child: SizedBox(
+                          width: size.width * 0.4,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: CachedNetworkImage(
+                                    imageUrl: itemsFilm[index].thumb_url,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                height: 40,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(
+                                  context
+                                              .watch<LocaleCubit>()
+                                              .state
+                                              .languageCode ==
+                                          'en'
+                                      ? itemsFilm[index].origin_name
+                                      : itemsFilm[index].name,
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Shimmer.fromColors(
-                        baseColor: Colors.grey.shade400,
-                        highlightColor: Colors.grey.shade100,
-                        child: Container(
-                          height: 10,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                    ],
+                      );
+                    },
+                    itemCount: 20, // Số lượng mục trong danh sách
                   ),
                 ),
               ],
-            );
-          },
-          itemCount: 20, // Số lượng mục trong danh sách
-        ),
-      ),
+            ),
     );
   }
 }

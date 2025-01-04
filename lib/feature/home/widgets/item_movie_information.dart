@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app/component/loading_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,6 @@ class ItemMovieInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
     return Row(
@@ -34,6 +34,9 @@ class ItemMovieInformation extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 ),
+              ),
+              placeholder: (context, url) => const Center(
+                child: LoadingWidget(),
               ),
               errorWidget: (context, url, error) => const Icon(Icons.warning),
             ),
