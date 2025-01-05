@@ -22,7 +22,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -143,99 +142,106 @@ class _HomePageState extends State<HomePage> {
                   appBar: _appBar(context, _scrollController),
                   body: BlocBuilder<MovieCubit, MovieState>(
                     builder: (context, state) {
-                      return CustomScrollView(
-                        controller: _scrollController,
-                        slivers: [
-                          homePageCubitWatch.state.isLoadingHome
-                              ? const SkeletonMovieCard()
-                              : SliverToBoxAdapter(
-                                  child: state.movies.isNotEmpty
-                                      ? Container(
-                                          margin: const EdgeInsets.only(top: 8),
-                                          height: height * 0.23,
-                                          width: width,
-                                          child: PageView.builder(
-                                            scrollDirection: Axis.horizontal,
-                                            controller: _pageController,
-                                            padEnds: false,
-                                            itemCount: state.movies.length,
-                                            itemBuilder: (context, index) {
-                                              return SizedBox(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                child: ItemSliderImage(
-                                                  imageUrl: state
-                                                      .movies[index].thumb_url,
-                                                  onTap: () {
-                                                    context.push(
-                                                        '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
-                                                        extra: state
-                                                            .movies[index]
-                                                            .slug);
-                                                  },
-                                                ),
-                                              );
-                                            },
-                                          ))
-                                      : const SizedBox(),
-                                ),
-                          homePageCubitWatch.state.isLoadingHome
-                              ? const SkeletonPageIndicator()
-                              : SliverToBoxAdapter(
-                                  child: Center(
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          initialization();
+                        },
+                        child: CustomScrollView(
+                          controller: _scrollController,
+                          slivers: [
+                            homePageCubitWatch.state.isLoadingHome
+                                ? const SkeletonMovieCard()
+                                : SliverToBoxAdapter(
                                     child: state.movies.isNotEmpty
-                                        ? Column(
-                                            children: [
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              SmoothPageIndicator(
-                                                  controller:
-                                                      _pageController, // PageController
-                                                  count: state.movies.length,
-                                                  effect: ExpandingDotsEffect(
-                                                      dotWidth: 10,
-                                                      dotHeight: 10,
-                                                      activeDotColor: theme
-                                                          .colorScheme
-                                                          .onPrimary), // your preferred effect
-                                                  onDotClicked: (index) {}),
-                                            ],
-                                          )
+                                        ? Container(
+                                            margin:
+                                                const EdgeInsets.only(top: 8),
+                                            height: height * 0.23,
+                                            width: width,
+                                            child: PageView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              controller: _pageController,
+                                              padEnds: false,
+                                              itemCount: state.movies.length,
+                                              itemBuilder: (context, index) {
+                                                return SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  child: ItemSliderImage(
+                                                    imageUrl: state
+                                                        .movies[index]
+                                                        .thumb_url,
+                                                    onTap: () {
+                                                      context.push(
+                                                          '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                                                          extra: state
+                                                              .movies[index]
+                                                              .slug);
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                            ))
                                         : const SizedBox(),
                                   ),
-                                ),
+                            homePageCubitWatch.state.isLoadingHome
+                                ? const SkeletonPageIndicator()
+                                : SliverToBoxAdapter(
+                                    child: Center(
+                                      child: state.movies.isNotEmpty
+                                          ? Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                SmoothPageIndicator(
+                                                    controller:
+                                                        _pageController, // PageController
+                                                    count: state.movies.length,
+                                                    effect: ExpandingDotsEffect(
+                                                        dotWidth: 10,
+                                                        dotHeight: 10,
+                                                        activeDotColor: theme
+                                                            .colorScheme
+                                                            .onPrimary), // your preferred effect
+                                                    onDotClicked: (index) {}),
+                                              ],
+                                            )
+                                          : const SizedBox(),
+                                    ),
+                                  ),
 
-                          /// phim lẻ
-                          homePageCubitWatch.state.isLoadingHome
-                              ? SkeletonItemGridAndTitle(
-                                  title: app?.singleMovie ?? '')
-                              : ItemGridAndTitle(
-                                  itemFilms: state.singleMovies,
-                                  title: app?.singleMovie ?? '',
-                                ),
+                            /// phim lẻ
+                            homePageCubitWatch.state.isLoadingHome
+                                ? SkeletonItemGridAndTitle(
+                                    title: app?.singleMovie ?? '')
+                                : ItemGridAndTitle(
+                                    itemFilms: state.singleMovies,
+                                    title: app?.singleMovie ?? '',
+                                  ),
 
-                          /// phim hoạt hình
-                          homePageCubitWatch.state.isLoadingHome
-                              ? const SkeletonItemFilmHorizontal()
-                              : ItemFilmHorizontally(
-                                  itemsFilm: state.cartoon,
-                                  title: app?.cartoon ?? '',
-                                  color: theme.colorScheme.tertiary),
+                            /// phim hoạt hình
+                            homePageCubitWatch.state.isLoadingHome
+                                ? const SkeletonItemFilmHorizontal()
+                                : ItemFilmHorizontally(
+                                    itemsFilm: state.cartoon,
+                                    title: app?.cartoon ?? '',
+                                    color: theme.colorScheme.tertiary),
 
-                          ///phim bộ
-                          homePageCubitWatch.state.isLoadingHome
-                              ? SkeletonItemGridAndTitle(
-                                  title: app?.seriesMovie ?? '')
-                              : ItemGridAndTitle(
-                                  itemFilms: state.seriesMovies,
-                                  title: app?.seriesMovie ?? '',
-                                ),
-                          const SliverToBoxAdapter(
-                            child: SizedBox(height: 30),
-                          )
-                        ],
+                            ///phim bộ
+                            homePageCubitWatch.state.isLoadingHome
+                                ? SkeletonItemGridAndTitle(
+                                    title: app?.seriesMovie ?? '')
+                                : ItemGridAndTitle(
+                                    itemFilms: state.seriesMovies,
+                                    title: app?.seriesMovie ?? '',
+                                  ),
+                            const SliverToBoxAdapter(
+                              child: SizedBox(height: 30),
+                            )
+                          ],
+                        ),
                       );
                     },
                   ),
