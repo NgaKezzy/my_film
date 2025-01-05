@@ -187,21 +187,23 @@ class MovieCubit extends Cubit<MovieState> {
   Future<void> moviesSearch(String keyWord) async {
     emit(state.copyWith(status: MovieStatus.loading));
     List<MovieInformation> newMoviesSearch = [];
-
-    final data = await FetchApiMovie.movieSearch(keyWord);
-
-    List items = data['data']['items'];
-    for (var i = 0; i < items.length; i++) {
-      final MovieInformation item;
-      item = MovieInformation.fromJson(items[i]);
-      item.poster_url = 'https://img.phimapi.com/${item.poster_url}';
-      item.thumb_url = 'https://img.phimapi.com/${item.thumb_url}';
-      newMoviesSearch.add(item);
+    try {
+      final data = await FetchApiMovie.movieSearch(keyWord);
+      List items = data['data']['items'];
+      for (var i = 0; i < items.length; i++) {
+        final MovieInformation item;
+        item = MovieInformation.fromJson(items[i]);
+        item.poster_url = 'https://img.phimapi.com/${item.poster_url}';
+        item.thumb_url = 'https://img.phimapi.com/${item.thumb_url}';
+        newMoviesSearch.add(item);
+      }
+      emit(state.copyWith(
+        moviesSearch: newMoviesSearch,
+        status: MovieStatus.success,
+      ));
+    } catch (e) {
+      printRed(e.toString());
     }
-    emit(state.copyWith(
-      moviesSearch: newMoviesSearch,
-      status: MovieStatus.success,
-    ));
   }
 
   Future<void> getMovieDataTheLocalStorage() async {

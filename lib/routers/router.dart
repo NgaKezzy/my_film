@@ -69,7 +69,7 @@ class AppRoutes {
               path: AppRouteConstant.searchMovie,
               pageBuilder: (context, state) => CustomTransitionPage(
                 child: BlocProvider<MovieCubit>.value(
-                  value: MovieCubit(), // Replace with your DI logic
+                  value: di.get<MovieCubit>(),
                   child: const SearchMovie(),
                 ),
                 transitionsBuilder:
