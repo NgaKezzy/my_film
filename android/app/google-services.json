@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "856710108082",
     "project_id": "my-film-af367",
-    "storage_bucket": "my-film-af367.appspot.com"
+    "storage_bucket": "my-film-af367.firebasestorage.app"
   },
   "client": [
     {

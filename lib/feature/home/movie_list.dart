@@ -3,8 +3,10 @@ import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/models/movie_information.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/feature/home/widgets/item_movie_information.dart';
+import 'package:app/routers/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class MovieList extends StatelessWidget {
   const MovieList({super.key, this.title = '', this.itemFilms = const []});
@@ -41,11 +43,14 @@ class MovieList extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => WatchAMovie(
-                                          slug: itemFilms[index].slug)));
+                              context.push(
+                                  '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                                  extra: itemFilms[index].slug);
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => WatchAMovie(
+                              //             slug: itemFilms[index].slug)));
                             },
                             child: ItemMovieInformation(
                               imageUrl: itemFilms[index].thumb_url,
