@@ -106,6 +106,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           height: height - (height * 0.3 + 32),
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
