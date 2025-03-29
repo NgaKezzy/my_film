@@ -1,3 +1,4 @@
+import 'package:app/component/loading_widget.dart';
 import 'package:app/config/app_size.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/models/movie_information.dart';
@@ -83,7 +84,6 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                        
                           context.push(
                               '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
                               extra: widget.itemFilms[index].slug);
@@ -103,6 +103,9 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                                         fit: BoxFit.cover,
                                       ),
                                     ),
+                                  ),
+                                  placeholder: (context, url) => Center(
+                                    child: LoadingWidget(),
                                   ),
                                   errorWidget: (context, url, error) =>
                                       const Icon(Icons.warning),
