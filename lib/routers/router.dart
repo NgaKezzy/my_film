@@ -17,8 +17,8 @@ class AppRouteConstant {
 
   static const String myHomeApp = '/my-home-app';
   // cấp 1 của myHomeApp
-  static const String watchAVideo = 'watch-a-video';
-  static const String searchMovie = 'search-movie';
+  static const String watchAVideo = '/watch-a-video';
+  static const String searchMovie = '/search-movie';
 
   // settings
   static const String viewHistory = '/viewHistory';

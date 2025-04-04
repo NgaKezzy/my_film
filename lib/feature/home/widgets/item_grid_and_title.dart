@@ -85,7 +85,7 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                       return GestureDetector(
                         onTap: () {
                           context.push(
-                              '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                              '${AppRouteConstant.myHomeApp}${AppRouteConstant.watchAVideo}',
                               extra: widget.itemFilms[index].slug);
                         },
                         child: Column(

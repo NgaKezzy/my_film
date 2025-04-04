@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                                                         .thumb_url,
                                                     onTap: () {
                                                       context.push(
-                                                          '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                                                          '${AppRouteConstant.myHomeApp}${AppRouteConstant.watchAVideo}',
                                                           extra: state
                                                               .movies[index]
                                                               .slug);
@@ -275,7 +275,7 @@ AppBar _appBar(BuildContext context, ScrollController scrollController) {
         GestureDetector(
           onTap: () {
             context.push(
-                '${AppRouteConstant.myHomeApp}/${AppRouteConstant.searchMovie}');
+                '${AppRouteConstant.myHomeApp}${AppRouteConstant.searchMovie}');
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),

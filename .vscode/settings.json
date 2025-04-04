@@ -1,5 +1,6 @@
 {
-    "cSpell.words": [
-        "Controllerinitialize"
-    ]
+  "cSpell.words": [
+    "Controllerinitialize"
+  ],
+  "dart.flutterSdkPath": ".fvm/versions/3.24.5"
 }

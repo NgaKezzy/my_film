@@ -47,7 +47,7 @@ class ViewHistory extends StatelessWidget {
                                 onTap: () {
                                   printRed(state.viewHistory[index]!.slug);
                                   context.push(
-                                      '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                                      '${AppRouteConstant.myHomeApp}${AppRouteConstant.watchAVideo}',
                                       extra: state.viewHistory[index]?.slug);
                                 },
                                 child: ItemMovieInformation(

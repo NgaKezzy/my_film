@@ -44,7 +44,7 @@ class FavoriteMoviePage extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       context.push(
-                          '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                          '${AppRouteConstant.myHomeApp}${AppRouteConstant.watchAVideo}',
                           extra: state.favoriteMovies[index]?.slug);
                     },
                     child: Column(

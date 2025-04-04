@@ -7,9 +7,11 @@ import 'package:app/feature/home/cubit/movie_state.dart';
 import 'package:app/feature/home/watch_a_movie.dart';
 import 'package:app/feature/home/widgets/item_movie_information.dart';
 import 'package:app/l10n/cubit/locale_cubit.dart';
+import 'package:app/routers/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchMovie extends StatefulWidget {
   const SearchMovie({super.key});
@@ -20,7 +22,7 @@ class SearchMovie extends StatefulWidget {
 
 class _SearchMovieState extends State<SearchMovie> {
   final TextEditingController searchController = TextEditingController();
-   MovieCubit movieCubit = di.get();
+  MovieCubit movieCubit = di.get();
   bool isPlaySearch = false;
   bool isFirst = true;
 
@@ -170,14 +172,18 @@ class _SearchMovieState extends State<SearchMovie> {
                                   child: GestureDetector(
                                     onTap: () {
                                       FocusScope.of(context).unfocus();
-                                   
+
                                       printRed(state.moviesSearch[index].slug);
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => WatchAMovie(
-                                                  slug: state
-                                                      .moviesSearch[index].slug)));
+                                      context.push(
+                                          '${AppRouteConstant.myHomeApp}${AppRouteConstant.watchAVideo}',
+                                          extra:
+                                              state.moviesSearch[index].slug);
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) => WatchAMovie(
+                                      //             slug: state
+                                      //                 .moviesSearch[index].slug)));
                                     },
                                     child: ItemMovieInformation(
                                       imageUrl:
