@@ -44,7 +44,7 @@ class LocaleCubit extends Cubit<LocaleState> {
     emit(state.copyWith(status: LocaleStatus.loading));
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    bool? isSelected = prefs.getBool(KeyApp.IS_SET_LANGUAGE);
+    bool isSelected = prefs.getBool(KeyApp.IS_SET_LANGUAGE) ?? false;
     emit(state.copyWith(
         isSelectLanguage: isSelected, status: LocaleStatus.success));
   }
