@@ -75,22 +75,28 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  int _retryCount = 0;
+  static const int maxRetries = 3;
+  static const Duration retryDelay = Duration(seconds: 1);
+
   Future<void> checkStatusNetwork() async {
-    homePageCubit.checkNetwork().then((value) async => {
-          if (homePageCubit.state.isConnectNetwork == false)
-            {
-              Future.delayed(const Duration(seconds: 1), () {
-                checkStatusNetwork();
-              }),
-            }
-          else
-            {
-              await initialization(),
-              Future.delayed(const Duration(seconds: 1), () {
-                homePageCubit.loadingHomeIsFalse();
-              }),
-            }
-        });
+    if (_retryCount >= maxRetries) {
+      // If max retries reached, show error and stop retrying
+      homePageCubit.loadingHomeIsFalse();
+      return;
+    }
+
+    await homePageCubit.checkNetwork();
+
+    if (!homePageCubit.state.isConnectNetwork) {
+      _retryCount++;
+      await Future.delayed(retryDelay);
+      checkStatusNetwork();
+    } else {
+      _retryCount = 0; // Reset retry count on success
+      await initialization();
+      homePageCubit.loadingHomeIsFalse();
+    }
   }
 
   @override

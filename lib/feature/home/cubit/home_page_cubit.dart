@@ -2,6 +2,7 @@ import 'package:app/config/key_app.dart';
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
 import '../../../config/print_color.dart';
 import 'home_page_state.dart';
@@ -9,6 +10,31 @@ import 'home_page_state.dart';
 class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit() : super(const HomePageState()) {
     initIsSelectedNotifications();
+    _initNetworkListener();
+  }
+
+  StreamSubscription<List<ConnectivityResult>>? _networkSubscription;
+
+  void _initNetworkListener() {
+    _networkSubscription =
+        Connectivity().onConnectivityChanged.listen((results) {
+      final result = results.first;
+      if (result == ConnectivityResult.none) {
+        printRed('Network disconnected');
+        emit(state.copyWith(
+            isConnectNetwork: false, status: HomePageStatus.success));
+      } else {
+        printRed('Network connected');
+        emit(state.copyWith(
+            isConnectNetwork: true, status: HomePageStatus.success));
+      }
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _networkSubscription?.cancel();
+    return super.close();
   }
 
   Future<void> checkNetwork() async {
