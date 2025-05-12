@@ -77,7 +77,7 @@ class ItemFilmHorizontally extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           context.push(
-                              '${AppRouteConstant.myHomeApp}/${AppRouteConstant.watchAVideo}',
+                              '${AppRouteConstant.myHomeApp}${AppRouteConstant.watchAVideo}',
                               extra: itemsFilm[index].slug);
                         },
                         child: SizedBox(

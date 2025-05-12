@@ -4,8 +4,6 @@ import 'package:app/feature/home/cubit/home_page_cubit.dart';
 import 'package:app/feature/home/cubit/home_page_state.dart';
 import 'package:app/feature/home/cubit/movie_cubit.dart';
 import 'package:app/feature/home/cubit/movie_state.dart';
-import 'package:app/feature/home/models/movie_information.dart';
-import 'package:app/feature/home/movie_list.dart';
 import 'package:app/feature/home/widgets/item_film_horizontally.dart';
 import 'package:app/feature/home/widgets/item_grid_and_title.dart';
 import 'package:app/feature/home/widgets/item_slider_image.dart';
@@ -14,7 +12,6 @@ import 'package:app/feature/home/widgets/skeleton_item_film_horizontal.dart';
 import 'package:app/feature/home/widgets/skeleton_item_grid_and_title.dart';
 import 'package:app/feature/home/widgets/skeleton_page_indicator.dart';
 import 'package:app/routers/router.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -105,7 +102,6 @@ class _HomePageState extends State<HomePage> {
     movieCubit = context.read<MovieCubit>();
     homePageCubit = context.read<HomePageCubit>();
     homePageCubit.state.isNotification ? {} : permissionHandle();
-
     checkStatusNetwork();
     _pageController = PageController(
       initialPage: homePageCubit.state.currentIndexPage,

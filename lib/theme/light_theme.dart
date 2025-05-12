@@ -5,7 +5,6 @@ ThemeData light = ThemeData(
     fontFamily: 'Ubuntu',
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
-      // 4 màu chủ đạo tạo điểm nhấn
       primary: Color(0xFF6196A6),
       onPrimary: Color(0xFFEE4266),
       primaryContainer: Color(0xFF6196A6),
@@ -13,7 +12,7 @@ ThemeData light = ThemeData(
       secondary: Color(0xFFE493B3),
       onSecondary: Color(0xFFA5DD9B),
       secondaryContainer: Color(0xFFEEA5A6),
-      onSecondaryContainer: Color(0xFFF1F0E8),
+      onSecondaryContainer: Colors.red,
       // -------------------
 
       // các màu light
