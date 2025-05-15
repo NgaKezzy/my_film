@@ -65,6 +65,7 @@ class _SearchMovieState extends State<SearchMovie> {
                             autofocus: true,
                             controller: searchController,
                             onChanged: (value) {
+                              // Hàm để gọi để tìm kiếm
                               debounce.call(() async {
                                 if (searchController.text.trim().isNotEmpty) {
                                   setState(() {
