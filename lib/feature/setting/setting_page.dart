@@ -55,6 +55,7 @@ class SettingsPage extends StatelessWidget {
                     value: themeCubit.state.isDark,
                     activeColor: Colors.red,
                     onChanged: (bool value) {
+                      // chỗ này nhấn nút để gọi hàm thay đổi chế độ sáng tối
                       context.read<ThemeCubit>().toggedTheme();
                     },
                   )

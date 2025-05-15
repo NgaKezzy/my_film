@@ -13,6 +13,7 @@ import 'package:translator/translator.dart';
 
 class MovieCubit extends Cubit<MovieState> {
   MovieCubit() : super(const MovieState()) {
+
     getMovieDataTheLocalStorage();
     getViewHistoryTheLocalStorage();
   }
@@ -20,6 +21,8 @@ class MovieCubit extends Cubit<MovieState> {
   final translator = GoogleTranslator();
 
   Future<void> getMovie() async {
+    // hàm này để lấy thông tin các bộ phim mới nhất
+
     emit(state.copyWith(status: MovieStatus.loading));
     List<MovieInformation> newMovies = [];
 
@@ -47,6 +50,7 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> getMovieDetails(String slug, String languageCode) async {
+    // lấy thông tin chi tiết của 1 bộ phim
     DataFilm? newDataFilm;
     Box<MovieDetails> favoriteMovieBox = Hive.box(KeyApp.FAVORITE_MOVIE_BOX);
     emit(state.copyWith(status: MovieStatus.loading, dataFilm: newDataFilm));
@@ -97,6 +101,7 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> getAListOfIndividualMovies() async {
+    // lấy danh sách các bộ phim 1 tập
     emit(state.copyWith(status: MovieStatus.loading));
     List<MovieInformation> newSingleMovie = [];
 
@@ -127,6 +132,7 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> getTheListOfMoviesAndSeries() async {
+    // lấy danh sách phim nhiều tập
     emit(state.copyWith(status: MovieStatus.loading));
     List<MovieInformation> newSeriesMovies = [];
 
@@ -156,6 +162,7 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> getTheListOfCartoons() async {
+    // lấy danh sách phim hoạt hình
     emit(state.copyWith(status: MovieStatus.loading));
     List<MovieInformation> newCartoons = [];
 
@@ -185,6 +192,7 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> moviesSearch(String keyWord) async {
+    // tìm kiếm phim theo tên
     emit(state.copyWith(status: MovieStatus.loading));
     List<MovieInformation> newMoviesSearch = [];
     try {
@@ -207,6 +215,7 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> getMovieDataTheLocalStorage() async {
+    // hàm để lấy các bộ phim yêu thích dưới bộ nhớ máy khi khởi động
     emit(state.copyWith(status: MovieStatus.loading));
     List<MovieDetails?> itemFilms = [];
 
@@ -227,6 +236,7 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> addMoviesToFavoritesList({
+    // thêm phim yêu thích và lưu xuống bộ nhớ máy
     required MovieDetails? itemFilm,
   }) async {
     emit(state.copyWith(status: MovieStatus.loading));
@@ -243,6 +253,7 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> removeMoviesToFavoritesList({
+    // xóa phim yêu thích khỏi bộ nhớ máy
     required MovieDetails? itemFilm,
   }) async {
     List<MovieDetails?> items = state.favoriteMovies;
@@ -268,6 +279,7 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> addToWatchHistory({required String slug}) async {
+    // thêm bộ phim vào lịch sử xem và lưu xuống bộ nhớ máy
     emit(state.copyWith(status: MovieStatus.loading));
     MovieDetails? itemFilm = state.dataFilm?.movie;
     itemFilm?.slug = slug;
@@ -334,6 +346,7 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> getViewHistoryTheLocalStorage() async {
+    // lấy các phim của lịch sử xem dưới bộ nhớ máy
     emit(state.copyWith(status: MovieStatus.loading));
     Box<MovieDetails> viewHistoryBox = Hive.box(KeyApp.VIEW_HISTORY_BOX);
     printRed(viewHistoryBox.length.toString());
@@ -354,6 +367,7 @@ class MovieCubit extends Cubit<MovieState> {
   }
 
   Future<void> clearCache() async {
+    // xóa bộ nhớ đệm, chính là xóa bộ nhớ của lịch sử xem và phim yêu thích
     emit(state.copyWith(status: MovieStatus.loading));
     Box<MovieDetails> viewHistoryBox = Hive.box(KeyApp.VIEW_HISTORY_BOX);
     Box<MovieDetails> favoriteMovieBox = Hive.box(KeyApp.FAVORITE_MOVIE_BOX);

@@ -18,7 +18,7 @@ class LocalStorage {
   }
 
   static Future<void> hiveClearBox() async {
-    // ? gọi từng box ra để  clear data
+    //  gọi từng box ra để  clear data
 
     Box<MovieDetails> favoriteMovieBox = Hive.box(KeyApp.FAVORITE_MOVIE_BOX);
     favoriteMovieBox.clear();

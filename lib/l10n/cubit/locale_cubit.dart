@@ -12,6 +12,7 @@ class LocaleCubit extends Cubit<LocaleState> {
   }
 
   Future<void> initLanguage() async {
+    // lấy dữ liệu dưới bộ nhớ máy xem đang ở ngôn ngữ nào
     emit(state.copyWith(status: LocaleStatus.loading));
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String code = prefs.getString(KeyApp.LANGUAGE_CODE) ?? 'en';
@@ -25,6 +26,7 @@ class LocaleCubit extends Cubit<LocaleState> {
   }
 
   Future<void> setLanguageCode(String code) async {
+    // gán giá trị khi chọn ngôn ngữ
     emit(state.copyWith(status: LocaleStatus.loading));
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(KeyApp.LANGUAGE_CODE, code);
@@ -35,7 +37,6 @@ class LocaleCubit extends Cubit<LocaleState> {
   Future<void> successSetLanguage() async {
     emit(state.copyWith(status: LocaleStatus.loading));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     prefs.setBool(KeyApp.IS_SET_LANGUAGE, true);
     emit(state.copyWith(isSelectLanguage: true, status: LocaleStatus.success));
   }

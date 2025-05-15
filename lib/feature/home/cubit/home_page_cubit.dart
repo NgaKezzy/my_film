@@ -16,6 +16,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   StreamSubscription<List<ConnectivityResult>>? _networkSubscription;
 
   void _initNetworkListener() {
+    // kiểm tra xem có kết nối mạng hay ko
     _networkSubscription =
         Connectivity().onConnectivityChanged.listen((results) {
       final result = results.first;

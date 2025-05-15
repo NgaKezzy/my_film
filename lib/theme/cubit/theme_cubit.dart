@@ -7,6 +7,8 @@ import '../../config/key_app.dart';
 class ThemeCubit extends Cubit<ThemeState> {
   ThemeCubit() : super(const ThemeState());
   Future<void> toggedTheme() async {
+
+  // hàm này để gán lại giá trị, nếu sáng gán thành tối, tối gán thành sáng
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     emit(state.copyWith(status: ThemeStatus.loading));
@@ -15,6 +17,8 @@ class ThemeCubit extends Cubit<ThemeState> {
   }
 
   Future<void> initTheme() async {
+
+    // hàm này để khi bắt đầu mở app nên sẽ lấy giá trị dưới bộ nhớ máy xem đang ở chế độ sáng hay tối
     SharedPreferences prefs = await SharedPreferences.getInstance();
     emit(state.copyWith(status: ThemeStatus.loading));
     bool value = prefs.getBool(KeyApp.IS_DARK) ?? true;

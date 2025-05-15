@@ -85,10 +85,12 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      // kiểm tra xem biến true hay false rồi chuyển ngôn ngữ tương ứng
       locale: Locale(localeCubit.state.languageCode.isEmpty
           ? 'en'
           : localeCubitWatch.state.languageCode),
-      theme: themeCubit.state.isDark ? dark : light,
+      // kiểm tra xem biến true hay false rồi sẽ gán file màu tương ứng
+      theme: themeCubit.state.isDark ? dark : light, 
       routerConfig: AppRoutes().router,
     );
   }
