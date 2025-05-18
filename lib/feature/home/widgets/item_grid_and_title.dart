@@ -75,7 +75,8 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
+                      crossAxisCount:
+                          3, // nếu muốn hiển thị số lượng phim theo hàng ngang
                       crossAxisSpacing: 10.0,
                       mainAxisSpacing: 10.0,
                       childAspectRatio: 0.6,
@@ -142,8 +143,8 @@ class _ItemGridAndTitleState extends State<ItemGridAndTitle> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      // mạc định hiển thị 9 phim, ấn xem thêm thì gán bằng 15 và ngược lại
                       isDetail = !isDetail;
-
                       if (isDetail) {
                         itemCount = 15;
                       } else {

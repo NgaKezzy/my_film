@@ -132,7 +132,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                         movieCubit.setHeart();
                       },
                       child: Icon(
-                        Icons.favorite,
+                        Icons.favorite, // icon trái tim thêm phim yêu thích
                         size: AppSize.size35,
                         color: context
                                 .watch<MovieCubit>()
@@ -140,7 +140,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                                 .dataFilm!
                                 .movie
                                 .isFavorite
-                            ? theme.colorScheme.onPrimary
+                            ? theme.colorScheme
+                                .onPrimary // chuyển màu xanh thì Colors.blue hoặc Colors.green
                             : theme.colorScheme.tertiary,
                       ),
                     )
