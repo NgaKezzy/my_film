@@ -1,3 +1,4 @@
+import 'package:app/config/print_color.dart';
 import 'package:app/feature/favorite/favorite_movie_page.dart';
 import 'package:app/feature/home/home_page_provider.dart';
 import 'package:app/feature/setting/setting_page.dart';
@@ -43,6 +44,8 @@ class _MyHomeAppState extends State<MyHomeApp> {
         final String slug = message?.data['slug'];
         final String route = message?.data['route'];
         context.pushReplacement(route, extra: slug);
+        printRed(route);
+        printRed(slug);
       }
       print("Foreground Notification: ${message?.notification?.title}");
     });

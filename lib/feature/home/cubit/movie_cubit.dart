@@ -13,7 +13,6 @@ import 'package:translator/translator.dart';
 
 class MovieCubit extends Cubit<MovieState> {
   MovieCubit() : super(const MovieState()) {
-
     getMovieDataTheLocalStorage();
     getViewHistoryTheLocalStorage();
   }
@@ -58,6 +57,7 @@ class MovieCubit extends Cubit<MovieState> {
     try {
       final data = await FetchApiMovie.getMovieDetails(slug);
       if (data['status'] == false) {
+        emit(state.copyWith(status: MovieStatus.error, dataFilm: null));
         return;
       }
 
@@ -87,7 +87,6 @@ class MovieCubit extends Cubit<MovieState> {
     printGreen(newDataFilm!.movie.content);
     emit(state.copyWith(
       dataFilm: newDataFilm,
-      status: MovieStatus.success,
     ));
   }
 
@@ -280,7 +279,6 @@ class MovieCubit extends Cubit<MovieState> {
 
   Future<void> addToWatchHistory({required String slug}) async {
     // thêm bộ phim vào lịch sử xem và lưu xuống bộ nhớ máy
-    emit(state.copyWith(status: MovieStatus.loading));
     MovieDetails? itemFilm = state.dataFilm?.movie;
     itemFilm?.slug = slug;
     Box<MovieDetails> viewHistoryBox = Hive.box(KeyApp.VIEW_HISTORY_BOX);
@@ -343,6 +341,7 @@ class MovieCubit extends Cubit<MovieState> {
         }
       }
     }
+    emit(state.copyWith(status: MovieStatus.success));
   }
 
   Future<void> getViewHistoryTheLocalStorage() async {

@@ -40,33 +40,14 @@ class _WatchAMovieState extends State<WatchAMovie> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<MovieCubit, MovieState>(
+        bloc: movieCubit,
         builder: (context, state) {
-          if (movieCubit.state.status == MovieStatus.loading) {
+          if (state.dataFilm == null) {
             return const Center(
               child: LoadingWidget(),
             );
           }
-          if (movieCubit.state.dataFilm == null) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Text(AppLocalizations.of(context)!.movieUpdate),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        context.pop();
-                      },
-                      child: Text(AppLocalizations.of(context)!.ok)),
-                )
-              ],
-            );
-          }
+
           return WillPopScope(
             onWillPop: () async {
               Fluttertoast.showToast(
@@ -87,8 +68,9 @@ class _WatchAMovieState extends State<WatchAMovie> {
                     children: [
                       VideoPlayerWidget(
                           // movieInformation: widget.movieInformation,
-                          url: state
-                              .dataFilm!.episodes[0].server_data[0].link_m3u8,
+                          url: state.dataFilm?.episodes[0].server_data[0]
+                                  .link_m3u8 ??
+                              '',
                           dataFilm: state.dataFilm),
                       Positioned(
                           left: 20,
